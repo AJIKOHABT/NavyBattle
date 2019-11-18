@@ -1,4 +1,5 @@
 ﻿using System;
+using NavyBattleModels.Interfaces;
 
 namespace NavyBattleModels
 {
@@ -22,7 +23,7 @@ namespace NavyBattleModels
         /// <summary>
         /// Starting point of the battleship
         /// </summary>
-        private IPoint _startPoint;
+        private Point _startPoint;
 
         /// <summary>
         /// Length of the battleship
@@ -49,7 +50,7 @@ namespace NavyBattleModels
         /// <summary>
         /// Starting point of the battleship
         /// </summary>
-        public IPoint StartPoint
+        public Point StartPoint
         {
             get
             {
@@ -67,7 +68,7 @@ namespace NavyBattleModels
         /// <param name="length">Length of the battleship</param>
         /// <param name="startPoint">Starting point of the battleship</param>
         /// <param name="isVertical">Is battleship vertically or horizontally orinted (true - vertically)</param>
-        public BattleShip(int length, IPoint startPoint, bool isVertical = true)
+        public BattleShip(int length, Point startPoint, bool isVertical = true)
         {
             _length = length;
             _isVertical = isVertical;
