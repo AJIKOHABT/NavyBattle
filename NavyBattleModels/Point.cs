@@ -8,7 +8,7 @@ namespace NavyBattleModels
     /// <summary>
     /// Struct describing point
     /// </summary>
-    public struct Point
+    public struct Point : IEquatable<Point>
     {
 
         #region fields & properties
@@ -88,9 +88,7 @@ namespace NavyBattleModels
                 return false;
             }
 
-            var otherPoint = (Point)obj;
-
-            return this.X == otherPoint.X && this.Y == otherPoint.Y; 
+            return true; 
 
         }
 
@@ -100,10 +98,23 @@ namespace NavyBattleModels
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return _x*2 + _y*5;
+            return _x*20000 + _y;
         }
 
         #endregion
 
+        #region IEquatable<T>
+
+        /// <summary>
+        /// Check equality of two point objects
+        /// </summary>
+        /// <param name="otherPoint"></param>
+        /// <returns></returns>
+        bool IEquatable<Point>.Equals(Point otherPoint)
+        {
+            return this.X == otherPoint.X && this.Y == otherPoint.Y;
+        }
+        
+        #endregion
     }
 }
