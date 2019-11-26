@@ -7,7 +7,7 @@ namespace NavyBattleModels.Validators
     /// <summary>
     /// Class to validate that position of the battleship is not beyond the border
     /// </summary>
-    public class BeyondBorderValidator
+    public class ClassicBeyondBorderValidator: IBeyondBorderValidator
     {
         public static bool Validate(List<BattleShip> battleShips)
         {

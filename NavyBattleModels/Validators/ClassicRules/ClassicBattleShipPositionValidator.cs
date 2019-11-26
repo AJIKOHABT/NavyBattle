@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NavyBattleModels.Validators
 {
-    public class BattleShipPositionValidator
+    public class ClassicBattleShipPositionValidator: IBattleShipPositionValidator
     {
 
 

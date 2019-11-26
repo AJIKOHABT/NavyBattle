@@ -7,7 +7,7 @@ namespace NavyBattleModels.Validators
     /// <summary>
     /// Class to validate the number and types of the battleships
     /// </summary>
-    public class BattleShipsValidator
+    public class ClassicBattleShipsValidator: IBattleShipsValidator
     {
         public static bool Validate(List<BattleShip> battleShips)
         {
