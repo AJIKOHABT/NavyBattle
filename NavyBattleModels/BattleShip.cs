@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NavyBattleModels.Interfaces;
 
 namespace NavyBattleModels
@@ -88,7 +89,7 @@ namespace NavyBattleModels
         {
             var points = new HashSet<Point>();
 
-            if (battleShip.IsVertical)
+            if (IsVertical)
             {
                 for (var dY = 0; dY < Length; dY++)
                 {
@@ -97,13 +98,23 @@ namespace NavyBattleModels
             }
             else
             {
-                for (var dX = 0; dX < battleShip.Length; dX++)
+                for (var dX = 0; dX < Length; dX++)
                 {
                     points.Add(new Point(StartPoint.X + dX, StartPoint.Y));
                 }
             }
 
             return points;
+        }
+
+        /// <summary>
+        /// Getting end point of the battleship
+        /// </summary>
+        /// <returns></returns>
+        public Point GetEndPoint()
+        {
+            return IsVertical ? new Point(StartPoint.X, StartPoint.Y + Length - 1) :
+                                new Point(StartPoint.X + Length - 1, StartPoint.Y);
         }
 
         #endregion

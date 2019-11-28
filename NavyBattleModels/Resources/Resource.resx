@@ -135,4 +135,7 @@
   <data name="BattleShipsValidator_Mosquito" xml:space="preserve">
     <value>mosquito(s)</value>
   </data>
+  <data name="BeyondBorderValidator_Error" xml:space="preserve">
+    <value>This battleship is out of the battlefield</value>
+  </data>
 </root>
