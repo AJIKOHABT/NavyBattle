@@ -50,21 +50,15 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        public string Validate(List<BattleShip> battleShips)
+        public Dictionary<Point, string> Validate(List<BattleShip> battleShips)
         {
-            if (!_battleShipsValidator.Validate(battleShips))
-            {
-                return "Battleships number or types error";
-            }
-            else if (_beyondBorderValidator.Validate(battleShips))
-            {
-                return "One of battleships is out of battlefield";
-            }
-            else if (_battleShipPositionValidator.Validate(battleShips))
-            {
-                return "One of battleships is crossing other battleship";
-            }
-            return "Everything is ok";
+            var validationResult = new Dictionary<Point, string>();
+
+            validationResult.AddRange(_battleShipsValidator.Validate(battleShips));
+            validationResult.AddRange(_beyondBorderValidator.Validate(battleShips));
+            validationResult.AddRange(_battleShipPositionValidator.Validate(battleShips));
+                        
+            return validationResult;
         }
 
         #endregion
