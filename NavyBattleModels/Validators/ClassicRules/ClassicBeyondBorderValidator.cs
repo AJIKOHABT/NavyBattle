@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NavyBattleModels.Resources;
+﻿using System.Collections.Generic;
+using NavyBattleModels.Validators.Interfaces;
+using NavyBattleModels.Errors;
+using NavyBattleModels.Enums;
 
 namespace NavyBattleModels.Validators
 {
@@ -15,9 +15,9 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        public Dictionary<Point,string> Validate(List<BattleShip> battleShips)
+        public IEnumerable<BattleFieldError> Validate(List<BattleShip> battleShips)
         {
-            var resultErrors = new Dictionary<Point, string>();
+            var resultErrors = new List<BattleFieldError>();
 
             foreach (var battleShip in battleShips)
             {
@@ -27,7 +27,7 @@ namespace NavyBattleModels.Validators
                 {
                     continue;
                 }
-                resultErrors.Add(startPoint, Resource.BeyondBorderValidator_Error);
+                resultErrors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipOutOfBorder, startPoint));                    
             }
 
             return resultErrors;

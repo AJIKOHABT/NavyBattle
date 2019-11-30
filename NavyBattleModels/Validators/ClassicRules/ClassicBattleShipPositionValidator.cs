@@ -2,33 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NavyBattleModels.Validators.Interfaces;
+using NavyBattleModels.Errors;
+using NavyBattleModels.Enums;
 
 namespace NavyBattleModels.Validators
 {
-    public class ClassicBattleShipPositionValidator: IBattleShipPositionValidator
+    public class ClassicBattleShipPositionValidator: IBattleValidator
     {
         private HashSet<Point> _addedPoints;
 
-        public Dictionary<Point, ErrorType> Validate(List<BattleShip> battleShips)
+        public IEnumerable<BattleFieldError> Validate(IEnumerable<BattleShip> battleShips)
         {
-            var errors = new Dictionary<Point, ErrorType>;
+            var errors = new List<BattleFieldError>();
             var zonePoints = new HashSet<Point>();
             var battleShipsPoints = new HashSet<Point>();
+
             foreach (var battleShip in battleShips)
             {
                 var battleShipSetOfPoints = battleShip.CreateBattleshipSetOfPoints();
-                foreach (var errorPoints in battleShipSetOfPoints.IntersectWith(battleShipsPoints))
+                var battleShipTmpSetOfPoints =  new HashSet<Point>(battleShipSetOfPoints);
+
+                battleShipSetOfPoints.IntersectWith(battleShipsPoints);
+                foreach (var errorPoint in battleShipSetOfPoints)
                 {
-                    errors.Add(Point, ErrorType.IntersectWithShipError);
+                    errors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipCrossingOther, errorPoint));
                 }
-                foreach (var errorPoints in battleShipSetOfPoints.IntersectWith(zonePoints))
+
+                battleShipTmpSetOfPoints.IntersectWith(zonePoints);
+                foreach (var errorPoint in battleShipTmpSetOfPoints)
                 {
-                    errors.Add(Point, ErrorType.TouchWithShipError);
+                    errors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipNearOther, errorPoint));
                 }
-                //addedPoints.Union(battleShipSetOfPoints); try it at home
+                
                 foreach (var battleShipPoint in battleShipSetOfPoints)
                 {
-                    addedPoints.Add(battleShipPoint);
+                    battleShipsPoints.Add(battleShipPoint);
                 }
             }
 

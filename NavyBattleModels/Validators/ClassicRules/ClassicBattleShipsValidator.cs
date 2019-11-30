@@ -4,6 +4,9 @@ using System.Text;
 using System.Linq;
 using NavyBattleModels.Enums;
 using NavyBattleModels.Resources;
+using NavyBattleModels.Validators.Interfaces;
+using NavyBattleModels.Errors;
+using NavyBattleModels.Enums;
 
 namespace NavyBattleModels.Validators
 {
@@ -12,6 +15,7 @@ namespace NavyBattleModels.Validators
     /// </summary>
     public class ClassicBattleShipsValidator: IBattleValidator
     {
+        private List<BattleFieldError> _resultErrors;
 
         #region IBattleValidator
 
@@ -20,13 +24,14 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        public Dictionary<Point, string> Validate(List<BattleShip> battleShips)
+        public IEnumerable<BattleFieldError> Validate(IEnumerable<BattleShip> battleShips)
         {
-            var resultErrors = new Dictionary<Point, string>();
-            resultErrors.Concat(GetNonValidTypeErrors(battleShips));
-            resultErrors.Concat(GetNonValidBattleshipsCount(battleShips));                             
+            _resultErrors = new List<BattleFieldError>();
 
-            return resultErrors;
+            GetNonValidTypeErrors(battleShips);
+            GetNonValidBattleshipsCount(battleShips);                             
+
+            return _resultErrors;
         }
 
         #endregion
@@ -38,9 +43,12 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        private Dictionary<Point, string> GetNonValidTypeErrors(List<BattleShip> battleShips)
+        private void GetNonValidTypeErrors(IEnumerable<BattleShip> battleShips)
         {
-            var resultErrors = new Dictionary<Point, string>();
+            if (_resultErrors == null)
+            {
+                _resultErrors = new List<BattleFieldError>();
+            }
             foreach (var battleShip in battleShips)
             {
                 if (!(battleShip.Length > 4) && !(battleShip.Length<1))
@@ -48,9 +56,8 @@ namespace NavyBattleModels.Validators
                     continue;
                 }
                 var errorText = string.Format(Resource.BattleShipsValidator_LengthError, battleShip.Length);
-                resultErrors.Add(battleShip.StartPoint, errorText);
+                _resultErrors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipNonValidLength, battleShip.StartPoint));
             }
-            return resultErrors;
         }
 
         /// <summary>
@@ -58,49 +65,22 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        private Dictionary<Point, string> GetNonValidBattleshipsCount(List<BattleShip> battleShips)
+        private void GetNonValidBattleshipsCount(IEnumerable<BattleShip> battleShips)
         {
-            ///TODO: здесь надо обдумать как быстро и оптимально проверять
-            var resultErrors = new Dictionary<Point, string>();
-            var defaultPoint = new Point(0, 0);
-            var battleshipActualCount = battleShips.Count(battleShip => battleShip.Length == (int)ClassicBattleShipTypesLength.Battleship);
-            var cruiserActualCount = battleShips.Count(battleShip => battleShip.Length == (int)ClassicBattleShipTypesLength.Cruiser);
-            var destroyerActualCount = battleShips.Count(battleShip => battleShip.Length == (int)ClassicBattleShipTypesLength.Destroyer);
-            var mosquitoActualCount = battleShips.Count(battleShip => battleShip.Length == (int)ClassicBattleShipTypesLength.Mosquito);
-            string errorText;
-            if (battleshipActualCount != (int)ClassicBattleShipTypesCount.Battleship)
+            if (_resultErrors == null)
             {
-                errorText = string.Format(Resource.BattleShipsValidator_BattleShipCountError,
-                    (int)ClassicBattleShipTypesCount.Battleship,
-                    Resource.BattleShipsValidator_Battleship,
-                    battleshipActualCount);
-                resultErrors.Add(defaultPoint, errorText);
+                _resultErrors = new List<BattleFieldError>();
             }
-            if (cruiserActualCount != (int)ClassicBattleShipTypesCount.Cruiser)
+            foreach (var battleShipLength in (int[]) Enum.GetValues(typeof(ClassicBattleShipTypesLength)))
             {
-                errorText = string.Format(Resource.BattleShipsValidator_BattleShipCountError,
-                    (int)ClassicBattleShipTypesCount.Cruiser, 
-                    Resource.BattleShipsValidator_Cruiser, 
-                    cruiserActualCount);
-                resultErrors.Add(defaultPoint, errorText);
+                var name = Enum.GetName(typeof(ClassicBattleShipTypesLength), battleShipLength);
+                var actualCnt = battleShips.Count(battleShip => battleShip.Length == battleShipLength);
+                var validCnt = (int)Enum.Parse(typeof(ClassicBattleShipTypesCount), name);
+                if (actualCnt != validCnt)
+                {
+                    _resultErrors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipNonValidCount));
+                }
             }
-            if (destroyerActualCount != (int)ClassicBattleShipTypesCount.Destroyer)
-            {
-                errorText = string.Format(Resource.BattleShipsValidator_BattleShipCountError,
-                    (int)ClassicBattleShipTypesCount.Destroyer, 
-                    Resource.BattleShipsValidator_Destroyer, 
-                    destroyerActualCount);
-                resultErrors.Add(defaultPoint, errorText);
-            }
-            if (mosquitoActualCount != (int)ClassicBattleShipTypesCount.Mosquito)
-            {
-                errorText = string.Format(Resource.BattleShipsValidator_BattleShipCountError,
-                    (int)ClassicBattleShipTypesCount.Mosquito, 
-                    Resource.BattleShipsValidator_Mosquito, 
-                    mosquitoActualCount);
-                resultErrors.Add(defaultPoint, errorText);
-            }
-            return resultErrors;
         }
 
         #endregion

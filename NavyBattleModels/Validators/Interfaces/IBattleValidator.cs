@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NavyBattleModels.Validators.Interfaces
 {
-    interface IBattleShipPositionValidator
+    interface IBattleValidator
     {
     }
 }
