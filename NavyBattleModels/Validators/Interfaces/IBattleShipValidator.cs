@@ -9,8 +9,8 @@ namespace NavyBattleModels.Validators.Interfaces
         /// <summary>
         /// Validate battleships to match rules
         /// </summary>
-        /// <param name="battleShips">List of battleships on the battlefield</param>
+        /// <param name="battleField">Battlefield to validate</param>
         /// <returns>IEnumerable of errors</returns>
-        IEnumerable<BattleFieldError> Validate(IEnumerable<IBattleShip> battleShips);
+        IEnumerable<BattleFieldError> Validate(IBattleField battleField);
     }
 }

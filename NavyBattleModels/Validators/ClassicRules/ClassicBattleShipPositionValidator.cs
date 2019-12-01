@@ -13,15 +13,15 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Validate battleships to match rules
         /// </summary>
-        /// <param name="battleShips">List of battleships on the battlefield</param>
+        /// <param name="battleField">Battlefield to validate</param>
         /// <returns>IEnumerable of errors</returns>
-        public IEnumerable<BattleFieldError> Validate(IEnumerable<IBattleShip> battleShips)
+        public IEnumerable<BattleFieldError> Validate(IBattleField battleField)
         {
             var errors = new List<BattleFieldError>();
             var zonePoints = new HashSet<Point>();
             var battleShipsPoints = new HashSet<Point>();
 
-            foreach (var battleShip in battleShips)
+            foreach (var battleShip in battleField.Battleships)
             {
                 var battleShipSetOfPoints = battleShip.CreateBattleshipSetOfPoints();
 

@@ -17,17 +17,17 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Validate battleships to match rules
         /// </summary>
-        /// <param name="battleShips">List of battleships on the battlefield</param>
+        /// <param name="battleField">Battlefield to validate</param>
         /// <returns>IEnumerable of errors</returns>
-        public IEnumerable<BattleFieldError> Validate(IEnumerable<IBattleShip> battleShips)
+        public IEnumerable<BattleFieldError> Validate(IBattleField battleField)
         {
             var resultErrors = new List<BattleFieldError>();
 
-            foreach (var battleShip in battleShips)
+            foreach (var battleShip in battleField.Battleships)
             {
                 var endPoint = battleShip.GetEndPoint();
                 var startPoint = battleShip.StartPoint;
-                if(startPoint.X >= 1 && startPoint.X <= 10 && startPoint.Y >= 1 && startPoint.Y <= 10)
+                if(startPoint.X >= 1 && startPoint.X <= battleField.Width && startPoint.Y >= 1 && startPoint.Y <= battleField.Width)
                 {
                     continue;
                 }

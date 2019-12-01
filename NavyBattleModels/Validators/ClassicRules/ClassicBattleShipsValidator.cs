@@ -29,14 +29,14 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Validate battleships to match rules
         /// </summary>
-        /// <param name="battleShips">List of battleships on the battlefield</param>
+        /// <param name="battleField">Battlefield to validate</param>
         /// <returns>IEnumerable of errors</returns>
-        public IEnumerable<BattleFieldError> Validate(IEnumerable<IBattleShip> battleShips)
+        public IEnumerable<BattleFieldError> Validate(IBattleField battleField)
         {
             _resultErrors = new List<BattleFieldError>();
 
-            GetNonValidTypeErrors(battleShips);
-            GetNonValidBattleshipsCount(battleShips);                             
+            GetNonValidTypeErrors(battleField.Battleships);
+            GetNonValidBattleshipsCount(battleField.Battleships);                             
 
             return _resultErrors;
         }
