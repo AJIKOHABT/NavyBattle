@@ -12,6 +12,11 @@ namespace NavyBattleModels
         #region fields & properties
 
         /// <summary>
+        /// Zone around the battleship
+        /// </summary>
+        private HashSet<Point> _zoneAroundBattleShip;
+
+        /// <summary>
         /// Length of the battleship
         /// </summary>
         private int _length;
@@ -25,6 +30,11 @@ namespace NavyBattleModels
         /// Starting point of the battleship
         /// </summary>
         private Point _startPoint;
+
+        /// <summary>
+        /// ID of the battlefield
+        /// </summary>
+        private int _battleFieldId;
 
         /// <summary>
         /// Length of the battleship
@@ -59,6 +69,21 @@ namespace NavyBattleModels
             }
         }
 
+        /// <summary>
+        /// ID of the battlefield
+        /// </summary>
+        public int BattleFieldId
+        {
+            get 
+            {
+                return _battleFieldId;
+            }
+            set 
+            {
+                _battleFieldId = value;
+            }
+        }
+
         #endregion
 
         #region constructors
@@ -89,18 +114,18 @@ namespace NavyBattleModels
         {
             var points = new HashSet<Point>();
 
-            if (IsVertical)
+            if (_isVertical)
             {
-                for (var dY = 0; dY < Length; dY++)
+                for (var dY = 0; dY < _length; dY++)
                 {
-                    points.Add(new Point(StartPoint.X, StartPoint.Y + dY));
+                    points.Add(new Point(_startPoint.X, _startPoint.Y + dY));
                 }
             }
             else
             {
-                for (var dX = 0; dX < Length; dX++)
+                for (var dX = 0; dX < _length; dX++)
                 {
-                    points.Add(new Point(StartPoint.X + dX, StartPoint.Y));
+                    points.Add(new Point(_startPoint.X + dX, _startPoint.Y));
                 }
             }
 
@@ -114,14 +139,29 @@ namespace NavyBattleModels
         /// <returns>HashSet of points around battleship</returns>
         public HashSet<Point> CreateSetOfPointsAroundBattleShip()
         {
-            var points = new HashSet<Point>();
+            _zoneAroundBattleShip = new HashSet<Point>();
 
-            if (StartPoint.X - 1 >= 1)
+            if (_startPoint.X > 1)
             {
                 CreateLeftZoneSetOfPoints();
             }
 
-            return points;
+            if (_startPoint.X < 10)
+            {
+                CreateRightZoneSetOfPoints();
+            }
+
+            if (_startPoint.Y > 1)
+            {
+                CreateTopZoneSetOfPoints();
+            }
+
+            if(_startPoint.Y < 10)
+            {
+                CreateBottomZoneSetOfPoints();
+            }
+
+            return _zoneAroundBattleShip;
         }
 
         /// <summary>
@@ -130,8 +170,8 @@ namespace NavyBattleModels
         /// <returns></returns>
         public Point GetEndPoint()
         {
-            return IsVertical ? new Point(StartPoint.X, StartPoint.Y + Length - 1) :
-                                new Point(StartPoint.X + Length - 1, StartPoint.Y);
+            return _isVertical ? new Point(_startPoint.X, _startPoint.Y + _length - 1) :
+                                new Point(_startPoint.X + _length - 1, _startPoint.Y);
         }
 
         #endregion
@@ -143,27 +183,25 @@ namespace NavyBattleModels
         /// </summary>
         /// <param name="battleShip"></param>
         /// <returns></returns>
-        private HashSet<Point> CreateLeftZoneSetOfPoints()
+        private void CreateLeftZoneSetOfPoints()
         {
-            var points = new HashSet<Point>();
             var endPoint = GetEndPoint();
-            if (IsVertical)
+            if (_isVertical)
             {
-                var startY = StartPoint.Y - 1 >= 1 ? -1 : 0;
+                var startY = _startPoint.Y > 1 ? -1 : 0;
                 var endY = endPoint.Y < 10 ? endPoint.Y + 1 : endPoint.Y;
                 for (int dY = startY; dY <= endY; dY++)
                 {
-                    points.Add(new Point(StartPoint.X - 1, StartPoint.Y+dY));
+                    _zoneAroundBattleShip.Add(new Point(_startPoint.X - 1, _startPoint.Y+dY));
                 }
             }
             else
             {
-                if (StartPoint.X - 1 >= 1)
+                if (_startPoint.X > 1)
                 {
-                    points.Add(new Point(StartPoint.X - 1, StartPoint.Y));
+                    _zoneAroundBattleShip.Add(new Point(_startPoint.X - 1, _startPoint.Y));
                 }
             }
-            return points;
         }
 
         /// <summary>
@@ -171,24 +209,75 @@ namespace NavyBattleModels
         /// </summary>
         /// <param name="battleShip"></param>
         /// <returns></returns>
-        private HashSet<Point> CreateRightZoneSetOfPoints(HashSet<Point> battleShipPoints)
+        private void CreateRightZoneSetOfPoints()
         {
-            var points = new HashSet<Point>();
-            foreach (var battleShipPoint in battleShipPoints)
+            var endPoint = GetEndPoint();
+            if (_isVertical)
             {
-                points.Add(new Point(battleShipPoint.X + 1, battleShipPoint.Y));
+                var startY = _startPoint.Y > 1 ? -1 : 0;
+                var endY = endPoint.Y < 10 ? endPoint.Y + 1 : endPoint.Y;
+                for (int dY = startY; dY <= endY; dY++)
+                {
+                    _zoneAroundBattleShip.Add(new Point(_startPoint.X + 1, _startPoint.Y + dY));
+                }
             }
-            return points;
+            else
+            {
+                if (endPoint.X < 10)
+                {
+                    _zoneAroundBattleShip.Add(new Point(endPoint.X + 1, _startPoint.Y));
+                }
+            }
         }
 
-        private Point CreateTopPoint(Point startPoint)
+        /// <summary>
+        /// Creating set of points on the top of the battleship
+        /// </summary>
+        /// <returns></returns>
+        private void CreateTopZoneSetOfPoints()
         {
-            return new Point(startPoint.X, startPoint.Y - 1);
+            var endPoint = GetEndPoint();
+            if (!_isVertical)
+            {
+                var startX = _startPoint.X > 1 ? -1 : 0;
+                var endX = endPoint.X < 10 ? endPoint.X + 1 : endPoint.X;
+                for (int dX = startX; dX <= endX; dX++)
+                {
+                    _zoneAroundBattleShip.Add(new Point(_startPoint.X + dX, _startPoint.Y - 1));
+                }
+            }
+            else
+            {
+                if (_startPoint.Y > 1)
+                {
+                    _zoneAroundBattleShip.Add(new Point(_startPoint.X, _startPoint.Y - 1));
+                }
+            }
         }
 
-        private Point CreateBottomPoint(Point lastPoint)
+        /// <summary>
+        /// Creating set of points on the bottom of the battleship
+        /// </summary>
+        /// <returns></returns>
+        private void CreateBottomZoneSetOfPoints()
         {
-            return new Point(lastPoint.X, lastPoint.Y + 1);
+            var endPoint = GetEndPoint();
+            if (!_isVertical)
+            {
+                var startX = _startPoint.X > 1 ? -1 : 0;
+                var endX = endPoint.X < 10 ? endPoint.X + 1 : endPoint.X;
+                for (int dX = startX; dX <= endX; dX++)
+                {
+                    _zoneAroundBattleShip.Add(new Point(_startPoint.X + dX, _startPoint.Y + 1));
+                }
+            }
+            else
+            {
+                if (endPoint.Y < 10)
+                {
+                    _zoneAroundBattleShip.Add(new Point(endPoint.X, _startPoint.Y + 1));
+                }
+            }
         }
 
 

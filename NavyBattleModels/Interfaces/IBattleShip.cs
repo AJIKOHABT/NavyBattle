@@ -22,6 +22,11 @@ namespace NavyBattleModels.Interfaces
         Point StartPoint { get; }
 
         /// <summary>
+        /// ID of the battlefield
+        /// </summary>
+        int BattleFieldId { get; set; }
+
+        /// <summary>
         /// Creating set of points of battleship
         /// </summary>
         /// <param name="battleShip">Battleship object</param>
