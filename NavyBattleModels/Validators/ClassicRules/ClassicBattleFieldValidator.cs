@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NavyBattleModels.Errors;
+using NavyBattleModels.Validators.Interfaces;
 
 namespace NavyBattleModels.Validators
 {
     /// <summary>
     /// Main validator for navyBattle classic rules
     /// </summary>
-    public class ClassicBattleFieldValidator : IBattleFieldValidator
+    public class ClassicBattleFieldValidator : IBattleShipValidator
     {
 
         #region Properties and fields
@@ -15,17 +17,17 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Battleships number and types validator
         /// </summary>
-        private IBattleShipsValidator _battleShipsValidator;
+        private IBattleShipValidator _battleShipsValidator;
 
         /// <summary>
         /// Crossing borders of battlefields validator
         /// </summary>
-        private IBeyondBorderValidator _beyondBorderValidator;
+        private IBattleShipValidator _beyondBorderValidator;
 
         /// <summary>
         /// Battleships positions validator
         /// </summary>
-        private IBattleShipPositionValidator _battleShipPositionValidator;
+        private IBattleShipValidator _battleShipPositionValidator;
 
         #endregion
 
@@ -50,9 +52,9 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        public Dictionary<Point, string> Validate(List<BattleShip> battleShips)
+        public IEnumerable<BattleFieldError> Validate(IEnumerable<BattleShip> battleShips)
         {
-            var validationResult = new Dictionary<Point, string>();
+            var validationResult = new List<BattleFieldError>();
 
             validationResult.AddRange(_battleShipsValidator.Validate(battleShips));
             validationResult.AddRange(_beyondBorderValidator.Validate(battleShips));

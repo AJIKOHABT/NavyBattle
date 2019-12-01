@@ -108,6 +108,23 @@ namespace NavyBattleModels
         }
 
         /// <summary>
+        /// Creating set of points around battleship
+        /// </summary>
+        /// <param name="battleShip">Battleship object</param>
+        /// <returns>HashSet of points around battleship</returns>
+        public HashSet<Point> CreateSetOfPointsAroundBattleShip()
+        {
+            var points = new HashSet<Point>();
+
+            if (StartPoint.X - 1 >= 1)
+            {
+                CreateLeftZoneSetOfPoints();
+            }
+
+            return points;
+        }
+
+        /// <summary>
         /// Getting end point of the battleship
         /// </summary>
         /// <returns></returns>
@@ -122,28 +139,29 @@ namespace NavyBattleModels
         #region private
 
         /// <summary>
-        /// Creating set of points around battleship
-        /// </summary>
-        /// <param name="battleShip">Battleship object</param>
-        /// <returns>HashSet of points around battleship</returns>
-        private HashSet<Point> CreateSetOfPointsAroundBattleShip(BattleShip battleShip)
-        {
-            var points = new HashSet<Point>();
-
-            return points;
-        }
-
-        /// <summary>
         /// Creating set of points to the left of the battleship
         /// </summary>
         /// <param name="battleShip"></param>
         /// <returns></returns>
-        private HashSet<Point> CreateLeftZoneSetOfPoints(HashSet<Point> battleShipPoints)
+        private HashSet<Point> CreateLeftZoneSetOfPoints()
         {
             var points = new HashSet<Point>();
-            foreach (var battleShipPoint in battleShipPoints)
+            var endPoint = GetEndPoint();
+            if (IsVertical)
             {
-                points.Add(new Point(battleShipPoint.X - 1, battleShipPoint.Y));
+                var startY = StartPoint.Y - 1 >= 1 ? -1 : 0;
+                var endY = endPoint.Y < 10 ? endPoint.Y + 1 : endPoint.Y;
+                for (int dY = startY; dY <= endY; dY++)
+                {
+                    points.Add(new Point(StartPoint.X - 1, StartPoint.Y+dY));
+                }
+            }
+            else
+            {
+                if (StartPoint.X - 1 >= 1)
+                {
+                    points.Add(new Point(StartPoint.X - 1, StartPoint.Y));
+                }
             }
             return points;
         }

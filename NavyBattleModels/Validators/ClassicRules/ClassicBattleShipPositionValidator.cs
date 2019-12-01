@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using NavyBattleModels.Validators.Interfaces;
 using NavyBattleModels.Errors;
 using NavyBattleModels.Enums;
+using NavyBattleModels.Interfaces;
 
 namespace NavyBattleModels.Validators
 {
-    public class ClassicBattleShipPositionValidator: IBattleValidator
+    public class ClassicBattleShipPositionValidator: IBattleShipValidator
     {
-        private HashSet<Point> _addedPoints;
+        #region IBattleValidator
 
-        public IEnumerable<BattleFieldError> Validate(IEnumerable<BattleShip> battleShips)
+        /// <summary>
+        /// Validate battleships to match rules
+        /// </summary>
+        /// <param name="battleShips">List of battleships on the battlefield</param>
+        /// <returns>IEnumerable of errors</returns>
+        public IEnumerable<BattleFieldError> Validate(IEnumerable<IBattleShip> battleShips)
         {
             var errors = new List<BattleFieldError>();
             var zonePoints = new HashSet<Point>();
@@ -21,29 +24,33 @@ namespace NavyBattleModels.Validators
             foreach (var battleShip in battleShips)
             {
                 var battleShipSetOfPoints = battleShip.CreateBattleshipSetOfPoints();
-                var battleShipTmpSetOfPoints =  new HashSet<Point>(battleShipSetOfPoints);
 
-                battleShipSetOfPoints.IntersectWith(battleShipsPoints);
-                foreach (var errorPoint in battleShipSetOfPoints)
-                {
-                    errors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipCrossingOther, errorPoint));
-                }
-
-                battleShipTmpSetOfPoints.IntersectWith(zonePoints);
-                foreach (var errorPoint in battleShipTmpSetOfPoints)
-                {
-                    errors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipNearOther, errorPoint));
-                }
-                
                 foreach (var battleShipPoint in battleShipSetOfPoints)
                 {
-                    battleShipsPoints.Add(battleShipPoint);
+                    if (battleShipsPoints.Contains(battleShipPoint))
+                    {
+                        errors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipCrossingOther, battleShipPoint));
+                    }
+                    else 
+                    {
+                        if (zonePoints.Contains(battleShipPoint))
+                        {
+                            errors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipNearOther, battleShipPoint));
+                        }
+                        battleShipsPoints.Add(battleShipPoint);
+                    }                    
+                }
+                var zoneAroundBattleShip = battleShip.CreateSetOfPointsAroundBattleShip();
+                foreach (var zonePoint in zoneAroundBattleShip)
+                {
+                    zonePoints.Add(zonePoint);
                 }
             }
 
             return errors;
-        }       
+        }
 
+        #endregion
 
     }
 }

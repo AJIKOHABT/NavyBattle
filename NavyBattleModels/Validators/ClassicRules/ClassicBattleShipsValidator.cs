@@ -1,30 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using NavyBattleModels.Enums;
 using NavyBattleModels.Resources;
 using NavyBattleModels.Validators.Interfaces;
 using NavyBattleModels.Errors;
-using NavyBattleModels.Enums;
+using NavyBattleModels.Interfaces;
 
 namespace NavyBattleModels.Validators
 {
     /// <summary>
     /// Class to validate the number and types of the battleships
     /// </summary>
-    public class ClassicBattleShipsValidator: IBattleValidator
+    public class ClassicBattleShipsValidator: IBattleShipValidator
     {
-        private List<BattleFieldError> _resultErrors;
+
+        #region fields and properties
+
+        /// <summary>
+        /// List of errors
+        /// </summary>
+        private IEnumerable<BattleFieldError> _resultErrors;
+
+        #endregion
 
         #region IBattleValidator
 
         /// <summary>
         /// Validate battleships to match rules
         /// </summary>
-        /// <param name="battleShips"></param>
-        /// <returns></returns>
-        public IEnumerable<BattleFieldError> Validate(IEnumerable<BattleShip> battleShips)
+        /// <param name="battleShips">List of battleships on the battlefield</param>
+        /// <returns>IEnumerable of errors</returns>
+        public IEnumerable<BattleFieldError> Validate(IEnumerable<IBattleShip> battleShips)
         {
             _resultErrors = new List<BattleFieldError>();
 
@@ -43,7 +50,7 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        private void GetNonValidTypeErrors(IEnumerable<BattleShip> battleShips)
+        private void GetNonValidTypeErrors(IEnumerable<IBattleShip> battleShips)
         {
             if (_resultErrors == null)
             {
@@ -56,16 +63,16 @@ namespace NavyBattleModels.Validators
                     continue;
                 }
                 var errorText = string.Format(Resource.BattleShipsValidator_LengthError, battleShip.Length);
-                _resultErrors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipNonValidLength, battleShip.StartPoint));
+                _resultErrors.Append(new BattleFieldError(BattlefieldErrorTypes.BattleShipNonValidLength, battleShip.StartPoint));                
             }
         }
 
         /// <summary>
-        /// Getting non valid 
+        /// Getting non valid battleships count for different types
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        private void GetNonValidBattleshipsCount(IEnumerable<BattleShip> battleShips)
+        private void GetNonValidBattleshipsCount(IEnumerable<IBattleShip> battleShips)
         {
             if (_resultErrors == null)
             {
@@ -78,7 +85,7 @@ namespace NavyBattleModels.Validators
                 var validCnt = (int)Enum.Parse(typeof(ClassicBattleShipTypesCount), name);
                 if (actualCnt != validCnt)
                 {
-                    _resultErrors.Add(new BattleFieldError(BattlefieldErrorTypes.BattleShipNonValidCount));
+                    _resultErrors.Append(new BattleFieldError(BattlefieldErrorTypes.BattleShipNonValidCount));
                 }
             }
         }
