@@ -27,6 +27,11 @@ namespace NavyBattleModels.Interfaces
         int BattleFieldId { get; set; }
 
         /// <summary>
+        /// Recalculation of battleship parameters
+        /// </summary>
+        void RecalculateBattleShip();
+
+        /// <summary>
         /// Creating set of points of battleship
         /// </summary>
         /// <param name="battleShip">Battleship object</param>
@@ -39,7 +44,7 @@ namespace NavyBattleModels.Interfaces
         /// <param name="battleShip">Battleship object</param>
         /// <returns>HashSet of points around battleship</returns>
         HashSet<Point> CreateSetOfPointsAroundBattleShip();
-
+        
         /// <summary>
         /// Getting end point of the battleship
         /// </summary>

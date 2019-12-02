@@ -95,6 +95,22 @@ namespace NavyBattleModels
         #region public methods
 
         /// <summary>
+        /// Recalculation of the startPoint and adding battleship to battlefield
+        /// </summary>
+        /// <param name="battleships"></param>
+        public void AddBattleShips(IEnumerable<IBattleShip> battleships)
+        {
+            foreach (var battleship in battleships)
+            {
+                if (battleship.Length < 0)
+                {
+                    battleship.RecalculateBattleShip();
+                }
+                _battleships.Add(battleship);
+            }
+        }
+
+        /// <summary>
         /// Save the battlefield
         /// </summary>
         /// <returns></returns>

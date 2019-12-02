@@ -106,6 +106,17 @@ namespace NavyBattleModels
         #region public methods
 
         /// <summary>
+        /// Recalculation of battleship parameters
+        /// </summary>
+        public void RecalculateBattleShip()
+        {
+            _startPoint = _isVertical ?
+                new Point(_startPoint.X, _startPoint.Y + _length + 1) :
+                new Point(_startPoint.X + _length + 1, _startPoint.Y);
+            _length = Math.Abs(_length);
+        }
+
+        /// <summary>
         /// Creating set of points of battleship
         /// </summary>
         /// <param name="battleShip">Battleship object</param>

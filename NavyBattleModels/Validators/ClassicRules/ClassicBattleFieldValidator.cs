@@ -58,7 +58,8 @@ namespace NavyBattleModels.Validators
             var validationResult = new List<BattleFieldError>();
 
             var battleField = new ClassicBattleField();
-            battleField.Battleships.AddRange(battleShips);
+            
+            battleField.AddBattleShips(battleShips);
 
             validationResult.AddRange(_battleShipsValidator.Validate(battleField));
             validationResult.AddRange(_beyondBorderValidator.Validate(battleField));
