@@ -3,6 +3,9 @@
 
 namespace NavyBattleModels.Interfaces
 {
+    /// <summary>
+    /// Interface for the game
+    /// </summary>
     public interface IGame
     {
         /// <summary>

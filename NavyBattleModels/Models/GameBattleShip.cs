@@ -26,6 +26,11 @@ namespace NavyBattleModels.Models
         private BattleShipState _state;
 
         /// <summary>
+        /// Count of damaged points of the battleship
+        /// </summary>
+        private int _damagedPointsCnt;
+
+        /// <summary>
         /// Game in which battleship stands
         /// </summary>
         public IGame Game

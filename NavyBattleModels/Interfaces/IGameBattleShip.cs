@@ -2,6 +2,9 @@
 
 namespace NavyBattleModels.Interfaces
 {
+    /// <summary>
+    /// Class for battleship in the game
+    /// </summary>
     public interface IGameBattleShip
     {
         /// <summary>

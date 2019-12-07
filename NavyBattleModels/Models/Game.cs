@@ -80,6 +80,13 @@ namespace NavyBattleModels.Models
         #region constructor
 
         /// <summary>
+        /// Parameterless constructor of the game
+        /// </summary>
+        public Game()
+        { 
+        }
+
+        /// <summary>
         /// Constructor of the game
         /// </summary>
         /// <param name="battleField">Battlefield on which the game will take place</param>
@@ -87,6 +94,17 @@ namespace NavyBattleModels.Models
         {
             _battleField = battleField;
             GenerateGameBattleShips(battleField);
+        }
+
+        #endregion
+
+        #region public methods
+        
+        public static IGame GetById(int id)
+        {
+                       
+
+            return game;
         }
 
         #endregion
