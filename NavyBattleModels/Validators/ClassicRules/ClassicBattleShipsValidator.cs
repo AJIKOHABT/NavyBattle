@@ -78,16 +78,30 @@ namespace NavyBattleModels.Validators
             {
                 _resultErrors = new List<BattleFieldError>();
             }
-            foreach (var battleShipLength in (int[]) Enum.GetValues(typeof(ClassicBattleShipTypesLength)))
+
+            var classicBattleShipLength = new Dictionary<ClassicBattleShipType, int>
             {
-                var name = Enum.GetName(typeof(ClassicBattleShipTypesLength), battleShipLength);
-                var actualCnt = battleShips.Count(battleShip => battleShip.Length == battleShipLength);
-                var validCnt = (int)Enum.Parse(typeof(ClassicBattleShipTypesCount), name);
-                if (actualCnt != validCnt)
+                {ClassicBattleShipType.Mosquito, 1},
+                {ClassicBattleShipType.Destroyer, 2},
+                {ClassicBattleShipType.Cruiser, 3},
+                {ClassicBattleShipType.Battleship, 4}
+            };
+            var classicBattleShipCnt = new Dictionary<ClassicBattleShipType, int>
+            {
+                {ClassicBattleShipType.Mosquito, 4},
+                {ClassicBattleShipType.Destroyer, 3},
+                {ClassicBattleShipType.Cruiser, 2},
+                {ClassicBattleShipType.Battleship, 1}
+            };
+
+            foreach (var classicLength in classicBattleShipLength)
+            {
+                var actualCnt = battleShips.Count(battleShip => battleShip.Length == classicLength.Value);
+                if (actualCnt != classicBattleShipCnt[classicLength.Key])
                 {
                     _resultErrors.Append(new BattleFieldError(BattlefieldErrorTypes.BattleShipNonValidCount));
                 }
-            }
+            }            
         }
 
         #endregion

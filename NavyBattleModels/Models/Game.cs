@@ -25,12 +25,12 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// BattleShips in the game
         /// </summary>
-        private IEnumerable<IGameBattleShip> _gameBattleShips = new List<IGameBattleShip>();
+        private List<IGameBattleShip> _gameBattleShips = new List<IGameBattleShip>();
 
         /// <summary>
         /// Shots that were made during the game
         /// </summary>
-        private IEnumerable<IShot> _shots = new List<IShot>();
+        private List<IShot> _shots = new List<IShot>();
 
         /// <summary>
         /// Game id

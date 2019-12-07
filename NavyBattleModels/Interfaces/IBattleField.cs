@@ -31,7 +31,7 @@ namespace NavyBattleModels.Interfaces
         /// Recalculation of the startPoint and adding battleship to battlefield
         /// </summary>
         /// <param name="battleships"></param>
-        AddBattleShips(IEnumerable<IBattleShip> battleships);
+        void AddBattleShips(IEnumerable<IBattleShip> battleships);
 
         /// <summary>
         /// Save the battlefield

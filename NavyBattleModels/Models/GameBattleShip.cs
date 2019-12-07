@@ -1,4 +1,5 @@
 ﻿using NavyBattleModels.Interfaces;
+using NavyBattleModels.Enums;
 
 namespace NavyBattleModels.Models
 {
@@ -55,6 +56,10 @@ namespace NavyBattleModels.Models
             {
                 return _state;
             }
+            set
+            {
+                _state = value;
+            }
         }
 
         #endregion
@@ -74,6 +79,5 @@ namespace NavyBattleModels.Models
         }
 
         #endregion
-
     }
 }

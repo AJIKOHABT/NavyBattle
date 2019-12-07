@@ -5,28 +5,28 @@ using System.Text;
 namespace NavyBattleModels.Enums
 {
     /// <summary>
-    /// Enum of the classic (russian) lengths of different types of battleships
+    /// Enum of the classic (russian) different types of battleships
     /// </summary>
-    public enum ClassicBattleShipTypesLength
+    public enum ClassicBattleShipType
     {
         /// <summary>
         /// Battleship or dreadnought (Линкор in russian)
         /// </summary>
-        Battleship = 4,
+        Battleship,
 
         /// <summary>
         /// Cruiser (Крейсер in russian)
         /// </summary>
-        Cruiser = 3,
+        Cruiser,
 
         /// <summary>
         /// Destroyer (Эсминец in russian)
         /// </summary>
-        Destroyer = 2,
+        Destroyer,
 
         /// <summary>
         /// Torpedo boat (Торпедный катер in russian)
         /// </summary>
-        Mosquito = 1
+        Mosquito
     }
 }
