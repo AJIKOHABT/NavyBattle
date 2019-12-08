@@ -10,9 +10,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 using NavyBattleModels;
 using NavyBattleModels.Validators;
 using NavyBattleModels.Interfaces;
+using NavyBattleModels.Contexts;
 using NavyBattleModels.Validators.Interfaces;
 
 
@@ -30,6 +32,7 @@ namespace NavyBattle
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<NavyBattleContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<IBattleFieldValidator, ClassicBattleFieldValidator>();
             services.AddTransient<IBattleField, BaseBattleField>();            

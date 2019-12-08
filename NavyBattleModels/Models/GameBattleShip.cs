@@ -67,6 +67,21 @@ namespace NavyBattleModels.Models
             }
         }
 
+        /// <summary>
+        /// Count of damaged points of the battleship
+        /// </summary>
+        public int DamagedPointsCnt 
+        {
+            get 
+            {
+                return _damagedPointsCnt;
+            }
+            set
+            {
+                _damagedPointsCnt = value;
+            }
+        }
+
         #endregion
 
         #region constructor

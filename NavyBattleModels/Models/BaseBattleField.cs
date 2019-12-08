@@ -137,7 +137,7 @@ namespace NavyBattleModels
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static IBattleField GetById(int id)
+        public IBattleField GetById(int id)
         {
             using (NavyBattleContext db = new NavyBattleContext())
             {
@@ -150,12 +150,9 @@ namespace NavyBattleModels
         /// Getting all battlefields from database
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<IBattleField> GetAll()
+        public IEnumerable<IBattleField> GetAll(NavyBattleContext db)
         {
-            using (NavyBattleContext db = new NavyBattleContext())
-            {
-                return db.BattleFields;                
-            }
+            return db.BattleFields;
         }
 
         #endregion

@@ -14,7 +14,7 @@ namespace NavyBattleController.Controllers
     
     [Route("api/[controller]")]
     ///Controller for battlefiled validator
-    public class ValidatorController : Controller
+    public class BattleFieldController : Controller
     {
         // GET: api/<controller>
         [HttpGet]

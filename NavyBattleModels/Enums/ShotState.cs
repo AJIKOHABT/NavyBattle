@@ -24,6 +24,11 @@ namespace NavyBattleModels.Enums
         /// <summary>
         /// Shot has destroyed the battleship
         /// </summary>
-        Destroyed
+        Destroyed,
+
+        /// <summary>
+        /// Shot was made at the same point
+        /// </summary>
+        SamePoint
     }
 }

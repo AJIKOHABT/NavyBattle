@@ -22,5 +22,10 @@ namespace NavyBattleModels.Interfaces
         /// </summary>
         BattleShipState State { get; set; }
 
+        /// <summary>
+        /// Count of damaged points of the battleship
+        /// </summary>
+        int DamagedPointsCnt { get; set; }
+
     }
 }

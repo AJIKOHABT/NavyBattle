@@ -1,13 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using NavyBattleModels.Interfaces;
+using System.IO;
 
 namespace NavyBattleModels.Contexts
 {
     public class NavyBattleContext : DbContext
     {
-
-        public NavyBattleContext() : base("DbConnection")
-        { 
+        public NavyBattleContext(DbContextOptions<NavyBattleContext> options) : base(options)
+        {            
         }
 
         public DbSet<IGame> Games
@@ -38,6 +40,20 @@ namespace NavyBattleModels.Contexts
         {
             get;
             set;
+        }
+    }
+
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<NavyBattleContext>
+    {
+        public NavyBattleContext CreateDbContext(string[] args)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile(@Directory.GetCurrentDirectory() + "/../NavyBattleController/appsettings.json").Build();
+            var builder = new DbContextOptionsBuilder<NavyBattleContext>();
+            var connectionString = configuration.GetConnectionString("sqlConnection");
+            builder.UseSqlServer(connectionString);
+            return new NavyBattleContext(builder.Options);
         }
     }
 }
