@@ -1,6 +1,7 @@
 ﻿using NavyBattleModels.Interfaces;
 using System.Collections.Generic;
 using NavyBattleModels.Contexts;
+using System.Linq;
 
 namespace NavyBattleModels
 {
@@ -117,7 +118,7 @@ namespace NavyBattleModels
         /// <summary>
         /// Save the battlefield
         /// </summary>
-        /// <returns></returns>
+        /// <returns>id of saved database</returns>
         public int Save()
         {
             using (NavyBattleContext db = new NavyBattleContext())
@@ -129,6 +130,32 @@ namespace NavyBattleModels
                 db.SaveChanges();
             }
                 return _id;
+        }
+
+        /// <summary>
+        /// Getting battlefield from database by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static IBattleField GetById(int id)
+        {
+            using (NavyBattleContext db = new NavyBattleContext())
+            {
+                var battleField = db.BattleFields.FirstOrDefault(bF => bF.Id == id);
+                return battleField;
+            }
+        }
+
+        /// <summary>
+        /// Getting all battlefields from database
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<IBattleField> GetAll()
+        {
+            using (NavyBattleContext db = new NavyBattleContext())
+            {
+                return db.BattleFields;                
+            }
         }
 
         #endregion

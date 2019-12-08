@@ -20,7 +20,7 @@ namespace NavyBattleController.Controllers
         [HttpGet]
         public JsonResult Get([FromServices] IBattleField battleField)
         {
-            return Json(battleField.GetAll);
+            return Json(battleField.GetAll());
         }
 
         // GET api/<controller>/5

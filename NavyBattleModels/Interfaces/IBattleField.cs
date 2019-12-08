@@ -38,5 +38,18 @@ namespace NavyBattleModels.Interfaces
         /// </summary>
         /// <returns></returns>
         int Save();
+
+        /// <summary>
+        /// Getting battlefield from database by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IBattleField GetById(int id);
+
+        /// <summary>
+        /// Getting all battlefields from database
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<IBattleField> GetAll();
     }
 }
