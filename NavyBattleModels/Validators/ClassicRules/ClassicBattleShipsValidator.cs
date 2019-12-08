@@ -20,7 +20,7 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// List of errors
         /// </summary>
-        private IEnumerable<BattleFieldError> _resultErrors;
+        private IEnumerable<IBattleFieldError> _resultErrors;
 
         #endregion
 
@@ -31,12 +31,12 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleField">Battlefield to validate</param>
         /// <returns>IEnumerable of errors</returns>
-        public IEnumerable<BattleFieldError> Validate(IBattleField battleField)
+        public IEnumerable<IBattleFieldError> Validate(IBattleField battleField)
         {
-            _resultErrors = new List<BattleFieldError>();
+            _resultErrors = new List<IBattleFieldError>();
 
-            GetNonValidTypeErrors(battleField.Battleships);
-            GetNonValidBattleshipsCount(battleField.Battleships);                             
+            GetNonValidTypeErrors(battleField.BattleShips);
+            GetNonValidBattleshipsCount(battleField.BattleShips);                             
 
             return _resultErrors;
         }

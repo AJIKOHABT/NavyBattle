@@ -11,6 +11,6 @@ namespace NavyBattleModels.Validators.Interfaces
         /// </summary>
         /// <param name="battleField">Battlefield to validate</param>
         /// <returns>IEnumerable of errors</returns>
-        IEnumerable<BattleFieldError> Validate(IBattleField battleField);
+        IEnumerable<IBattleFieldError> Validate(IBattleField battleField);
     }
 }

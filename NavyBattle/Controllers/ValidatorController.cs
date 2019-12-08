@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NavyBattleModels;
+using NavyBattleModels.Validators.Interfaces;
+using NavyBattleModels.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,23 +18,28 @@ namespace NavyBattleController.Controllers
     {
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public JsonResult Get([FromServices] IBattleField battleField)
         {
-            return new string[] { "value1", "value2" };
+            return Json(battleField.GetAll);
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public JsonResult Get(int id, [FromServices] IBattleField battleField)
         {
-            return "value";
+            return Json(battleField.GetById(id));
         }
 
         // POST api/<controller>
         [HttpPost]
-        public string Post([FromBody]List<BattleShip> battleShips)
+        public IActionResult Post([FromBody]List<BattleShip> battleShips, [FromServices] IBattleFieldValidator validator)
         {
-            return "valid";//BattleFieldValidator.Validate(battleShips);
+            var result = validator.Validate(battleShips);
+            if (result.IsSuccess)
+            {
+                return Ok(result.BattleFieldId);
+            }
+            return BadRequest(result.ErrorList);
         }
 
         // PUT api/<controller>/5

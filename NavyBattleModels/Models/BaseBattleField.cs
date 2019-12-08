@@ -1,5 +1,6 @@
 ﻿using NavyBattleModels.Interfaces;
 using System.Collections.Generic;
+using NavyBattleModels.Contexts;
 
 namespace NavyBattleModels
 {
@@ -28,7 +29,7 @@ namespace NavyBattleModels
         /// <summary>
         /// List of battleships on the battlefield
         /// </summary>
-        private IEnumerable<BattleShip> _battleships;
+        private ICollection<IBattleShip> _battleShips = new List<IBattleShip>();
 
         /// <summary>
         /// Width of the battlefield
@@ -61,16 +62,20 @@ namespace NavyBattleModels
             {
                 return _id;
             }
+            set
+            {
+                _id = value;
+            }
         }
 
         /// <summary>
         /// List of battleships on the battlefield
         /// </summary>
-        public IEnumerable<IBattleShip> Battleships
+        public ICollection<IBattleShip> BattleShips
         {
             get
             {
-                return _battleships;
+                return _battleShips;
             }
         }
 
@@ -87,7 +92,6 @@ namespace NavyBattleModels
         {
             _width = width;
             _height = height;
-            _battleships = new List<BattleShip>();
         }
 
         #endregion
@@ -106,7 +110,7 @@ namespace NavyBattleModels
                 {
                     battleship.RecalculateBattleShip();
                 }
-                _battleships.Add(battleship);
+                _battleShips.Add(battleship);
             }
         }
 
@@ -116,7 +120,15 @@ namespace NavyBattleModels
         /// <returns></returns>
         public int Save()
         {
-            return _id;
+            using (NavyBattleContext db = new NavyBattleContext())
+            {
+                db.BattleFields.Add(this);
+                db.SaveChanges();
+
+                db.BattleShips.AddRange(this.BattleShips);
+                db.SaveChanges();
+            }
+                return _id;
         }
 
         #endregion

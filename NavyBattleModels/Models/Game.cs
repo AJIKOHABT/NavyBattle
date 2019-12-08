@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NavyBattleModels.Interfaces;
+using NavyBattleModels.Contexts;
 
 namespace NavyBattleModels.Models
 {
@@ -102,9 +103,12 @@ namespace NavyBattleModels.Models
         
         public static IGame GetById(int id)
         {
-                       
+            using (NavyBattleContext dv = new NavyBattleContext)
+            {
+                
+            }
 
-            return game;
+                return game;
         }
 
         #endregion

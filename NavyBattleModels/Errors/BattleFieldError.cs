@@ -6,7 +6,7 @@ namespace NavyBattleModels.Errors
     /// <summary>
     /// Class for error saving
     /// </summary>
-    public class BattleFieldError
+    public class BattleFieldError : IBattleFieldError
     {
         #region fields and properties
 

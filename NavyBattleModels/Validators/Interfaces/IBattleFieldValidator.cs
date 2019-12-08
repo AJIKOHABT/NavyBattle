@@ -6,13 +6,13 @@ using System.Text;
 
 namespace NavyBattleModels.Validators.Interfaces
 {
-    interface IBattleFieldValidator
+    public interface IBattleFieldValidator
     {
         /// <summary>
         /// Validate navy battle game field to match classic rules 
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        IEnumerable<BattleFieldError> Validate(IEnumerable<IBattleShip> battleShips);
+        IBattleFieldValidationResult Validate(IEnumerable<IBattleShip> battleShips);
     }
 }

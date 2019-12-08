@@ -24,7 +24,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// List of battleships on the battlefield
         /// </summary>
-        IEnumerable<IBattleShip> Battleships { get; }
+        ICollection<IBattleShip> BattleShips { get; }
 
 
         /// <summary>

@@ -4,6 +4,7 @@ using System.Text;
 using NavyBattleModels.Errors;
 using NavyBattleModels.Interfaces;
 using NavyBattleModels.Validators.Interfaces;
+using System.Linq;
 
 namespace NavyBattleModels.Validators
 {
@@ -53,17 +54,22 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        public IEnumerable<BattleFieldError> Validate(IEnumerable<IBattleShip> battleShips)
+        public IBattleFieldValidationResult Validate(IEnumerable<IBattleShip> battleShips)
         {
-            var validationResult = new List<BattleFieldError>();
+            var validationResult = new BattleFieldValidationResult();
 
             var battleField = new ClassicBattleField();
-            
             battleField.AddBattleShips(battleShips);
 
-            validationResult.AddRange(_battleShipsValidator.Validate(battleField));
-            validationResult.AddRange(_beyondBorderValidator.Validate(battleField));
-            validationResult.AddRange(_battleShipPositionValidator.Validate(battleField));
+            validationResult.ErrorList.AddRange(_battleShipsValidator.Validate(battleField));
+            validationResult.ErrorList.AddRange(_beyondBorderValidator.Validate(battleField));
+            validationResult.ErrorList.AddRange(_battleShipPositionValidator.Validate(battleField));
+
+            if (!validationResult.ErrorList.Any())
+            {
+                validationResult.IsSuccess = true;
+                validationResult.BattleFieldId = battleField.Save();
+            }
                         
             return validationResult;
         }

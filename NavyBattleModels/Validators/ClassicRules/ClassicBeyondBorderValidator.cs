@@ -19,11 +19,11 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleField">Battlefield to validate</param>
         /// <returns>IEnumerable of errors</returns>
-        public IEnumerable<BattleFieldError> Validate(IBattleField battleField)
+        public IEnumerable<IBattleFieldError> Validate(IBattleField battleField)
         {
-            var resultErrors = new List<BattleFieldError>();
+            var resultErrors = new List<IBattleFieldError>();
 
-            foreach (var battleShip in battleField.Battleships)
+            foreach (var battleShip in battleField.BattleShips)
             {
                 var endPoint = battleShip.GetEndPoint();
                 var startPoint = battleShip.StartPoint;
