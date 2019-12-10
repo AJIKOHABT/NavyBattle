@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 namespace NavyBattle.Dal.Repositories
 {
     /// <summary>
-    /// Repository to work with battlefield objects in db
+    /// Repository to work with game objects in db
     /// </summary>
-    public class BattleFieldRepository : IBaseRepository<IBattleField>
+    public class GameRepository : IBaseRepository<IGame>        
     {
         #region properties and fields
 
@@ -32,11 +32,11 @@ namespace NavyBattle.Dal.Repositories
         /// Constructor
         /// </summary>
         /// <param name="context">db context</param>
-        public BattleFieldRepository(NavyBattleContext context)
+        public GameRepository(NavyBattleContext context)
         {
             _db = context;
         }
-        
+
         #endregion
 
         #region IBaseRepository
@@ -45,36 +45,36 @@ namespace NavyBattle.Dal.Repositories
         /// Getting all objects of required type from the database
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IBattleField> GetAll()
+        public IEnumerable<IGame> GetAll()
         {
-            return _db.BattleFields;
+            return _db.Games;
         }
 
         /// <summary>
         /// Getting object of required type from the database by its id
         /// </summary>
         /// <returns></returns>
-        public IBattleField GetById(int id)
+        public IGame GetById(int id)
         {
-            return _db.BattleFields.Find(id);
+            return _db.Games.Find(id);
         }
 
         /// <summary>
         /// Adding object of required type to the database
         /// </summary>
         /// <param name="item"></param>
-        public void Add(IBattleField battleField)
+        public void Add(IGame game)
         {
-            _db.BattleFields.Add(battleField);
+            _db.Games.Add(game);
         }
 
         /// <summary>
         /// Updating object of required type in the database
         /// </summary>
         /// <param name="item"></param>
-        public void Update(IBattleField battleField)
+        public void Update(IGame game)
         {
-            _db.Entry(battleField).State = EntityState.Modified;
+            _db.Entry(game).State = EntityState.Modified;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace NavyBattle.Dal.Repositories
             _db.SaveChanges();
         }
 
-        #endregion
+
 
         #region IDisposable
 

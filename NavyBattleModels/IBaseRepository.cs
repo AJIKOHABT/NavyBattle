@@ -4,32 +4,32 @@ using System.Text;
 
 namespace NavyBattleModels
 {
-    public interface IBaseRepository<T> : IDisposable
-        where T : class
+    public interface IBaseRepository<TEntity> : IDisposable
+        where TEntity : class
     {
         /// <summary>
         /// Getting all objects of required type from the database
         /// </summary>
         /// <returns></returns>
-        IEnumerable<T> GetAll();
+        IEnumerable<TEntity> GetAll();
 
         /// <summary>
         /// Getting object of required type from the database by its id
         /// </summary>
         /// <returns></returns>
-        T GetById(int id);
+        TEntity GetById(int id);
 
         /// <summary>
-        /// Creating object of required type in the database
+        /// Adding object of required type to the database
         /// </summary>
         /// <param name="item"></param>
-        void Create(T item);
+        void Add(TEntity item);
 
         /// <summary>
         /// Updating object of required type in the database
         /// </summary>
         /// <param name="item"></param>
-        void Update(T item);
+        void Update(TEntity item);
         
         /// <summary>
         /// Saving changes in the database

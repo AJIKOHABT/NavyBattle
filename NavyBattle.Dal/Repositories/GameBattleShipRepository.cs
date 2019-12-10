@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 namespace NavyBattle.Dal.Repositories
 {
     /// <summary>
-    /// Repository to work with battlefield objects in db
+    /// Repository to work with battleship in the game objects in db
     /// </summary>
-    public class BattleFieldRepository : IBaseRepository<IBattleField>
+    public class GameBattleShipRepository : IBaseRepository<IGameBattleShip>
     {
         #region properties and fields
 
@@ -32,11 +32,11 @@ namespace NavyBattle.Dal.Repositories
         /// Constructor
         /// </summary>
         /// <param name="context">db context</param>
-        public BattleFieldRepository(NavyBattleContext context)
+        public GameBattleShipRepository(NavyBattleContext context)
         {
             _db = context;
         }
-        
+
         #endregion
 
         #region IBaseRepository
@@ -45,37 +45,39 @@ namespace NavyBattle.Dal.Repositories
         /// Getting all objects of required type from the database
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IBattleField> GetAll()
+        public IEnumerable<IGameBattleShip> GetAll()
         {
-            return _db.BattleFields;
+            return _db.GameBattleShips;
         }
 
         /// <summary>
         /// Getting object of required type from the database by its id
         /// </summary>
         /// <returns></returns>
-        public IBattleField GetById(int id)
+        public IGameBattleShip GetById(int id)
         {
-            return _db.BattleFields.Find(id);
+            return _db.GameBattleShips.Find(id);
         }
+
 
         /// <summary>
         /// Adding object of required type to the database
         /// </summary>
         /// <param name="item"></param>
-        public void Add(IBattleField battleField)
+        public void Add(IGameBattleShip gameBattleShip)
         {
-            _db.BattleFields.Add(battleField);
+            _db.GameBattleShips.Add(gameBattleShip);
         }
-
+        
         /// <summary>
         /// Updating object of required type in the database
         /// </summary>
         /// <param name="item"></param>
-        public void Update(IBattleField battleField)
+        public void Update(IGameBattleShip gameBattleShip)
         {
-            _db.Entry(battleField).State = EntityState.Modified;
+            _db.Entry(gameBattleShip).State = EntityState.Modified;
         }
+
 
         /// <summary>
         /// Saving changes in the database
