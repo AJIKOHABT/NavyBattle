@@ -16,7 +16,7 @@ using NavyBattleModels.Validators;
 using NavyBattleModels.Interfaces;
 using NavyBattleModels.Validators.Interfaces;
 using NavyBattle.Dal.Contexts;
-using NavyBattle.Dal.Repositories;
+using NavyBattle.Dal.Work;
 
 namespace NavyBattle
 {
@@ -32,8 +32,8 @@ namespace NavyBattle
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<NavyBattleContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
-            services.AddTransient<IBaseRepository<IBattleField>, BattleFieldRepository>();//TODO: это надо вынести в отдельный метод в DAL.
+            services.AddDbContext<NavyBattleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"), x => x.MigrationsAssembly("NavyBattle.Dal")));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddTransient<IBattleFieldValidator, ClassicBattleFieldValidator>();
             services.AddTransient<IBattleField, BaseBattleField>();            

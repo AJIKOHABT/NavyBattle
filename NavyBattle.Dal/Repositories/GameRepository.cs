@@ -85,7 +85,7 @@ namespace NavyBattle.Dal.Repositories
             _db.SaveChanges();
         }
 
-
+        #endregion
 
         #region IDisposable
 
