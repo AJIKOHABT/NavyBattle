@@ -26,14 +26,16 @@ namespace NavyBattleModels
         void Add(TEntity item);
 
         /// <summary>
+        /// Adding range of objects of required type
+        /// </summary>
+        /// <param name="entities"></param>
+        void AddRange(IEnumerable<TEntity> entities);
+
+        /// <summary>
         /// Updating object of required type in the database
         /// </summary>
         /// <param name="item"></param>
         void Update(TEntity item);
-        
-        /// <summary>
-        /// Saving changes in the database
-        /// </summary>
-        void Save();
+
     }
 }

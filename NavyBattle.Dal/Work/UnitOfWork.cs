@@ -15,7 +15,7 @@ namespace NavyBattle.Dal.Work
         /// <summary>
         /// Context class to work with database
         /// </summary>
-        private readonly NavyBattleContext _dbcontext;
+        private readonly NavyBattleContext _dbContext;
 
         /// <summary>
         /// Repository class to work with battlefield objects in database
@@ -49,7 +49,7 @@ namespace NavyBattle.Dal.Work
         {
             get 
             {
-                return _battleFieldRepository ?? new BattleFieldRepository(_dbcontext);
+                return _battleFieldRepository ?? new BattleFieldRepository(_dbContext);
             } 
         }
 
@@ -60,7 +60,7 @@ namespace NavyBattle.Dal.Work
         {
             get
             {
-                return _battleShipRepository ?? new BattleShipRepository(_dbcontext);
+                return _battleShipRepository ?? new BattleShipRepository(_dbContext);
             }
         }
 
@@ -71,7 +71,7 @@ namespace NavyBattle.Dal.Work
         {
             get
             {
-                return _gameRepository ?? new GameRepository(_dbcontext);
+                return _gameRepository ?? new GameRepository(_dbContext);
             }
         }
 
@@ -82,7 +82,7 @@ namespace NavyBattle.Dal.Work
         {
             get
             {
-                return _gameBattleShipRepository ?? new GameBattleShipRepository(_dbcontext);
+                return _gameBattleShipRepository ?? new GameBattleShipRepository(_dbContext);
             }
         }
 
@@ -93,7 +93,7 @@ namespace NavyBattle.Dal.Work
         {
             get
             {
-                return _shotRepository ?? new ShotRepository(_dbcontext);
+                return _shotRepository ?? new ShotRepository(_dbContext);
             }
         }
 
@@ -107,7 +107,20 @@ namespace NavyBattle.Dal.Work
         /// <param name="dbContext">Context to work with db</param>
         public UnitOfWork(NavyBattleContext dbContext)
         {
-            this._dbcontext = dbContext;
+            this._dbContext = dbContext;
+        }
+
+        #endregion
+
+        #region IUnitOfWork
+
+        /// <summary>
+        /// Commit all changes to database
+        /// </summary>
+        /// <returns></returns>
+        public int Commit()
+        {
+            return _dbContext.SaveChanges();
         }
 
         #endregion
@@ -116,10 +129,9 @@ namespace NavyBattle.Dal.Work
 
         public void Dispose()
         {
-            _dbcontext.Dispose();
+            _dbContext.Dispose();
         }
 
-        #endregion
-
+        #endregion        
     }
 }
