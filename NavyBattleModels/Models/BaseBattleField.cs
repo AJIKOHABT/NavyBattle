@@ -1,6 +1,5 @@
 ﻿using NavyBattleModels.Interfaces;
 using System.Collections.Generic;
-using NavyBattleModels.Contexts;
 using System.Linq;
 
 namespace NavyBattleModels
@@ -41,6 +40,10 @@ namespace NavyBattleModels
             {
                 return _width;
             }
+            set
+            {
+                _width = value;
+            }
         }
 
         /// <summary>
@@ -51,6 +54,10 @@ namespace NavyBattleModels
             get
             {
                 return _height;
+            }
+            set
+            {
+                _height = value;
             }
         }
 
@@ -78,6 +85,10 @@ namespace NavyBattleModels
             {
                 return _battleShips;
             }
+            set
+            {
+                _battleShips = value;
+            }
         }
 
         #endregion
@@ -85,10 +96,18 @@ namespace NavyBattleModels
         #region constructor
 
         /// <summary>
-        /// 
+        /// Parameterless constructor
         /// </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
+        public BaseBattleField()
+        {
+            _battleShips = new List<IBattleShip>();
+        }
+
+        /// <summary>
+        /// Battlefield constructor
+        /// </summary>
+        /// <param name="width">width of the battlefield</param>
+        /// <param name="height">height of the battlefield</param>
         public BaseBattleField(int width, int height)
         {
             _width = width;
@@ -113,47 +132,7 @@ namespace NavyBattleModels
                 }
                 _battleShips.Add(battleship);
             }
-        }
-
-        /// <summary>
-        /// Save the battlefield
-        /// </summary>
-        /// <returns>id of saved database</returns>
-        public int Save()
-        {
-            using (NavyBattleContext db = new NavyBattleContext())
-            {
-                db.BattleFields.Add(this);
-                db.SaveChanges();
-
-                db.BattleShips.AddRange(this.BattleShips);
-                db.SaveChanges();
-            }
-                return _id;
-        }
-
-        /// <summary>
-        /// Getting battlefield from database by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public IBattleField GetById(int id)
-        {
-            using (NavyBattleContext db = new NavyBattleContext())
-            {
-                var battleField = db.BattleFields.FirstOrDefault(bF => bF.Id == id);
-                return battleField;
-            }
-        }
-
-        /// <summary>
-        /// Getting all battlefields from database
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<IBattleField> GetAll(NavyBattleContext db)
-        {
-            return db.BattleFields;
-        }
+        }       
 
         #endregion
     }

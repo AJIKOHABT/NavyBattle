@@ -54,21 +54,17 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        public IBattleFieldValidationResult Validate(IEnumerable<IBattleShip> battleShips)
+        public IBattleFieldValidationResult Validate(IBattleField battleField)
         {
             var validationResult = new BattleFieldValidationResult();
-
-            var battleField = new ClassicBattleField();
-            battleField.AddBattleShips(battleShips);
-
+            
             validationResult.ErrorList.AddRange(_battleShipsValidator.Validate(battleField));
             validationResult.ErrorList.AddRange(_beyondBorderValidator.Validate(battleField));
             validationResult.ErrorList.AddRange(_battleShipPositionValidator.Validate(battleField));
 
             if (!validationResult.ErrorList.Any())
             {
-                validationResult.IsSuccess = true;
-                validationResult.BattleFieldId = battleField.Save();
+                validationResult.IsSuccess = true;                
             }
                         
             return validationResult;

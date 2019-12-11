@@ -13,6 +13,6 @@ namespace NavyBattleModels.Validators.Interfaces
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        IBattleFieldValidationResult Validate(IEnumerable<IBattleShip> battleShips);
+        IBattleFieldValidationResult Validate(IBattleField battleField);
     }
 }

@@ -3,6 +3,7 @@ using NavyBattleModels.Models;
 using NavyBattleModels.Enums;
 using NavyBattleModels.Validators.Interfaces;
 using System.Linq;
+using System.Collections;
 
 namespace NavyBattleModels.Validators
 {
@@ -19,17 +20,34 @@ namespace NavyBattleModels.Validators
             var gameShots = game.Shots;
             var shotPoint = shot.ShotPoint;
             var battleField = game.BattleField;
+            
+            
+            shot.State = ShotState.Miss;
+            shot.Save();
+            return shot;
+        }
+
+        public CheckShotIsValid()
+        {
             if (shotPoint.X < 0 || shotPoint.Y < 0 || shotPoint.X > battleField.Width || shotPoint.Y > battleField.Height)
             {
                 shot.State = ShotState.Nonvalid;
                 return shot;
             }
+        }
+
+        public CheckShotSamePoint()
+        {
             if (gameShots.Any(gp => gp.ShotPoint.Equals(shotPoint)))
             {
                 shot.State = ShotState.SamePoint;
                 return shot;
             }
-            var gameBattleShips = game.GameBattleShips;
+        }
+
+        public IGameBattleShip CheckBattleShipDamagedOrDestroyed(IEnumerable<IGameBattleShip> gameBattleShips)
+        {
+            game.GameBattleShips;
             foreach (var gameBattleShip in gameBattleShips)
             {
                 var battleShip = gameBattleShip.BattleShip;
@@ -55,9 +73,6 @@ namespace NavyBattleModels.Validators
                     }
                 }
             }
-            shot.State = ShotState.Miss;
-            shot.Save();
-            return shot;
-        }        
+        }
     }
 }

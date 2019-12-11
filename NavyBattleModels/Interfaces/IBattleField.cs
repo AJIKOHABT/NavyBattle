@@ -9,22 +9,22 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Width of the battlefield
         /// </summary>
-        int Width { get; }
+        int Width { get; set; }
 
         /// <summary>
         /// Height of the battlefield
         /// </summary>
-        int Height { get; }
+        int Height { get; set; }
 
         /// <summary>
         /// Id of the battlefield
         /// </summary>
-        int Id { get; }
+        int Id { get; set; }
 
         /// <summary>
         /// List of battleships on the battlefield
         /// </summary>
-        ICollection<IBattleShip> BattleShips { get; }
+        ICollection<IBattleShip> BattleShips { get; set; }
 
 
         /// <summary>
@@ -33,23 +33,5 @@ namespace NavyBattleModels.Interfaces
         /// <param name="battleships"></param>
         void AddBattleShips(IEnumerable<IBattleShip> battleships);
 
-        /// <summary>
-        /// Save the battlefield
-        /// </summary>
-        /// <returns></returns>
-        int Save();
-
-        /// <summary>
-        /// Getting battlefield from database by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        IBattleField GetById(int id);
-
-        /// <summary>
-        /// Getting all battlefields from database
-        /// </summary>
-        /// <returns></returns>
-        IEnumerable<IBattleField> GetAll();
     }
 }
