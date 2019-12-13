@@ -10,14 +10,19 @@ namespace NavyBattle.Services
     /// <summary>
     /// Service to work with battlefields
     /// </summary>
-    public class BattleFieldService : IBattleFieldService
+    internal class BattleFieldService : IBattleFieldService
     {
         #region fields and properties
 
         /// <summary>
-        /// Class to work with database
+        /// Repository class to work with battlefield objectcs in database
         /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
+        IBaseRepository<IBattleField> _battleFieldRepository;
+
+        /// <summary>
+        /// Repository class to work with battleship objectcs in database
+        /// </summary>
+        IBaseRepository<IBattleShip> _battleShipRepository;
 
         #endregion
 
@@ -26,10 +31,12 @@ namespace NavyBattle.Services
         /// <summary>
         /// Service to work with battlefields
         /// </summary>
-        /// <param name="unitOfWork">Class to work with database</param>
-        public BattleFieldService(IUnitOfWork unitOfWork)
+        /// <param name="battleFieldRepository">Repository class to work with battlefield objectcs in database</param>
+        /// <param name="battleShipRepository">Repository class to work with battleship objectcs in database</param>
+        public BattleFieldService(IBaseRepository<IBattleField> battleFieldRepository, IBaseRepository<IBattleShip> battleShipRepository)
         {
-            this._unitOfWork = unitOfWork;
+            this._battleFieldRepository = battleFieldRepository;
+            this._battleShipRepository = battleShipRepository;
         }
 
         #endregion
@@ -50,11 +57,11 @@ namespace NavyBattle.Services
             var result = validator.Validate(battleField);
             if (result.IsSuccess)
             {
-                _unitOfWork.BattleFieldRepository.Add(battleField);
-                _unitOfWork.Commit();
+                _battleFieldRepository.Add(battleField);
+                _battleFieldRepository.Save();
 
-                _unitOfWork.BattleShipRepository.AddRange(battleField.BattleShips);
-                _unitOfWork.Commit();
+                _battleShipRepository.AddRange(battleField.BattleShips);
+                _battleShipRepository.Save();
 
                 result.BattleFieldId = battleField.Id;
             }
@@ -69,7 +76,7 @@ namespace NavyBattle.Services
         /// <returns></returns>
         public IBattleField GetById(int id)
         {
-            return _unitOfWork.BattleFieldRepository.GetById(id);
+            return _battleFieldRepository.GetById(id);
         }
 
         /// <summary>
@@ -78,7 +85,7 @@ namespace NavyBattle.Services
         /// <returns></returns>
         public IEnumerable<IBattleField> GetAll()
         {
-            return _unitOfWork.BattleFieldRepository.GetAll();
+            return _battleFieldRepository.GetAll();
         }
 
         #endregion

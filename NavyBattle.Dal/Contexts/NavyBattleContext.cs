@@ -16,7 +16,7 @@ namespace NavyBattle.Dal.Contexts
             set; 
         }
 
-        public DbSet<IShot> Shots
+        public DbSet<IShotResult> Shots
         {
             get;
             set;

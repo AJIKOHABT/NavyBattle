@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NavyBattleModels
 {
@@ -36,6 +35,12 @@ namespace NavyBattleModels
         /// </summary>
         /// <param name="item"></param>
         void Update(TEntity item);
+
+        /// <summary>
+        /// Save changes in the database
+        /// </summary>
+        /// <returns></returns>
+        int Save();
 
     }
 }

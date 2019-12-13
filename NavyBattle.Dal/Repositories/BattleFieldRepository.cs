@@ -10,7 +10,7 @@ namespace NavyBattle.Dal.Repositories
     /// <summary>
     /// Repository to work with battlefield objects in db
     /// </summary>
-    public class BattleFieldRepository : BaseRepository<IBattleField>
+    internal class BattleFieldRepository : BaseRepository<IBattleField>
     {
         #region Constructor
 

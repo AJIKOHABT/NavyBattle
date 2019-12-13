@@ -6,7 +6,7 @@ using NavyBattleModels;
 
 namespace NavyBattle.Dal.Repositories
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity>
+    internal class BaseRepository<TEntity> : IBaseRepository<TEntity>
         where TEntity: class
     {
         #region properties and fields
@@ -81,6 +81,15 @@ namespace NavyBattle.Dal.Repositories
         public void Update(TEntity entity)
         {
             Context.Entry(entity).State = EntityState.Modified;
+        }
+
+        /// <summary>
+        /// Save changes in the database
+        /// </summary>
+        /// <returns></returns>
+        public int Save()
+        {
+            return Context.SaveChanges();
         }
 
         #endregion

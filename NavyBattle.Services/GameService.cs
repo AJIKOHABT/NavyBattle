@@ -2,23 +2,37 @@
 using NavyBattleModels;
 using NavyBattleModels.Interfaces;
 using NavyBattleModels.Models;
-using NavyBattleModels.Services;
 using NavyBattleModels.Validators;
 using NavyBattleModels.Validators.Interfaces;
 
 namespace NavyBattle.Services
 {
     /// <summary>
-    /// Service to work with battlefields
+    /// Service to work with game
     /// </summary>
-    public class GameService : IGameService
+    internal class GameService : IGameService
     {
         #region fields and properties
 
         /// <summary>
-        /// Class to work with database
+        /// Repository class to work with battlefield objectcs in database
         /// </summary>
-        private readonly IUnitOfWork _unitOfWork;
+        IBaseRepository<IBattleField> _battleFieldRepository;
+
+        /// <summary>
+        /// Repository class to work with game objectcs in database
+        /// </summary>
+        IBaseRepository<IGame> _gameRepository;
+
+        /// <summary>
+        /// Repository class to work with battleship objectcs from the game in database
+        /// </summary>
+        IBaseRepository<IGameBattleShip> _gameBattleShipRepository;
+
+        /// <summary>
+        /// Repository class to work with shot objectcs in database
+        /// </summary>
+        IBaseRepository<IShot> _shotRepository;
 
         #endregion
 
@@ -27,10 +41,16 @@ namespace NavyBattle.Services
         /// <summary>
         /// Service to work with battlefields
         /// </summary>
-        /// <param name="unitOfWork">Class to work with database</param>
-        public BattleFieldService(IUnitOfWork unitOfWork)
+        /// <param name="battleFieldRepository">Repository class to work with battlefield objectcs in database</param>
+        /// <param name="gameRepository">Repository class to work with game objectcs in database</param>
+        /// <param name="gameBattleShipRepository">Repository class to work with battleship objectcs from the game in database</param>
+        /// <param name="shotRepository">Repository class to work with shot objectcs in database</param>
+        public GameService(IBaseRepository<IBattleField> battleFieldRepository, IBaseRepository<IGame> gameRepository, IBaseRepository<IGameBattleShip> gameBattleShipRepository, IBaseRepository<IShot> shotRepository)
         {
-            this._unitOfWork = unitOfWork;
+            this._battleFieldRepository = battleFieldRepository;
+            this._gameRepository = gameRepository;
+            this._gameBattleShipRepository = gameBattleShipRepository;
+            this._shotRepository = shotRepository;
         }
 
         #endregion
@@ -44,14 +64,14 @@ namespace NavyBattle.Services
         /// <returns></returns>
         public IGame CreateGame(int id)
         {
-            var battleField = _unitOfWork.BattleFieldRepository.GetById(id);
+            var battleField = _battleFieldRepository.GetById(id);
 
             var game = new Game(battleField);
-            _unitOfWork.GameRepository.Add(game);
-            _unitOfWork.Commit();
+            _gameRepository.Add(game);
+            _gameRepository.Save();
 
-            _unitOfWork.GameBattleShipRepository.AddRange(game.GameBattleShips);
-            _unitOfWork.Commit();
+            _gameBattleShipRepository.AddRange(game.GameBattleShips);
+            _gameBattleShipRepository.Save();
 
             return game;
         }
@@ -63,7 +83,7 @@ namespace NavyBattle.Services
         /// <returns></returns>
         public IGame GetById(int id)
         {
-            return _unitOfWork.GameRepository.GetById(id);
+            return _gameRepository.GetById(id);
         }
 
         /// <summary>
@@ -72,7 +92,7 @@ namespace NavyBattle.Services
         /// <returns></returns>
         public IEnumerable<IGame> GetAll()
         {
-            return _unitOfWork.GameRepository.GetAll();
+            return _gameRepository.GetAll();
         }
 
         /// <summary>
@@ -80,15 +100,22 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="shot"></param>
         /// <returns></returns>
-        public IShot FireShot(IShot shot)
+        public IShotResult FireShot(IShot shot)
         {
             var game = GetById(shot.GameId);
-            var battleShips = game.GameBattleShips;
-           
-                        
-            _unitOfWork.ShotRepository.Add(shot);
-            _unitOfWork.Commit();
-            return shot;
+            var shotValidator = new ShotValidator();
+            var result = shotValidator.Validate(game, shot);
+
+            if (result.IsSuccess)
+            {
+                _shotRepository.Add(result.Shot);
+                _shotRepository.Save();
+
+                _gameBattleShipRepository.Update(result.GameBattleShip);
+                _gameBattleShipRepository.Save();
+            }           
+
+            return result;
         }
 
         #endregion

@@ -3,12 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using NavyBattleModels;
-using NavyBattle.Dal.Contexts;
-using NavyBattle.Dal.Work;
-using NavyBattleModels.Services;
 using NavyBattle.Services;
+using NavyBattle.Dal;
 
 namespace NavyBattle
 {
@@ -24,11 +20,9 @@ namespace NavyBattle
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<NavyBattleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"), x => x.MigrationsAssembly("NavyBattle.Dal")));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddTransient<IBattleFieldService, BattleFieldService>();
-            services.AddTransient<IGameService, GameService>();
+            DalContainer.RegisterRepositories(services, Configuration.GetConnectionString("sqlConnection"));
+            ServicesContainer.RegisterServices(services);            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

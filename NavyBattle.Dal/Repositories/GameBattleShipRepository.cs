@@ -10,7 +10,7 @@ namespace NavyBattle.Dal.Repositories
     /// <summary>
     /// Repository to work with battleship in the game objects in db
     /// </summary>
-    public class GameBattleShipRepository : BaseRepository<IGameBattleShip>
+    internal class GameBattleShipRepository : BaseRepository<IGameBattleShip>
     {
         #region Constructor
 

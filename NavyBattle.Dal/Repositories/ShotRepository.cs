@@ -10,7 +10,7 @@ namespace NavyBattle.Dal.Repositories
     /// <summary>
     /// Repository to work with shot objects in db
     /// </summary>
-    public class ShotRepository : BaseRepository<IShot>
+    internal class ShotRepository : BaseRepository<IShotResult>
     {
         #region Constructor
 

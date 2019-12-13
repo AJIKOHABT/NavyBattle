@@ -4,50 +4,92 @@ using NavyBattleModels.Enums;
 using NavyBattleModels.Validators.Interfaces;
 using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NavyBattleModels.Validators
 {
     public class ShotValidator : IShotValidator
     {
+        #region public methods
+
         /// <summary>
         /// Validating shot
         /// </summary>
-        /// <param name="shot"></param>
-        /// <returns></returns>
-        public IShot Validate(IShot shot)
+        /// <param name="shot">fired shot</param>
+        /// <returns>Result of the shot as IResultShot object</returns>
+        public IShotResult Validate(IGame game, IShot shot)
         {
-            var game = Game.GetById(shot.GameId);
             var gameShots = game.Shots;
             var shotPoint = shot.ShotPoint;
             var battleField = game.BattleField;
-            
-            
-            shot.State = ShotState.Miss;
-            shot.Save();
-            return shot;
-        }
+            var shotResult = new ShotResult();
+            shotResult.Shot = shot;
 
-        public CheckShotIsValid()
-        {
-            if (shotPoint.X < 0 || shotPoint.Y < 0 || shotPoint.X > battleField.Width || shotPoint.Y > battleField.Height)
+            if (!CheckShotIsValid(battleField, shotPoint))
             {
                 shot.State = ShotState.Nonvalid;
-                return shot;
             }
-        }
-
-        public CheckShotSamePoint()
-        {
-            if (gameShots.Any(gp => gp.ShotPoint.Equals(shotPoint)))
+            else if (CheckShotSamePoint(gameShots, shotPoint))
             {
                 shot.State = ShotState.SamePoint;
-                return shot;
             }
+            else
+            {
+                var isBattleShipDestroyed = CheckBattleShipDestroyed(game.GameBattleShips, shotResult);
+                if (!isBattleShipDestroyed.HasValue)
+                {
+                    shot.State = ShotState.Miss;
+                }
+                else if (isBattleShipDestroyed.Value)
+                {
+                    shot.State = ShotState.Destroyed;
+                }
+                else if (!isBattleShipDestroyed.Value)
+                {
+                    shot.State = ShotState.Damaged;
+                }
+                shotResult.IsSuccess = true;
+            }
+
+            return shotResult;
         }
 
-        public IGameBattleShip CheckBattleShipDamagedOrDestroyed(IEnumerable<IGameBattleShip> gameBattleShips)
+        #endregion
+
+        #region private methods
+
+        /// <summary>
+        /// Check shot to stay in the field
+        /// </summary>
+        /// <param name="battleField">battlefield</param>
+        /// <param name="shotPoint">point of the shot</param>
+        /// <returns></returns>
+        private bool CheckShotIsValid(IBattleField battleField, Point shotPoint)
         {
-            game.GameBattleShips;
+            return shotPoint.X > 0 && shotPoint.Y > 0 && shotPoint.X <= battleField.Width && shotPoint.Y <= battleField.Height;            
+        }
+
+        /// <summary>
+        /// Check shot to get at the same point
+        /// </summary>
+        /// <param name="gameShots"></param>
+        /// <param name="shotPoint"></param>
+        /// <returns></returns>
+        private bool CheckShotSamePoint(IEnumerable<IShot> gameShots, Point shotPoint)
+        {
+            return gameShots.Any(gp => gp.ShotPoint.Equals(shotPoint));            
+        }
+
+        /// <summary>
+        /// Check battleships to be damaged or destroyed
+        /// </summary>
+        /// <param name="gameBattleShips"></param>
+        /// <param name="shotResult"></param>
+        /// <returns>true - if destroyed, false - if damaged, null - if missed</returns>
+        private bool? CheckBattleShipDestroyed(IEnumerable<IGameBattleShip> gameBattleShips, IShotResult shotResult)
+        {
+            var shot = shotResult.Shot;
+            var shotPoint = shot.ShotPoint;
             foreach (var gameBattleShip in gameBattleShips)
             {
                 var battleShip = gameBattleShip.BattleShip;
@@ -58,21 +100,20 @@ namespace NavyBattleModels.Validators
                     if (gameBattleShip.DamagedPointsCnt == battleShip.Length)
                     {
                         gameBattleShip.State = BattleShipState.Destroyed;
-                        gameBattleShip.Save();
-                        shot.State = ShotState.Destroyed;
-                        shot.Save();
-                        return shot;
+                        shotResult.GameBattleShip = gameBattleShip;                                          
+                        return true;
                     }
                     if (gameBattleShip.DamagedPointsCnt < battleShip.Length)
                     {
                         gameBattleShip.State = BattleShipState.Damaged;
-                        gameBattleShip.Save();
-                        shot.State = ShotState.Damaged;
-                        shot.Save();
-                        return shot;
+                        shotResult.GameBattleShip = gameBattleShip;
+                        return false;
                     }
                 }
             }
+            return null;
         }
+
+        #endregion
     }
 }
