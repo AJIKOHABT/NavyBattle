@@ -62,7 +62,6 @@ namespace NavyBattleModels.Validators
                 {
                     continue;
                 }
-                var errorText = string.Format(Resource.BattleShipsValidator_LengthError, battleShip.Length);
                 _resultErrors.Append(new BattleFieldError(BattlefieldErrorTypes.BattleShipNonValidLength, battleShip.StartPoint));                
             }
         }

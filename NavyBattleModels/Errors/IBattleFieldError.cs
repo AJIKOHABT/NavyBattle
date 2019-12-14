@@ -10,16 +10,16 @@ namespace NavyBattleModels.Errors
         /// <summary>
         /// Type of the error
         /// </summary>
-        BattlefieldErrorTypes Type { get; }
+        BattlefieldErrorTypes Type { get; set; }
 
         /// <summary>
         /// Point of the battlefield where error occured
         /// </summary>
-        Point ErrorPoint { get; }
+        Point ErrorPoint { get; set; }
 
         /// <summary>
         /// Descriptionof the error
         /// </summary>
-        string Description { get; }
+        string Description { get; set; }
     }
 }

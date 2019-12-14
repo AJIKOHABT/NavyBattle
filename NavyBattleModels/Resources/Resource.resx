@@ -117,25 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BattleShipsValidator_Battleship" xml:space="preserve">
-    <value>battleship(s)</value>
+  <data name="BattleShipCrossingOther" xml:space="preserve">
+    <value>This battleship is crossing other one</value>
   </data>
-  <data name="BattleShipsValidator_BattleShipCountError" xml:space="preserve">
-    <value>There is more than {0} {1}. Actual count is {2}.</value>
+  <data name="BattleShipNearOther" xml:space="preserve">
+    <value>This battleship stands too close to the other one</value>
   </data>
-  <data name="BattleShipsValidator_Cruiser" xml:space="preserve">
-    <value>cruiser(s)</value>
+  <data name="BattleShipNonValidCount" xml:space="preserve">
+    <value>There are more ships than set in rules</value>
   </data>
-  <data name="BattleShipsValidator_Destroyer" xml:space="preserve">
-    <value>destroyer(s)</value>
+  <data name="BattleShipNonValidLength" xml:space="preserve">
+    <value>This battleship length is non valid</value>
   </data>
-  <data name="BattleShipsValidator_LengthError" xml:space="preserve">
-    <value>This battleship is non valid type: its length is {0}.</value>
-  </data>
-  <data name="BattleShipsValidator_Mosquito" xml:space="preserve">
-    <value>mosquito(s)</value>
-  </data>
-  <data name="BeyondBorderValidator_Error" xml:space="preserve">
+  <data name="BattleShipOutOfBorder" xml:space="preserve">
     <value>This battleship is out of the battlefield</value>
   </data>
 </root>

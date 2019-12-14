@@ -61,65 +61,47 @@ namespace NavyBattleModels.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на battleship(s).
+        ///   Ищет локализованную строку, похожую на This battleship is crossing other one.
         /// </summary>
-        internal static string BattleShipsValidator_Battleship {
+        internal static string BattleShipCrossingOther {
             get {
-                return ResourceManager.GetString("BattleShipsValidator_Battleship", resourceCulture);
+                return ResourceManager.GetString("BattleShipCrossingOther", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на There is more than {0} {1}. Actual count is {2}..
+        ///   Ищет локализованную строку, похожую на This battleship stands too close to the other one.
         /// </summary>
-        internal static string BattleShipsValidator_BattleShipCountError {
+        internal static string BattleShipNearOther {
             get {
-                return ResourceManager.GetString("BattleShipsValidator_BattleShipCountError", resourceCulture);
+                return ResourceManager.GetString("BattleShipNearOther", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на cruiser(s).
+        ///   Ищет локализованную строку, похожую на There are more ships than set in rules.
         /// </summary>
-        internal static string BattleShipsValidator_Cruiser {
+        internal static string BattleShipNonValidCount {
             get {
-                return ResourceManager.GetString("BattleShipsValidator_Cruiser", resourceCulture);
+                return ResourceManager.GetString("BattleShipNonValidCount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на destroyer(s).
+        ///   Ищет локализованную строку, похожую на This battleship length is non valid.
         /// </summary>
-        internal static string BattleShipsValidator_Destroyer {
+        internal static string BattleShipNonValidLength {
             get {
-                return ResourceManager.GetString("BattleShipsValidator_Destroyer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на This battleship is non valid type: its length is {0}..
-        /// </summary>
-        internal static string BattleShipsValidator_LengthError {
-            get {
-                return ResourceManager.GetString("BattleShipsValidator_LengthError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на mosquito(s).
-        /// </summary>
-        internal static string BattleShipsValidator_Mosquito {
-            get {
-                return ResourceManager.GetString("BattleShipsValidator_Mosquito", resourceCulture);
+                return ResourceManager.GetString("BattleShipNonValidLength", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на This battleship is out of the battlefield.
         /// </summary>
-        internal static string BeyondBorderValidator_Error {
+        internal static string BattleShipOutOfBorder {
             get {
-                return ResourceManager.GetString("BeyondBorderValidator_Error", resourceCulture);
+                return ResourceManager.GetString("BattleShipOutOfBorder", resourceCulture);
             }
         }
     }

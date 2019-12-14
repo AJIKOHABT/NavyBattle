@@ -34,6 +34,10 @@ namespace NavyBattleModels.Errors
             {
                 return _type;
             }
+            set 
+            {
+                _type = value;
+            }
         }
 
         /// <summary>
@@ -45,16 +49,24 @@ namespace NavyBattleModels.Errors
             {
                 return _point;
             }
+            set 
+            {
+                _point = value;
+            }
         }
 
         /// <summary>
-        /// Descriptionof the error
+        /// Description of the error
         /// </summary>
         public string Description
         {
             get
             {
                 return _description;
+            }
+            set
+            {
+                _description = value;
             }
         }
 
