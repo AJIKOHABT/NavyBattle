@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using NavyBattleModels;
-using NavyBattleModels.Validators.Interfaces;
-using NavyBattleModels.Interfaces;
+using NavyBattleModels.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,25 +12,32 @@ namespace NavyBattleController.Controllers
     ///Controller for battlefiled validator
     public class BattleFieldController : Controller
     {
+        private IBattleFieldService _battleFieldService;
+
+        public BattleFieldController(IBattleFieldService battleFieldService)
+        {
+            this._battleFieldService = battleFieldService;
+        }
+
         // GET: api/<controller>
         [HttpGet]
-        public JsonResult Get([FromServices] IBattleField battleField)
+        public JsonResult Get()
         {
-            return Json(battleField.GetAll());
+            return Json(_battleFieldService.GetAll());
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id, [FromServices] IBattleField battleField)
+        public JsonResult Get(int id)
         {
-            return Json(battleField.GetById(id));
+            return Json(_battleFieldService.GetById(id));
         }
 
         // POST api/<controller>
         [HttpPost]
-        public IActionResult Post([FromBody]List<BattleShip> battleShips, [FromServices] IBattleFieldValidator validator)
+        public ActionResult Post([FromBody]List<BattleShip> battleShips)
         {
-            var result = validator.Validate(battleShips);
+            var result = _battleFieldService.CreateBattleField(battleShips);
             if (result.IsSuccess)
             {
                 return Ok(result.BattleFieldId);

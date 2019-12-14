@@ -2,7 +2,7 @@
 using NavyBattleModels.Validators.Interfaces;
 using System.Collections.Generic;
 
-namespace NavyBattle.Services
+namespace NavyBattleModels.Services
 {
     public interface IGameService
     {
