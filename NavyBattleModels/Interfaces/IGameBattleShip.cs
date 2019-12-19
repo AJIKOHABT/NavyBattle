@@ -10,12 +10,22 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Game in which battleship stands
         /// </summary>
-        IGame Game { get; }
+        IGame Game { get; set; }
+
+        // <summary>
+        /// Id of the game
+        /// </summary>
+        int GameId { get; set; }
 
         /// <summary>
         /// Battleship on the battleField
         /// </summary>
-        IBattleShip BattleShip { get; }
+        IBattleShip BattleShip { get; set; }
+
+        /// <summary>
+        /// Id of the battleship on the battleField
+        /// </summary>
+        int BattleShipId { get; set; }
 
         /// <summary>
         /// State of the battleship in the game

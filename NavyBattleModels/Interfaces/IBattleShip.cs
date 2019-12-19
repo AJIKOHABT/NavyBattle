@@ -9,17 +9,17 @@ namespace NavyBattleModels.Interfaces
     /// </summary>
     public interface IBattleShip
     {
-        int Length { get; }
+        int Length { get; set; }
 
         /// <summary>
         /// Is battleship vertically or horizontally orinted (true - vertically)
         /// </summary>
-        bool IsVertical { get; }
+        bool IsVertical { get; set; }
 
         /// <summary>
         /// Starting point of the battleship
         /// </summary>
-        Point StartPoint { get; }
+        Point StartPoint { get; set; }
 
         /// <summary>
         /// ID of the battlefield

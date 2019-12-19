@@ -16,9 +16,19 @@ namespace NavyBattleModels.Models
         private IGame _game;
 
         /// <summary>
+        /// Id of the game
+        /// </summary>
+        private int _gameId;
+
+        /// <summary>
         /// Battleship on the battleField
         /// </summary>
         private IBattleShip _battleShip;
+
+        /// <summary>
+        /// Id of the battleship on the battleField
+        /// </summary>
+        private int _battleShipId;
 
         /// <summary>
         /// State of the battleship in the game
@@ -39,6 +49,28 @@ namespace NavyBattleModels.Models
             {
                 return _game;
             }
+            set 
+            {
+                if (value != null)
+                {
+                    _game = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Id of the game
+        /// </summary>
+        private int GameId
+        {
+            get
+            {
+                return _gameId;
+            }
+            set
+            {
+                _gameId = value;
+            }
         }
 
         /// <summary>
@@ -49,6 +81,28 @@ namespace NavyBattleModels.Models
             get 
             {
                 return _battleShip;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _battleShip = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Id of the battleship on the battleField
+        /// </summary>
+        public int BattleShipId
+        {
+            get 
+            {
+                return _battleShipId;
+            }
+            set
+            {
+                _battleShipId = value;
             }
         }
 

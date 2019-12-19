@@ -34,6 +34,11 @@ namespace NavyBattleModels.Models
             {
                 return _shotPoint;
             }
+            set 
+            {
+                _shotPoint = value;
+            }
+
         }
 
         /// <summary>
@@ -59,6 +64,10 @@ namespace NavyBattleModels.Models
             get
             {
                 return _gameId;
+            }
+            set 
+            {
+                _gameId = value;
             }
         }
 

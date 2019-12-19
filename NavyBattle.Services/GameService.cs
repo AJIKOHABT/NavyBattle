@@ -109,6 +109,12 @@ namespace NavyBattle.Services
 
             if (result.IsSuccess)
             {
+                if (game.State == GameState.Finished)
+                {
+                    _gameRepository.Update(game);
+                    _gameRepository.Save();
+                }
+
                 _shotRepository.Add(result.Shot);
                 _shotRepository.Save();
 

@@ -75,7 +75,7 @@ namespace NavyBattleModels
                 _id = value;
             }
         }
-
+        
         /// <summary>
         /// List of battleships on the battlefield
         /// </summary>

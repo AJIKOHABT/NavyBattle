@@ -42,7 +42,13 @@ namespace NavyBattleModels.Validators
                 }
                 else if (isBattleShipDestroyed.Value)
                 {
-                    shot.State = ShotState.Destroyed;
+                    var destroyedShips = game.GameBattleShips.Count(gameBattleShip => gameBattleShip.State = BattleShipState.Destroyed);
+                    if (destroyedShips == game.BattleField.BattleShips.Count)
+                    {
+                        game.State = GameState.Finished;
+                    }
+                    shot.State = ShotState.Destroyed;                    
+
                 }
                 else if (!isBattleShipDestroyed.Value)
                 {
