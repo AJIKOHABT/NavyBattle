@@ -118,6 +118,10 @@ namespace NavyBattleModels
 
         #region public methods
 
+        public virtual void AutoGenerate()
+        { 
+        }
+
         /// <summary>
         /// Recalculation of the startPoint and adding battleship to battlefield
         /// </summary>
