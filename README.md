@@ -1,2 +1,2 @@
 # NavyBattle
-Navy battle test application fot EPAM Saratov.
+Navy battle test application for EPAM Saratov.
