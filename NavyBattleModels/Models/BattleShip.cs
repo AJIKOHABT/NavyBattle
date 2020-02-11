@@ -45,6 +45,10 @@ namespace NavyBattleModels
             { 
                 return _length; 
             }
+            set 
+            {
+                _length = value;
+            }
         }
 
         /// <summary>
@@ -56,6 +60,10 @@ namespace NavyBattleModels
             { 
                 return _isVertical; 
             }
+            set 
+            {
+                _isVertical = value;
+            }
         }
 
         /// <summary>
@@ -66,6 +74,10 @@ namespace NavyBattleModels
             get
             {
                 return _startPoint;
+            }
+            set 
+            {
+                _startPoint = value;
             }
         }
 

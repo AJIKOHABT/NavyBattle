@@ -10,7 +10,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Point where shot was made
         /// </summary>
-        Point ShotPoint { get; }
+        Point ShotPoint { get; set; }
 
         /// <summary>
         /// Result state of the shot
@@ -20,6 +20,6 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Point where shot was made
         /// </summary>
-        int GameId { get; }
+        int GameId { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NavyBattleModels.Interfaces;
 using NavyBattleModels.Contexts;
+using NavyBattleModels.Enums;
 
 namespace NavyBattleModels.Models
 {
@@ -24,6 +25,11 @@ namespace NavyBattleModels.Models
         private IBattleField _battleField;
 
         /// <summary>
+        /// Id of the battlefield
+        /// </summary>
+        private int _battleFieldId;
+
+        /// <summary>
         /// BattleShips in the game
         /// </summary>
         private List<IGameBattleShip> _gameBattleShips = new List<IGameBattleShip>();
@@ -34,6 +40,11 @@ namespace NavyBattleModels.Models
         private List<IShot> _shots = new List<IShot>();
 
         /// <summary>
+        /// Current state of the game
+        /// </summary>
+        private GameState _state;
+
+        /// <summary>
         /// Game id
         /// </summary>
         public int Id
@@ -41,6 +52,10 @@ namespace NavyBattleModels.Models
             get 
             {
                 return _id;
+            }
+            set 
+            {
+                _id = value;
             }
         }
 
@@ -53,6 +68,28 @@ namespace NavyBattleModels.Models
             {
                 return _battleField;
             }
+            set 
+            {
+                if (value != null)
+                {
+                    _battleField = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Id of the battlefield
+        /// </summary>
+        public int BattleFieldId
+        {
+            get 
+            {
+                return _battleFieldId;
+            }
+            set 
+            {
+                _battleFieldId = value;
+            }
         }
 
         /// <summary>
@@ -63,6 +100,13 @@ namespace NavyBattleModels.Models
             get 
             {
                 return _gameBattleShips;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _gameBattleShips = value;
+                }
             }
         }
 
@@ -75,7 +119,30 @@ namespace NavyBattleModels.Models
             {
                 return _shots;
             }
+            set
+            {
+                if (value != null)
+                {
+                    _shots = value;
+                }
+            }
         }
+
+        /// <summary>
+        /// Current state of the game
+        /// </summary>
+        public GameState State
+        {
+            get 
+            {
+                return _state;
+            }
+            set 
+            {
+                _state = value;
+            }
+        }
+
         #endregion
 
         #region constructor
@@ -94,6 +161,7 @@ namespace NavyBattleModels.Models
         public Game(IBattleField battleField)
         {
             _battleField = battleField;
+            _gameState = Game.State.Started;
             GenerateGameBattleShips(battleField);
         }
 

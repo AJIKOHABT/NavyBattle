@@ -75,7 +75,7 @@ namespace NavyBattleModels
                 _id = value;
             }
         }
-
+        
         /// <summary>
         /// List of battleships on the battlefield
         /// </summary>
@@ -117,6 +117,10 @@ namespace NavyBattleModels
         #endregion
 
         #region public methods
+
+        public virtual void AutoGenerate()
+        { 
+        }
 
         /// <summary>
         /// Recalculation of the startPoint and adding battleship to battlefield
