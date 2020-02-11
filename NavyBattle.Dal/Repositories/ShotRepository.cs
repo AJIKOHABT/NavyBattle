@@ -1,9 +1,5 @@
-﻿using System;
-using NavyBattleModels;
-using NavyBattleModels.Interfaces;
-using NavyBattle.Dal.Contexts;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using NavyBattle.Dal.Contexts;
+using NavyBattleModels.Validators.Interfaces;
 
 namespace NavyBattle.Dal.Repositories
 {
