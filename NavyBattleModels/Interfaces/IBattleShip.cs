@@ -9,6 +9,14 @@ namespace NavyBattleModels.Interfaces
     /// </summary>
     public interface IBattleShip
     {
+        /// <summary>
+        /// Id of the battleship
+        /// </summary>
+        Guid Guid { get; set; }
+        
+        /// <summary>
+        /// Length of the battleship
+        /// </summary>
         int Length { get; set; }
 
         /// <summary>

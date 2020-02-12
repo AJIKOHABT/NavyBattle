@@ -24,7 +24,10 @@ namespace NavyBattle.Dal
             services.AddScoped<IBaseRepository<IBattleShip>, BattleShipRepository>();
             services.AddScoped<IBaseRepository<IGame>, GameRepository>();
             services.AddScoped<IBaseRepository<IGameBattleShip>, GameBattleShipRepository>();
-            services.AddScoped<IBaseRepository<IShotResult>, ShotRepository>();
+            services.AddScoped<IBaseRepository<IShot>, ShotRepository>();
+            services.AddScoped<IBaseRepository<IUser>, UserRepository>();
+            services.AddScoped<IBaseRepository<IGameBattleField>, GameBattleFieldRepository>();
+
         }
     }
 }

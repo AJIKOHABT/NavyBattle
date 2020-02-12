@@ -16,7 +16,19 @@ namespace NavyBattle.Dal.Contexts
             set; 
         }
 
-        public DbSet<IShotResult> Shots
+        public DbSet<IGameBattleField> GameBattleFields
+        {
+            get;
+            set;
+        }
+
+        public DbSet<IUser> Users
+        {
+            get;
+            set;
+        }
+
+        public DbSet<IShot> Shots
         {
             get;
             set;

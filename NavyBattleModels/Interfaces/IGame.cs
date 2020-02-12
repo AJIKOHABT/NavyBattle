@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using NavyBattleModels.Enums;
+using System;
+using System.Collections.Generic;
 
 
 namespace NavyBattleModels.Interfaces
@@ -11,17 +13,12 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Game id
         /// </summary>
-        int Id { get; set; }
+        Guid Guid { get; set; }
 
         /// <summary>
         /// Battlefield on which the game will take place
         /// </summary>
-        IBattleField BattleField { get; set; }
-
-        /// <summary>
-        /// Id of the battlefield
-        /// </summary>
-        int BattleFieldId { get; set; }
+        IEnumerable<IGameBattleField> GameBattleFields { get; set; }
 
         /// <summary>
         /// BattleShips in the game
@@ -29,9 +26,14 @@ namespace NavyBattleModels.Interfaces
         IEnumerable<IGameBattleShip> GameBattleShips { get; set; }
 
         /// <summary>
-        /// Shots that were made during the game
+        /// Id of the player who's shooting now
         /// </summary>
-        IEnumerable<IShot> Shots { get; set; }
+        Guid TurnOfThePlayer { get; set; }
+
+        /// <summary>
+        /// Id of the winner
+        /// </summary>
+        Guid Winner { get; set; }
 
         /// <summary>
         /// Current state of the game

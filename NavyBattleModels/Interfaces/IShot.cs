@@ -1,4 +1,5 @@
 ﻿using NavyBattleModels.Enums;
+using System;
 
 namespace NavyBattleModels.Interfaces
 {
@@ -7,6 +8,11 @@ namespace NavyBattleModels.Interfaces
     /// </summary>
     public interface IShot
     {
+        /// <summary>
+        /// Id of the shot
+        /// </summary>
+        Guid Guid { get; set; }
+
         /// <summary>
         /// Point where shot was made
         /// </summary>
@@ -18,8 +24,13 @@ namespace NavyBattleModels.Interfaces
         ShotState State { get; set; }
 
         /// <summary>
-        /// Point where shot was made
+        /// Id of the player who has made the shot
         /// </summary>
-        int GameId { get; set; }
+        Guid PlayerId { get; set; }
+
+        /// <summary>
+        /// Id of the game battlefield where shot was made
+        /// </summary>
+        Guid GameBattleFieldId { get; set; }
     }
 }

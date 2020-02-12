@@ -1,5 +1,6 @@
 ﻿using NavyBattleModels.Enums;
 using NavyBattleModels.Interfaces;
+using System;
 
 namespace NavyBattleModels.Models
 {
