@@ -63,7 +63,7 @@ namespace NavyBattle.Services
                 _battleShipRepository.AddRange(battleField.BattleShips);
                 _battleShipRepository.Save();
 
-                result.BattleFieldId = battleField.Id;
+                result.BattleFieldId = battleField.Guid;
             }
 
             return result;

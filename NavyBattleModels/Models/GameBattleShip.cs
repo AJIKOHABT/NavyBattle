@@ -1,5 +1,6 @@
 ﻿using NavyBattleModels.Interfaces;
 using NavyBattleModels.Enums;
+using System;
 
 namespace NavyBattleModels.Models
 {
@@ -11,14 +12,19 @@ namespace NavyBattleModels.Models
         #region properties and fields
 
         /// <summary>
+        /// Id of the battleship
+        /// </summary>
+        private Guid _guid;
+
+        /// <summary>
         /// Game in which battleship stands
         /// </summary>
-        private IGame _game;
+        private IGameBattleField _gameBattleField;
 
         /// <summary>
         /// Id of the game
         /// </summary>
-        private int _gameId;
+        private Guid _gameBattlefieldId;
 
         /// <summary>
         /// Battleship on the battleField
@@ -28,7 +34,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Id of the battleship on the battleField
         /// </summary>
-        private int _battleShipId;
+        private Guid _battleShipId;
 
         /// <summary>
         /// State of the battleship in the game
@@ -41,19 +47,34 @@ namespace NavyBattleModels.Models
         private int _damagedPointsCnt;
 
         /// <summary>
-        /// Game in which battleship stands
+        /// Id of the battleship
         /// </summary>
-        public IGame Game
+        public Guid Guid
         {
             get 
             {
-                return _game;
+                return _guid;
+            }
+            set 
+            {
+                _guid = value;
+            }
+        }
+
+        /// <summary>
+        /// Game in which battleship stands
+        /// </summary>
+        public IGameBattleField GameBattleField
+        {
+            get 
+            {
+                return _gameBattleField;
             }
             set 
             {
                 if (value != null)
                 {
-                    _game = value;
+                    _gameBattleField = value;
                 }
             }
         }
@@ -61,15 +82,15 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Id of the game
         /// </summary>
-        private int GameId
+        public Guid GameBattlefieldId
         {
             get
             {
-                return _gameId;
+                return _gameBattlefieldId;
             }
             set
             {
-                _gameId = value;
+                _gameBattlefieldId = value;
             }
         }
 
@@ -94,7 +115,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Id of the battleship on the battleField
         /// </summary>
-        public int BattleShipId
+        public Guid BattleShipId
         {
             get 
             {
@@ -145,9 +166,9 @@ namespace NavyBattleModels.Models
         /// </summary>
         /// <param name="game"></param>
         /// <param name="battleShip"></param>
-        public GameBattleShip(IGame game, IBattleShip battleShip)
+        public GameBattleShip(IGameBattleField gameBattleField, IBattleShip battleShip)
         {
-            _game = game;
+            _gameBattleField = gameBattleField;
             _battleShip = battleShip;
             _state = BattleShipState.Full;
         }

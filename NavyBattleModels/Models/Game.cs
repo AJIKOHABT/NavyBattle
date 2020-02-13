@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using NavyBattleModels.Interfaces;
-using NavyBattleModels.Contexts;
 using NavyBattleModels.Enums;
 
 namespace NavyBattleModels.Models
@@ -17,27 +15,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Game id
         /// </summary>
-        private int _id;
-
-        /// <summary>
-        /// Battlefield on which the game will take place
-        /// </summary>
-        private IBattleField _battleField;
-
-        /// <summary>
-        /// Id of the battlefield
-        /// </summary>
-        private int _battleFieldId;
-
-        /// <summary>
-        /// BattleShips in the game
-        /// </summary>
-        private List<IGameBattleShip> _gameBattleShips = new List<IGameBattleShip>();
-
-        /// <summary>
-        /// Shots that were made during the game
-        /// </summary>
-        private List<IShot> _shots = new List<IShot>();
+        private Guid _guid;
 
         /// <summary>
         /// Current state of the game
@@ -45,88 +23,40 @@ namespace NavyBattleModels.Models
         private GameState _state;
 
         /// <summary>
+        /// List of the battlefields using in the game
+        /// </summary>
+        private List<IGameBattleField> _gameBattleFields = new List<IGameBattleField>();
+
+        /// <summary>
+        /// Winner of the game
+        /// </summary>
+        private IUser _winner;
+
+        /// <summary>
+        /// Winner id
+        /// </summary>
+        private Guid _winnerId;
+
+        /// <summary>
+        /// Whos turn now
+        /// </summary>
+        private Guid _turnOfThePlayer;
+
+        /// <summary>
         /// Game id
         /// </summary>
-        public int Id
+        public Guid Guid
         {
             get 
             {
-                return _id;
+                return _guid;
             }
             set 
             {
-                _id = value;
+                _guid = value;
             }
-        }
+        }      
 
-        /// <summary>
-        /// Battlefield on which the game will take place
-        /// </summary>
-        public IBattleField BattleField
-        {
-            get
-            {
-                return _battleField;
-            }
-            set 
-            {
-                if (value != null)
-                {
-                    _battleField = value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Id of the battlefield
-        /// </summary>
-        public int BattleFieldId
-        {
-            get 
-            {
-                return _battleFieldId;
-            }
-            set 
-            {
-                _battleFieldId = value;
-            }
-        }
-
-        /// <summary>
-        /// BattleShips in the game
-        /// </summary>
-        public IEnumerable<IGameBattleShip> GameBattleShips
-        {
-            get 
-            {
-                return _gameBattleShips;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    _gameBattleShips = value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Shots that were made during the game
-        /// </summary>
-        public IEnumerable<IShot> Shots
-        {
-            get
-            {
-                return _shots;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    _shots = value;
-                }
-            }
-        }
 
         /// <summary>
         /// Current state of the game
@@ -140,6 +70,69 @@ namespace NavyBattleModels.Models
             set 
             {
                 _state = value;
+            }
+        }
+
+        /// <summary>
+        /// List of the battlefields using in the game
+        /// </summary>
+        public IEnumerable<IGameBattleField> GameBattleFields
+        {
+            get
+            {
+                return _gameBattleFields;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _gameBattleFields = (List<IGameBattleField>)value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Winner of the game
+        /// </summary>
+        public IUser Winner
+        {
+            get
+            {
+                return _winner;
+            }
+            set
+            {
+                _winner = value;
+            }
+        }
+
+        /// <summary>
+        /// Winner id
+        /// </summary>
+        public Guid WinnerId
+        {
+            get
+            {
+                return _winnerId;
+            }
+            set
+            {
+                _winnerId = value;
+            }
+        }
+
+        /// <summary>
+        /// Whos turn now
+        /// </summary>
+        public Guid TurnOfThePlayer
+        {
+            get
+            {
+                return _turnOfThePlayer;
+            }
+            set
+            {
+                _turnOfThePlayer = value;
             }
         }
 
@@ -159,42 +152,11 @@ namespace NavyBattleModels.Models
         /// </summary>
         /// <param name="battleField">Battlefield on which the game will take place</param>
         public Game(IBattleField battleField)
-        {
-            _battleField = battleField;
-            _gameState = Game.State.Started;
-            GenerateGameBattleShips(battleField);
+        {          
+            _state = GameState.Started;            
         }
 
         #endregion
 
-        #region public methods
-        
-        public static IGame GetById(int id)
-        {
-            using (NavyBattleContext dv = new NavyBattleContext)
-            {
-                
-            }
-
-                return game;
-        }
-
-        #endregion
-
-        #region private methods
-
-        /// <summary>
-        /// Generating battleships for the game
-        /// </summary>
-        /// <param name="battleField">Battlefield which battleships will be used in the game</param>
-        private void GenerateGameBattleShips(IBattleField battleField)
-        {            
-            foreach (var battleShip in battleField.Battleships)
-            {
-                _gameBattleShips.Add(new GameBattleShip(this, battleShip));
-            }
-        }
-
-        #endregion
     }
 }

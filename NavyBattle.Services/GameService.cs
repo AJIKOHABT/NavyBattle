@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NavyBattleModels;
 using NavyBattleModels.Enums;
 using NavyBattleModels.Interfaces;
@@ -37,6 +38,16 @@ namespace NavyBattle.Services
         /// </summary>
         IBaseRepository<IShot> _shotRepository;
 
+        /// <summary>
+        /// Repository class to work with battlefield objectcs in database
+        /// </summary>
+        IBaseRepository<IBattleField> _battleFieldRepository;
+
+        /// <summary>
+        /// Repository class to work with battleship objectcs in database
+        /// </summary>
+        IBaseRepository<IBattleShip> _battleShipRepository;
+
         #endregion
 
         #region Constructor
@@ -63,12 +74,30 @@ namespace NavyBattle.Services
 
         #region IGameService
 
+        public Guid StartGame(Guid battleFieldGuid)
+        {
+            var battleField = _battleFieldRepository.GetByGuid(battleFieldGuid);
+            var gameBattleField = new GameBattleField(battleField);
+
+            _gameBattleFieldRepository.Add(gameBattleField);
+            _gameBattleFieldRepository.Save();
+
+            _gameBattleShipRepository.AddRange(gameBattleField.GameBattleShips);
+            _gameBattleShipRepository.Save();
+
+            return gameBattleField.Guid;
+        }
+
+        public void GetOtherPlayer()
+        {
+            var gameBattleField = _gameBattleFieldRepository.GetAll().FirstOrDefault(gb=>gb.Status == );            
+        }
+
         /// <summary>
         /// Validating and creating battlefield
         /// </summary>
         /// <param name="id">id of the chosen battlefield</param>
         /// <returns></returns>
-        // TO DO: Надо переписать алгоритм создания игры, возможно сюда надо передавать поле для старта игры, либо создавать пустую игру с последующим добавлением в нее полей
         public IGame CreateGame(int id)
         {
             var battleField = _battleFieldRepository.GetById(id);
@@ -86,11 +115,11 @@ namespace NavyBattle.Services
         /// <summary>
         /// Getting battlefield by id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="guid"></param>
         /// <returns></returns>
-        public IGame GetById(Guid id)
+        public IGame GetById(Guid guid)
         {
-            return _gameRepository.GetById(id);
+            return _gameRepository.GetByGuid(guid);
         }
 
         /// <summary>

@@ -51,9 +51,9 @@ namespace NavyBattle.Dal.Repositories
         /// Getting object of required type from the database by its id
         /// </summary>
         /// <returns></returns>
-        public TEntity GetById(int id)
+        public TEntity GetByGuid(Guid guid)
         {
-            return Context.Set<TEntity>().Find(id);
+            return Context.Set<TEntity>().Find(guid);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace NavyBattle.Dal.Repositories
             {
                 if (disposing)
                 {
-                    _db.Dispose();
+                    Context.Dispose();
                 }
             }
             this._disposed = true;

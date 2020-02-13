@@ -21,19 +21,19 @@ namespace NavyBattleModels.Interfaces
         IEnumerable<IGameBattleField> GameBattleFields { get; set; }
 
         /// <summary>
-        /// BattleShips in the game
-        /// </summary>
-        IEnumerable<IGameBattleShip> GameBattleShips { get; set; }
-
-        /// <summary>
         /// Id of the player who's shooting now
         /// </summary>
         Guid TurnOfThePlayer { get; set; }
 
         /// <summary>
+        /// Winner
+        /// </summary>
+        IUser Winner { get; set; }
+
+        /// <summary>
         /// Id of the winner
         /// </summary>
-        Guid Winner { get; set; }
+        Guid WinnerId { get; set; }
 
         /// <summary>
         /// Current state of the game

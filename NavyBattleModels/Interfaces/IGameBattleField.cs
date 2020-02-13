@@ -22,7 +22,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the battlefield
         /// </summary>
-        int BattleFieldId { get; set; }
+        Guid BattleFieldId { get; set; }
 
         /// <summary>
         /// Game which this battlefield is added to

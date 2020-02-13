@@ -32,15 +32,5 @@ namespace NavyBattleModels.Interfaces
         /// <param name="battleships"></param>
         void AddBattleShips(IEnumerable<IBattleShip> battleships);
 
-        /// <summary>
-        /// Player owner of this battlefield
-        /// </summary>
-        IUser Owner { get; set; }
-
-        /// <summary>
-        /// Id of the player owner of this battlefield
-        /// </summary>
-        int OwnerId { get; set; }
-
     }
 }

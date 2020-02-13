@@ -1,4 +1,5 @@
 ﻿using NavyBattleModels.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,7 +25,7 @@ namespace NavyBattleModels
         /// <summary>
         /// Id of the battlefield
         /// </summary>
-        private int _id;
+        private Guid _guid;
 
         /// <summary>
         /// List of battleships on the battlefield
@@ -64,15 +65,15 @@ namespace NavyBattleModels
         /// <summary>
         /// Id of the battlefield
         /// </summary>
-        public int Id
+        public Guid Guid
         {
             get
             {
-                return _id;
+                return _guid;
             }
             set
             {
-                _id = value;
+                _guid = value;
             }
         }
         
@@ -110,6 +111,7 @@ namespace NavyBattleModels
         /// <param name="height">height of the battlefield</param>
         public BaseBattleField(int width, int height)
         {
+            _guid = new Guid();
             _width = width;
             _height = height;
         }
