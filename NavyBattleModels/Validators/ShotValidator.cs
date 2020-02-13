@@ -19,9 +19,12 @@ namespace NavyBattleModels.Validators
         /// <returns>Result of the shot as IResultShot object</returns>
         public IShotResult Validate(IGame game, IShot shot)
         {
-            var gameShots = game.Shots;
+            var gameShots = gameBattleField.Shots;
             var shotPoint = shot.ShotPoint;
-            var battleField = game.BattleField;
+            var battleField = gameBattleField.BattleField;
+            
+            var gameBattleField = 
+
             var shotResult = new ShotResult();
             shotResult.Shot = shot;
 
@@ -35,17 +38,18 @@ namespace NavyBattleModels.Validators
             }
             else
             {
-                var isBattleShipDestroyed = CheckBattleShipDestroyed(game.GameBattleShips, shotResult);
+                var isBattleShipDestroyed = CheckBattleShipDestroyed(gameBattleField.GameBattleShips, shotResult);
                 if (!isBattleShipDestroyed.HasValue)
                 {
                     shot.State = ShotState.Miss;
                 }
                 else if (isBattleShipDestroyed.Value)
                 {
-                    var destroyedShips = game.GameBattleShips.Count(gameBattleShip => gameBattleShip.State = BattleShipState.Destroyed);
-                    if (destroyedShips == game.BattleField.BattleShips.Count)
+                    var destroyedShips = gameBattleField.GameBattleShips.Count(gameBattleShip => gameBattleShip.State == BattleShipState.Destroyed);
+                    if (destroyedShips == gameBattleField.BattleField.BattleShips.Count)
                     {
                         game.State = GameState.Finished;
+                        ////сюда добавить победителя
                     }
                     shot.State = ShotState.Destroyed;                    
 

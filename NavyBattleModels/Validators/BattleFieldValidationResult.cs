@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NavyBattleModels.Errors;
 using NavyBattleModels.Validators.Interfaces;
 
@@ -16,7 +17,7 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Id of the battlefield which was validates
         /// </summary>
-        private int _battleFieldId;
+        private Guid _battleFieldId;
 
         /// <summary>
         /// List of validation errors
@@ -41,7 +42,7 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Id of the battlefield which was validates
         /// </summary>
-        public int BattleFieldId
+        public Guid BattleFieldId
         {
             get 
             {

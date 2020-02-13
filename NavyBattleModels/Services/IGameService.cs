@@ -1,5 +1,6 @@
 ﻿using NavyBattleModels.Interfaces;
 using NavyBattleModels.Validators.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace NavyBattleModels.Services
@@ -18,7 +19,7 @@ namespace NavyBattleModels.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        IGame GetById(int id);
+        IGame GetById(Guid id);
 
         /// <summary>
         /// Getting all battlefields from the database

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NavyBattleModels;
+using NavyBattleModels.Enums;
 using NavyBattleModels.Interfaces;
 using NavyBattleModels.Models;
 using NavyBattleModels.Services;
@@ -18,7 +20,7 @@ namespace NavyBattle.Services
         /// <summary>
         /// Repository class to work with battlefield objectcs in database
         /// </summary>
-        IBaseRepository<IBattleField> _battleFieldRepository;
+        IBaseRepository<IGameBattleField> _gameBattleFieldRepository;
 
         /// <summary>
         /// Repository class to work with game objectcs in database
@@ -46,9 +48,12 @@ namespace NavyBattle.Services
         /// <param name="gameRepository">Repository class to work with game objectcs in database</param>
         /// <param name="gameBattleShipRepository">Repository class to work with battleship objectcs from the game in database</param>
         /// <param name="shotRepository">Repository class to work with shot objectcs in database</param>
-        public GameService(IBaseRepository<IBattleField> battleFieldRepository, IBaseRepository<IGame> gameRepository, IBaseRepository<IGameBattleShip> gameBattleShipRepository, IBaseRepository<IShot> shotRepository)
+        public GameService(IBaseRepository<IGameBattleField> gameBattleFieldRepository, 
+            IBaseRepository<IGame> gameRepository,
+            IBaseRepository<IGameBattleShip> gameBattleShipRepository,
+            IBaseRepository<IShot> shotRepository)
         {
-            this._battleFieldRepository = battleFieldRepository;
+            this._gameBattleFieldRepository = gameBattleFieldRepository;
             this._gameRepository = gameRepository;
             this._gameBattleShipRepository = gameBattleShipRepository;
             this._shotRepository = shotRepository;
@@ -63,6 +68,7 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="id">id of the chosen battlefield</param>
         /// <returns></returns>
+        // TO DO: Надо переписать алгоритм создания игры, возможно сюда надо передавать поле для старта игры, либо создавать пустую игру с последующим добавлением в нее полей
         public IGame CreateGame(int id)
         {
             var battleField = _battleFieldRepository.GetById(id);
@@ -82,7 +88,7 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IGame GetById(int id)
+        public IGame GetById(Guid id)
         {
             return _gameRepository.GetById(id);
         }
