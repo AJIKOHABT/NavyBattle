@@ -13,7 +13,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Game id
         /// </summary>
-        Guid Guid { get; set; }
+        int Id { get; set; }
 
         /// <summary>
         /// Battlefield on which the game will take place
@@ -23,7 +23,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the player who's shooting now
         /// </summary>
-        Guid TurnOfThePlayer { get; set; }
+        int? TurnOfThePlayer { get; set; }
 
         /// <summary>
         /// Winner
@@ -33,7 +33,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the winner
         /// </summary>
-        Guid WinnerId { get; set; }
+        int? WinnerId { get; set; }
 
         /// <summary>
         /// Current state of the game

@@ -15,7 +15,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Game id
         /// </summary>
-        private Guid _guid;
+        private int _id;
 
         /// <summary>
         /// Current state of the game
@@ -35,25 +35,25 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Winner id
         /// </summary>
-        private Guid _winnerId;
+        private int? _winnerId;
 
         /// <summary>
         /// Whos turn now
         /// </summary>
-        private Guid _turnOfThePlayer;
+        private int? _turnOfThePlayer;
 
         /// <summary>
         /// Game id
         /// </summary>
-        public Guid Guid
+        public int Id
         {
             get 
             {
-                return _guid;
+                return _id;
             }
             set 
             {
-                _guid = value;
+                _id = value;
             }
         }      
 
@@ -109,7 +109,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Winner id
         /// </summary>
-        public Guid WinnerId
+        public int? WinnerId
         {
             get
             {
@@ -124,7 +124,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Whos turn now
         /// </summary>
-        public Guid TurnOfThePlayer
+        public int? TurnOfThePlayer
         {
             get
             {
@@ -151,9 +151,13 @@ namespace NavyBattleModels.Models
         /// Constructor of the game
         /// </summary>
         /// <param name="battleField">Battlefield on which the game will take place</param>
-        public Game(IBattleField battleField)
-        {          
-            _state = GameState.Started;            
+        public Game(IEnumerable<IGameBattleField> gameBattleFields)
+        {
+            _gameBattleFields.AddRange(gameBattleFields);
+            _state = GameState.Started;
+            Random random = new Random();
+            _turnOfThePlayer = random.Next(0, 1000000) < 500000 ? _gameBattleFields[0].OwnerId : _gameBattleFields[1].OwnerId;          
+
         }
 
         #endregion

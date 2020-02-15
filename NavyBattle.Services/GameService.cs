@@ -48,6 +48,11 @@ namespace NavyBattle.Services
         /// </summary>
         IBaseRepository<IBattleShip> _battleShipRepository;
 
+        /// <summary>
+        /// Repository class to work with battleship objectcs in database
+        /// </summary>
+        IBaseRepository<IUser> _userRepository;
+
         #endregion
 
         #region Constructor
@@ -74,52 +79,14 @@ namespace NavyBattle.Services
 
         #region IGameService
 
-        public Guid StartGame(Guid battleFieldGuid)
-        {
-            var battleField = _battleFieldRepository.GetByGuid(battleFieldGuid);
-            var gameBattleField = new GameBattleField(battleField);
-
-            _gameBattleFieldRepository.Add(gameBattleField);
-            _gameBattleFieldRepository.Save();
-
-            _gameBattleShipRepository.AddRange(gameBattleField.GameBattleShips);
-            _gameBattleShipRepository.Save();
-
-            return gameBattleField.Guid;
-        }
-
-        public void GetOtherPlayer()
-        {
-            var gameBattleField = _gameBattleFieldRepository.GetAll().FirstOrDefault(gb=>gb.Status == );            
-        }
-
-        /// <summary>
-        /// Validating and creating battlefield
-        /// </summary>
-        /// <param name="id">id of the chosen battlefield</param>
-        /// <returns></returns>
-        public IGame CreateGame(int id)
-        {
-            var battleField = _battleFieldRepository.GetById(id);
-
-            var game = new Game(battleField);
-            _gameRepository.Add(game);
-            _gameRepository.Save();
-
-            _gameBattleShipRepository.AddRange(game.GameBattleShips);
-            _gameBattleShipRepository.Save();
-
-            return game;
-        }
-
         /// <summary>
         /// Getting battlefield by id
         /// </summary>
-        /// <param name="guid"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public IGame GetById(Guid guid)
+        public IGame GetById(int id)
         {
-            return _gameRepository.GetByGuid(guid);
+            return _gameRepository.GetById(id);
         }
 
         /// <summary>
@@ -132,13 +99,100 @@ namespace NavyBattle.Services
         }
 
         /// <summary>
+        /// Creating gameBattleField for the player
+        /// </summary>
+        /// <param name="battleFieldId"></param>
+        /// <param name="ownerId"></param>
+        /// <returns></returns>
+        public IBattleFieldResult CreateGameBattleField(int battleFieldId, int ownerId)
+        {
+            var owner = _userRepository.GetById(ownerId);
+            var result = new BattleFieldResult();
+
+            if (owner == null)
+            {
+                result.IsError = true;
+                result.ErrorMessage = "There is no user with such Id";
+                return result;
+            }
+
+            var battleField = _battleFieldRepository.GetById(battleFieldId);
+
+            if(battleField == null)
+            {
+                result.IsError = true;
+                result.ErrorMessage = "There is no battlefield with such Id";
+                return result;
+            }
+
+            var gameBattleField = new GameBattleField(battleField);
+            gameBattleField.Owner = owner;
+
+            _gameBattleFieldRepository.Add(gameBattleField);
+            _gameBattleFieldRepository.Save();
+
+            _gameBattleShipRepository.AddRange(gameBattleField.GameBattleShips);
+            _gameBattleShipRepository.Save();
+
+            result.IsWaiting = true;
+            result.GameBattleFieldId = gameBattleField.Id;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Waiting for other player to start the game
+        /// </summary>
+        /// <param name="gameBattleFieldId"></param>
+        /// <returns></returns>
+        public IBattleFieldResult WaitingForPlayer(int gameBattleFieldId)
+        {
+            var result = new BattleFieldResult();
+            var userGameBattleField = _gameBattleFieldRepository.GetById(gameBattleFieldId);
+
+            if (userGameBattleField == null)
+            {
+                result.IsError = true;
+                result.ErrorMessage = "There is no gameBattlefield with such Id";
+                result.GameBattleFieldId = gameBattleFieldId;
+                return result;
+            }
+
+            if (!userGameBattleField.IsWaiting)
+            {
+                result.GameBattleFieldId = userGameBattleField.Id;
+                result.GameId = userGameBattleField.GameId;
+                return result;
+            }
+
+            var gameBattleField = _gameBattleFieldRepository.GetAll().
+                FirstOrDefault(gb=> gb.IsWaiting && gb.Id != gameBattleFieldId);
+
+            if (gameBattleField == null)
+            {
+                result.IsWaiting = true;
+                result.GameBattleFieldId = gameBattleFieldId;
+                return result;
+            }
+
+            var gameBattleFields = new List<IGameBattleField>()
+                    {
+                        userGameBattleField,
+                        gameBattleField
+                    };
+
+            result.GameId = CreateGame(gameBattleFields);
+            return result;
+        }
+
+        /// <summary>
         /// Getting result of shot
         /// </summary>
         /// <param name="shot"></param>
         /// <returns></returns>
         public IShotResult FireShot(IShot shot)
         {
-            var game = GetById(shot.GameId);
+            var game = GetById(shot.GameId.Value);
             var shotValidator = new ShotValidator();
             var result = shotValidator.Validate(game, shot);
 
@@ -158,6 +212,32 @@ namespace NavyBattle.Services
             }           
 
             return result;
+        }
+
+        #endregion
+
+        #region private methods  
+
+        /// <summary>
+        /// Creating game and adding it to database
+        /// </summary>
+        /// <param name="gameBattleFields"></param>
+        /// <returns></returns>
+        private int CreateGame(IEnumerable<IGameBattleField> gameBattleFields)
+        {
+            var game = new Game(gameBattleFields);
+            game.State = GameState.WaitingForShot;
+
+            _gameRepository.Add(game);
+            _gameRepository.Save();
+
+            foreach (var gameBf in game.GameBattleFields)
+            {
+                gameBf.IsWaiting = false;
+                _gameBattleFieldRepository.Update(gameBf);
+                _gameBattleFieldRepository.Save();
+            }
+            return game.Id;
         }
 
         #endregion

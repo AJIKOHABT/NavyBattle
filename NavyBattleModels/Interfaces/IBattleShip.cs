@@ -12,7 +12,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the battleship
         /// </summary>
-        Guid Guid { get; set; }
+        int Id { get; set; }
         
         /// <summary>
         /// Length of the battleship
@@ -32,7 +32,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// ID of the battlefield
         /// </summary>
-        int BattleFieldId { get; set; }
+        int? BattleFieldId { get; set; }
 
         /// <summary>
         /// Recalculation of battleship parameters

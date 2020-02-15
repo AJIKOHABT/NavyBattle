@@ -13,7 +13,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// User id
         /// </summary>
-        Guid Guid { get; set; }
+        int Id { get; set; }
 
         /// <summary>
         /// User name
@@ -29,5 +29,10 @@ namespace NavyBattleModels.Interfaces
         /// Battlefields that was created by this user
         /// </summary>
         IEnumerable<IBattleField> BattleFields { get; set; }
+
+        /// <summary>
+        /// Battlefields that was created by this user
+        /// </summary>
+        IEnumerable<IGame> Games { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace NavyBattleModels
         /// Getting object of required type from the database by its id
         /// </summary>
         /// <returns></returns>
-        TEntity GetByGuid(Guid guid);
+        TEntity GetById(int id);
 
         /// <summary>
         /// Adding object of required type to the database

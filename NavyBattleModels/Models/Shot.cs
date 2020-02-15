@@ -12,6 +12,11 @@ namespace NavyBattleModels.Models
         #region properties and fields
 
         /// <summary>
+        /// Id of the shot
+        /// </summary>
+        private int _id;
+
+        /// <summary>
         /// Point where shot was made
         /// </summary>
         private Point _shotPoint;
@@ -22,9 +27,34 @@ namespace NavyBattleModels.Models
         private ShotState _state;
 
         /// <summary>
+        /// Id of the player who has made shot
+        /// </summary>
+        private int? _playerId;
+
+        /// <summary>
+        /// Id of the battlefield where shot was made
+        /// </summary>
+        private int? _gameBattleFieldId;
+
+        /// <summary>
         /// Id of the game where shot was made
         /// </summary>
-        private int _gameId;
+        private int? _gameId;
+
+        /// <summary>
+        /// Id of the shot
+        /// </summary>
+        public int Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+            }
+        }
 
         /// <summary>
         /// Point where shot was made
@@ -35,7 +65,7 @@ namespace NavyBattleModels.Models
             {
                 return _shotPoint;
             }
-            set 
+            set
             {
                 _shotPoint = value;
             }
@@ -51,16 +81,46 @@ namespace NavyBattleModels.Models
             {
                 return _state;
             }
-            set 
+            set
             {
                 _state = value;
             }
         }
 
         /// <summary>
+        /// Id of the player who has made shot
+        /// </summary>
+        public int? PlayerId
+        {
+            get
+            {
+                return _playerId;
+            }
+            set
+            {
+                _playerId = value;
+            }
+        }
+
+        /// <summary>
+        /// Id of the battlefield where shot was made
+        /// </summary>
+        public int? GameBattleFieldId
+        {
+            get 
+            {
+                return _gameBattleFieldId;
+            }
+            set 
+            {
+                _gameBattleFieldId = value;
+            }
+        }
+
+        /// <summary>
         /// Point where shot was made
         /// </summary>
-        public int GameId
+        public int? GameId
         {
             get
             {

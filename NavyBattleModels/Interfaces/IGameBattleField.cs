@@ -12,7 +12,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Game battlefield id
         /// </summary>
-        Guid Guid { get; set; }
+        int Id { get; set; }
 
         /// <summary>
         /// Battlefield on which the game will take place
@@ -22,7 +22,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the battlefield
         /// </summary>
-        Guid BattleFieldId { get; set; }
+        int? BattleFieldId { get; set; }
 
         /// <summary>
         /// Game which this battlefield is added to
@@ -32,7 +32,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the game which this battlefield is added to
         /// </summary>
-        Guid GameId { get; set; }
+        int? GameId { get; set; }
 
         /// <summary>
         /// Player owner of this battlefield
@@ -42,7 +42,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the player owner of this battlefield
         /// </summary>
-        Guid OwnerId { get; set; }
+        int? OwnerId { get; set; }
 
         /// <summary>
         /// BattleShips in the game
@@ -53,6 +53,11 @@ namespace NavyBattleModels.Interfaces
         /// Shots that were made during the game                                                                                                                                                                                                                                                                                                                     
         /// </summary>
         IEnumerable<IShot> Shots { get; set; }
+
+        /// <summary>
+        /// Flag to indicate that battlefield is ready to play
+        /// </summary>
+        bool IsWaiting { get; set; }
         
     }
 }

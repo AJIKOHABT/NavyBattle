@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NavyBattleModels;
+using NavyBattleModels.Errors;
 using NavyBattleModels.Interfaces;
 using NavyBattleModels.Services;
 using NavyBattleModels.Validators;
@@ -23,6 +24,8 @@ namespace NavyBattle.Services
         /// Repository class to work with battleship objectcs in database
         /// </summary>
         IBaseRepository<IBattleShip> _battleShipRepository;
+
+        IBaseRepository<IUser> _userRepository;
 
         #endregion
 
@@ -48,8 +51,10 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        public IBattleFieldValidationResult CreateBattleField(IEnumerable<IBattleShip> battleShips)
+        public IBattleFieldValidationResult CreateBattleField(int userId, IEnumerable<IBattleShip> battleShips)
         {
+            var user = _userRepository.GetById(userId);         
+
             var battleField = new ClassicBattleField();
             battleField.AddBattleShips(battleShips);
 
@@ -57,13 +62,15 @@ namespace NavyBattle.Services
             var result = validator.Validate(battleField);
             if (result.IsSuccess)
             {
+
+                battleField.Owner = user;
                 _battleFieldRepository.Add(battleField);
                 _battleFieldRepository.Save();
 
                 _battleShipRepository.AddRange(battleField.BattleShips);
                 _battleShipRepository.Save();
 
-                result.BattleFieldId = battleField.Guid;
+                result.BattleFieldId = battleField.Id;
             }
 
             return result;

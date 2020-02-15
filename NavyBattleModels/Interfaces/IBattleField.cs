@@ -9,7 +9,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the battlefield
         /// </summary>
-        Guid Guid { get; set; }
+        int Id { get; set; }
 
         /// <summary>
         /// Width of the battlefield
@@ -31,6 +31,16 @@ namespace NavyBattleModels.Interfaces
         /// </summary>
         /// <param name="battleships"></param>
         void AddBattleShips(IEnumerable<IBattleShip> battleships);
+
+        /// <summary>
+        /// Player owner of this battlefield
+        /// </summary>
+        IUser Owner { get; set; }
+
+        /// <summary>
+        /// Id of the player owner of this battlefield
+        /// </summary>
+        int? OwnerId { get; set; }
 
     }
 }

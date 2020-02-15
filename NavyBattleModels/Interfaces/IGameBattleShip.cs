@@ -11,7 +11,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the gamebattleship
         /// </summary>
-        Guid Guid { get; set; }
+        int Id { get; set; }
 
         /// <summary>
         /// Game battlefield in which battleship stands
@@ -21,7 +21,7 @@ namespace NavyBattleModels.Interfaces
         // <summary>
         /// Id of the game battlefield
         /// </summary>
-        Guid GameBattlefieldId { get; set; }
+        int? GameBattlefieldId { get; set; }
 
         /// <summary>
         /// Battleship on the battleField
@@ -31,7 +31,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the battleship on the battleField
         /// </summary>
-        Guid BattleShipId { get; set; }
+        int? BattleShipId { get; set; }
 
         /// <summary>
         /// State of the battleship in the game

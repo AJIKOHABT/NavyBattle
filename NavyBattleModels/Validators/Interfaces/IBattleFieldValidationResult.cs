@@ -15,7 +15,7 @@ namespace NavyBattleModels.Validators.Interfaces
         /// <summary>
         /// Id of the battlefield which was validates
         /// </summary>
-        Guid BattleFieldId { get; set; }   
+        int? BattleFieldId { get; set; }   
         
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Id of the battlefield which was validates
         /// </summary>
-        private Guid _battleFieldId;
+        private int? _battleFieldId;
 
         /// <summary>
         /// List of validation errors
@@ -42,7 +42,7 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Id of the battlefield which was validates
         /// </summary>
-        public Guid BattleFieldId
+        public int? BattleFieldId
         {
             get 
             {

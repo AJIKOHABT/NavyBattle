@@ -6,6 +6,7 @@ namespace NavyBattleModels.Models
 {
     public class GameBattleField : IGameBattleField
     {
+        #region properties and fields
 
         /// <summary>
         /// Battlefield
@@ -18,9 +19,14 @@ namespace NavyBattleModels.Models
         private List<IGameBattleShip> _gameBattleShips = new List<IGameBattleShip>();
 
         /// <summary>
+        /// Flag to indicate that battlefield is ready to play
+        /// </summary>
+        private bool _isWaiting;
+
+        /// <summary>
         /// Game battlefield id
         /// </summary>
-        public Guid Guid { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Battlefield on which the game will take place
@@ -30,7 +36,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Id of the battlefield
         /// </summary>
-        public Guid BattleFieldId { get; set; }
+        public int? BattleFieldId { get; set; }
 
         /// <summary>
         /// Game which this battlefield is added to
@@ -40,7 +46,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Id of the game which this battlefield is added to
         /// </summary>
-        public Guid GameId { get; set; }
+        public int? GameId { get; set; }
 
         /// <summary>
         /// Player owner of this battlefield
@@ -50,7 +56,22 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Id of the player owner of this battlefield
         /// </summary>
-        public Guid OwnerId { get; set; }
+        public int? OwnerId { get; set; }
+
+        /// <summary>
+        /// Flag to indicate that battlefield is ready to play
+        /// </summary>
+        public bool IsWaiting 
+        {
+            get 
+            {
+                return _isWaiting;
+            }
+            set 
+            {
+                _isWaiting = value;
+            }
+        }
 
         /// <summary>
         /// BattleShips in the game
@@ -75,16 +96,31 @@ namespace NavyBattleModels.Models
         /// </summary>
         public IEnumerable<IShot> Shots { get; set; }
 
+        #endregion
+
+        #region constructor
+
+        /// <summary>
+        /// GameBattleField constructor
+        /// </summary>
         public GameBattleField()
         { 
 
         }
 
-        public GameBattleField(IBattleField battleField)
+        /// <summary>
+        /// GameBattleField constructor
+        /// </summary>
+        /// <param name="battleField">battlefield which is used for game</param>
+        /// <param name="isWaiting">flag to indicate that battlefield is ready to play</param>
+        public GameBattleField(IBattleField battleField, bool isWaiting = true)
         {
             _battleField = battleField;
-            GenerateGameBattleShips(battleField);            
+            GenerateGameBattleShips(battleField);
+            _isWaiting = isWaiting;
         }
+
+        #endregion
 
         #region private methods
 

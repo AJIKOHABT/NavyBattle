@@ -12,6 +12,11 @@ namespace NavyBattleModels
         #region fields & properties
 
         /// <summary>
+        /// Id of the battleShip
+        /// </summary>
+        private int _id;
+
+        /// <summary>
         /// Zone around the battleship
         /// </summary>
         private HashSet<Point> _zoneAroundBattleShip;
@@ -34,7 +39,22 @@ namespace NavyBattleModels
         /// <summary>
         /// ID of the battlefield
         /// </summary>
-        private int _battleFieldId;
+        private int? _battleFieldId;
+
+        /// <summary>
+        /// Id of the battleShip
+        /// </summary>
+        public int Id
+        {
+            get 
+            {
+                return _id;
+            }
+            set 
+            {
+                _id = value;
+            }
+        }
 
         /// <summary>
         /// Length of the battleship
@@ -84,7 +104,7 @@ namespace NavyBattleModels
         /// <summary>
         /// ID of the battlefield
         /// </summary>
-        public int BattleFieldId
+        public int? BattleFieldId
         {
             get 
             {

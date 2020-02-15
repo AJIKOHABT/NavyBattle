@@ -12,11 +12,6 @@ namespace NavyBattleModels.Enums
         Started,
 
         /// <summary>
-        /// Waiting for players to connect
-        /// </summary>
-        WaitingForPlayers,
-
-        /// <summary>
         /// Waiting for shot from the player
         /// </summary>
         WaitingForShot,

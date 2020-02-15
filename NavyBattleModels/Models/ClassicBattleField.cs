@@ -15,18 +15,5 @@ namespace NavyBattleModels
 
         #endregion
 
-        #region override methods
-
-        public void override AutoGenerate()
-        {
-            
-        }
-
-        private GenerateBattleShip(bool isVertical)
-        {
-            
-        }
-
-        #endregion
     }
 }

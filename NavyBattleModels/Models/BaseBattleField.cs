@@ -25,7 +25,7 @@ namespace NavyBattleModels
         /// <summary>
         /// Id of the battlefield
         /// </summary>
-        private Guid _guid;
+        private int _id;
 
         /// <summary>
         /// List of battleships on the battlefield
@@ -65,15 +65,15 @@ namespace NavyBattleModels
         /// <summary>
         /// Id of the battlefield
         /// </summary>
-        public Guid Guid
+        public int Id
         {
             get
             {
-                return _guid;
+                return _id;
             }
             set
             {
-                _guid = value;
+                _id = value;
             }
         }
         
@@ -91,6 +91,16 @@ namespace NavyBattleModels
                 _battleShips = value;
             }
         }
+
+        /// <summary>
+        /// Player owner of this battlefield
+        /// </summary>
+        public IUser Owner { get; set; }
+
+        /// <summary>
+        /// Id of the player owner of this battlefield
+        /// </summary>
+        public int? OwnerId { get; set; }
 
         #endregion
 
@@ -111,7 +121,6 @@ namespace NavyBattleModels
         /// <param name="height">height of the battlefield</param>
         public BaseBattleField(int width, int height)
         {
-            _guid = new Guid();
             _width = width;
             _height = height;
         }

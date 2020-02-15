@@ -11,7 +11,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the shot
         /// </summary>
-        Guid Guid { get; set; }
+        int Id { get; set; }
 
         /// <summary>
         /// Point where shot was made
@@ -26,16 +26,16 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Id of the player who has made the shot
         /// </summary>
-        Guid PlayerId { get; set; }
+        int? PlayerId { get; set; }
 
         /// <summary>
         /// Id of the game battlefield where shot was made
         /// </summary>
-        Guid GameBattleFieldId { get; set; }
+        int? GameBattleFieldId { get; set; }
 
         /// <summary>
         /// Id of the game
         /// </summary>
-        Guid GameId { get; set; }
+        int? GameId { get; set; }
     }
 }
