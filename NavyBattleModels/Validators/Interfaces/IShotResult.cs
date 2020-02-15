@@ -21,5 +21,6 @@ namespace NavyBattleModels.Validators.Interfaces
         /// Shot
         /// </summary>
         IShot Shot { get; set; }
+
     }
 }

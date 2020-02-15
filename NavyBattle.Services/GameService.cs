@@ -186,13 +186,45 @@ namespace NavyBattle.Services
         }
 
         /// <summary>
+        /// Checking for whos turn now
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public IGameResult CheckForUsersTurn(int userId, int gameId)
+        {
+            var result = new GameResult();
+            result.GameId = gameId;
+            var game = GetById(gameId);
+
+            if (game == null)
+            {
+                result.IsError = true;
+                result.ErrorMessage = "There is no game with such id";
+                return result;
+            }
+                        
+            result.GameState = game.State;
+            result.WhosTurn = game.TurnOfThePlayer;
+            var usersBattleField = game.GameBattleFields.FirstOrDefault(gbf=>gbf.OwnerId == userId);
+            result.Shots = usersBattleField.Shots;
+
+            if (game.State == GameState.Finished)
+            {
+                result.Winner = game.Winner;
+            }
+                      
+            return result;
+        }
+
+        /// <summary>
         /// Getting result of shot
         /// </summary>
         /// <param name="shot"></param>
         /// <returns></returns>
         public IShotResult FireShot(IShot shot)
         {
-            var game = GetById(shot.GameId.Value);
+            var game = GetById(shot.GameId.Value);            
             var shotValidator = new ShotValidator();
             var result = shotValidator.Validate(game, shot);
 
@@ -200,12 +232,13 @@ namespace NavyBattle.Services
             {
                 if (game.State == GameState.Finished)
                 {
+                    game.Winner = _userRepository.GetById(shot.PlayerId.Value);
                     _gameRepository.Update(game);
                     _gameRepository.Save();
                 }
 
                 _shotRepository.Add(result.Shot);
-                _shotRepository.Save();
+                _shotRepository.Save();                
 
                 _gameBattleShipRepository.Update(result.GameBattleShip);
                 _gameBattleShipRepository.Save();

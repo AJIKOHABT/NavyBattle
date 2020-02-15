@@ -37,11 +37,6 @@ namespace NavyBattleModels.Models
         private int? _gameBattleFieldId;
 
         /// <summary>
-        /// Id of the game where shot was made
-        /// </summary>
-        private int? _gameId;
-
-        /// <summary>
         /// Id of the shot
         /// </summary>
         public int Id
@@ -118,19 +113,14 @@ namespace NavyBattleModels.Models
         }
 
         /// <summary>
-        /// Point where shot was made
+        /// BattleField where shot was made
         /// </summary>
-        public int? GameId
-        {
-            get
-            {
-                return _gameId;
-            }
-            set 
-            {
-                _gameId = value;
-            }
-        }
+        public IGameBattleField GameBattleField { get; set; }
+
+        /// <summary>
+        /// Id of the game where shot was made
+        /// </summary>
+        public int? GameId { get; set; }
 
         #endregion
     }

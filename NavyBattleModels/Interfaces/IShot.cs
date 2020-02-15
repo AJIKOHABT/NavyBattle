@@ -29,12 +29,17 @@ namespace NavyBattleModels.Interfaces
         int? PlayerId { get; set; }
 
         /// <summary>
-        /// Id of the game battlefield where shot was made
+        /// BattleField where shot was made
+        /// </summary>
+        IGameBattleField GameBattleField { get; set; }
+
+        /// <summary>
+        /// Id of the BattleField where shot was made
         /// </summary>
         int? GameBattleFieldId { get; set; }
 
         /// <summary>
-        /// Id of the game
+        /// Id of the game where shot was made
         /// </summary>
         int? GameId { get; set; }
     }

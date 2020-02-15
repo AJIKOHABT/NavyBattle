@@ -1,9 +1,7 @@
 ﻿using NavyBattleModels.Interfaces;
-using NavyBattleModels.Models;
 using NavyBattleModels.Enums;
 using NavyBattleModels.Validators.Interfaces;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace NavyBattleModels.Validators
@@ -19,12 +17,11 @@ namespace NavyBattleModels.Validators
         /// <returns>Result of the shot as IResultShot object</returns>
         public IShotResult Validate(IGame game, IShot shot)
         {
+            var gameBattleField = game.GameBattleFields.FirstOrDefault(gbf => gbf.OwnerId != shot.PlayerId.Value);
             var gameShots = gameBattleField.Shots;
             var shotPoint = shot.ShotPoint;
             var battleField = gameBattleField.BattleField;
             
-            var gameBattleField = 
-
             var shotResult = new ShotResult();
             shotResult.Shot = shot;
 
@@ -42,22 +39,22 @@ namespace NavyBattleModels.Validators
                 if (!isBattleShipDestroyed.HasValue)
                 {
                     shot.State = ShotState.Miss;
+                    game.TurnOfThePlayer = gameBattleField.OwnerId;
                 }
                 else if (isBattleShipDestroyed.Value)
                 {
                     var destroyedShips = gameBattleField.GameBattleShips.Count(gameBattleShip => gameBattleShip.State == BattleShipState.Destroyed);
                     if (destroyedShips == gameBattleField.BattleField.BattleShips.Count)
                     {
-                        game.State = GameState.Finished;
-                        ////сюда добавить победителя
+                        game.State = GameState.Finished;                        
                     }
-                    shot.State = ShotState.Destroyed;                    
-
+                    shot.State = ShotState.Destroyed;  
                 }
                 else if (!isBattleShipDestroyed.Value)
                 {
                     shot.State = ShotState.Damaged;
                 }
+                shot.GameBattleField = gameBattleField;
                 shotResult.IsSuccess = true;
             }
 

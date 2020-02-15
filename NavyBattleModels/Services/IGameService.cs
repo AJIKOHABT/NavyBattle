@@ -41,5 +41,13 @@ namespace NavyBattleModels.Services
         /// <param name="gameBattleFieldId"></param>
         /// <returns></returns>
         IBattleFieldResult WaitingForPlayer(int gameBattleFieldId);
+
+        /// <summary>
+        /// Checking for whos turn now
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        IGameResult CheckForUsersTurn(int userId, int gameId);
     }
 }

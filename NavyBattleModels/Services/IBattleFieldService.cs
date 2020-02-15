@@ -11,7 +11,7 @@ namespace NavyBattleModels.Services
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        IBattleFieldValidationResult CreateBattleField(IEnumerable<IBattleShip> battleShips);
+        IBattleFieldValidationResult CreateBattleField(int userId, IEnumerable<IBattleShip> battleShips);
 
         /// <summary>
         /// Getting battlefield by id
