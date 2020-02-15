@@ -35,9 +35,9 @@ namespace NavyBattleController.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public ActionResult Post([FromBody]List<BattleShip> battleShips)
+        public ActionResult Post([FromBody] int userId,[FromBody]List<BattleShip> battleShips)
         {
-            var result = _battleFieldService.CreateBattleField(battleShips);
+            var result = _battleFieldService.CreateBattleField(userId, battleShips);
             if (result.IsSuccess)
             {
                 return Ok(result.BattleFieldId);

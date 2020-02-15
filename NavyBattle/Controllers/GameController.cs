@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NavyBattleModels.Interfaces;
 using NavyBattleModels.Services;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace NavyBattle.Controllers
 {
@@ -24,22 +22,27 @@ namespace NavyBattle.Controllers
             return Json(_gameService.GetAll());
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        [HttpGet("{battleFieldId}")]
+        public JsonResult Get(int battleFieldId)
         {
-            return Json(_gameService.GetById(id));
+            return Json(_gameService.WaitingForPlayer(battleFieldId));
+        }
+
+        [HttpGet]
+        public JsonResult Get([FromQuery]int userId, [FromQuery]int gameId)
+        {
+            return Json(_gameService.CheckForUsersTurn(userId, gameId));
         }
 
         // POST api/values
         [HttpPost]
-        public JsonResult Post([FromBody] int id)
+        public JsonResult Post([FromBody] int userId, [FromBody] int battleFieldId)
         {
-           return Json(_gameService.CreateGame(id));
+           return Json(_gameService.CreateGameBattleField(userId, battleFieldId));
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
+        [HttpPut("{shot}")]
         public ActionResult Put(IShot shot)
         {
             var result = _gameService.FireShot(shot);
