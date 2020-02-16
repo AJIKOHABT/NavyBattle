@@ -1,9 +1,11 @@
 ﻿using NavyBattleModels.Enums;
 using NavyBattleModels.Interfaces;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NavyBattleModels.Models
 {
+    [NotMapped]
     public class GameResult : IGameResult
     {
         /// <summary>

@@ -126,7 +126,7 @@ namespace NavyBattle.Services
             }
 
             var gameBattleField = new GameBattleField(battleField);
-            gameBattleField.Owner = owner;
+            gameBattleField.Owner = (User)owner;
 
             _gameBattleFieldRepository.Add(gameBattleField);
             _gameBattleFieldRepository.Save();
@@ -232,7 +232,7 @@ namespace NavyBattle.Services
             {
                 if (game.State == GameState.Finished)
                 {
-                    game.Winner = _userRepository.GetById(shot.PlayerId.Value);
+                    game.Winner = (User)_userRepository.GetById(shot.PlayerId.Value);
                     _gameRepository.Update(game);
                     _gameRepository.Save();
                 }

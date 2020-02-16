@@ -1,7 +1,9 @@
 ﻿using NavyBattleModels.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NavyBattleModels.Models
 {
+    [NotMapped]
     public class BattleFieldResult : IBattleFieldResult
     {
         /// <summary>

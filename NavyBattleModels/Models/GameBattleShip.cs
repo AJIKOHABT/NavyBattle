@@ -19,7 +19,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Game in which battleship stands
         /// </summary>
-        private IGameBattleField _gameBattleField;
+        private GameBattleField _gameBattleField;
 
         /// <summary>
         /// Id of the game
@@ -29,7 +29,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Battleship on the battleField
         /// </summary>
-        private IBattleShip _battleShip;
+        private BattleShip _battleShip;
 
         /// <summary>
         /// Id of the battleship on the battleField
@@ -64,7 +64,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Game in which battleship stands
         /// </summary>
-        public IGameBattleField GameBattleField
+        public GameBattleField GameBattleField
         {
             get 
             {
@@ -97,7 +97,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Battleship on the battleField
         /// </summary>
-        public IBattleShip BattleShip
+        public BattleShip BattleShip
         {
             get 
             {
@@ -160,7 +160,9 @@ namespace NavyBattleModels.Models
         #endregion
 
         #region constructor
-
+        public GameBattleShip()
+        {
+        }
         /// <summary>
         /// Constructor of the battleship in the game
         /// </summary>
@@ -168,8 +170,8 @@ namespace NavyBattleModels.Models
         /// <param name="battleShip"></param>
         public GameBattleShip(IGameBattleField gameBattleField, IBattleShip battleShip)
         {
-            _gameBattleField = gameBattleField;
-            _battleShip = battleShip;
+            _gameBattleField = (GameBattleField)gameBattleField;
+            _battleShip = (BattleShip)battleShip;
             _state = BattleShipState.Full;
         }
 

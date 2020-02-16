@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NavyBattleModels.Interfaces;
-
+using NavyBattleModels;
+using NavyBattleModels.Models;
 
 namespace NavyBattle.Dal.Contexts
 {
@@ -10,43 +10,43 @@ namespace NavyBattle.Dal.Contexts
         {            
         }
 
-        public DbSet<IGame> Games
+        public DbSet<Game> Games
         {
             get;
             set; 
         }
 
-        public DbSet<IGameBattleField> GameBattleFields
+        public DbSet<GameBattleField> GameBattleFields
         {
             get;
             set;
         }
 
-        public DbSet<IUser> Users
+        public DbSet<User> Users
         {
             get;
             set;
         }
 
-        public DbSet<IShot> Shots
+        public DbSet<Shot> Shots
         {
             get;
             set;
         }
 
-        public DbSet<IGameBattleShip> GameBattleShips
+        public DbSet<GameBattleShip> GameBattleShips
         {
             get;
             set;
         }
 
-        public DbSet<IBattleField> BattleFields
+        public DbSet<BaseBattleField> BattleFields
         {
             get;
             set;
         }
 
-        public DbSet<IBattleShip> BattleShips
+        public DbSet<BattleShip> BattleShips
         {
             get;
             set;

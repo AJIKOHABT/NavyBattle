@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NavyBattle.Services;
 using NavyBattle.Dal;
+using NavyBattleModels;
 
 namespace NavyBattle
 {
@@ -21,6 +22,7 @@ namespace NavyBattle
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            ModelsContainer.RegisterModels(services);
             DalContainer.RegisterRepositories(services, Configuration.GetConnectionString("sqlConnection"));
             ServicesContainer.RegisterServices(services);            
         }

@@ -4,6 +4,7 @@ using NavyBattle.Dal.Contexts;
 using NavyBattle.Dal.Repositories;
 using NavyBattleModels;
 using NavyBattleModels.Interfaces;
+using NavyBattleModels.Models;
 
 namespace NavyBattle.Dal
 {

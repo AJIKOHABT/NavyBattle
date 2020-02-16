@@ -25,12 +25,12 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// List of the battlefields using in the game
         /// </summary>
-        private List<IGameBattleField> _gameBattleFields = new List<IGameBattleField>();
+        private List<GameBattleField> _gameBattleFields = new List<GameBattleField>();
 
         /// <summary>
         /// Winner of the game
         /// </summary>
-        private IUser _winner;
+        private User _winner;
 
         /// <summary>
         /// Winner id
@@ -76,7 +76,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// List of the battlefields using in the game
         /// </summary>
-        public IEnumerable<IGameBattleField> GameBattleFields
+        public IEnumerable<GameBattleField> GameBattleFields
         {
             get
             {
@@ -86,7 +86,7 @@ namespace NavyBattleModels.Models
             {
                 if (value != null)
                 {
-                    _gameBattleFields = (List<IGameBattleField>)value;
+                    _gameBattleFields = (List<GameBattleField>)value;
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Winner of the game
         /// </summary>
-        public IUser Winner
+        public User Winner
         {
             get
             {
@@ -153,7 +153,11 @@ namespace NavyBattleModels.Models
         /// <param name="battleField">Battlefield on which the game will take place</param>
         public Game(IEnumerable<IGameBattleField> gameBattleFields)
         {
-            _gameBattleFields.AddRange(gameBattleFields);
+            foreach (var gameBattleField in gameBattleFields)
+            {
+                gameBattleField.Game = this;
+                _gameBattleFields.Add((GameBattleField)gameBattleField);
+            }
             _state = GameState.Started;
             Random random = new Random();
             _turnOfThePlayer = random.Next(0, 1000000) < 500000 ? _gameBattleFields[0].OwnerId : _gameBattleFields[1].OwnerId;          

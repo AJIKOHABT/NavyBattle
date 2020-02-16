@@ -1,6 +1,7 @@
 ﻿using NavyBattleModels.Enums;
 using NavyBattleModels.Interfaces;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NavyBattleModels.Models
 {
@@ -15,6 +16,16 @@ namespace NavyBattleModels.Models
         /// Id of the shot
         /// </summary>
         private int _id;
+
+        /// <summary>
+        /// X coordinate of the shot point
+        /// </summary>
+        private int _shotX;
+
+        /// <summary>
+        /// Y coordinate of the shot point
+        /// </summary>
+        private int _shotY;
 
         /// <summary>
         /// Point where shot was made
@@ -52,8 +63,47 @@ namespace NavyBattleModels.Models
         }
 
         /// <summary>
+        /// X coordinate of the shot point
+        /// </summary>
+        public int ShotX
+        {
+            get
+            {
+                if (_shotX == 0 && _shotPoint.X != 0)
+                {
+                    _shotX = _shotPoint.X;
+                }
+                return _shotX;
+            }
+            set
+            {
+                _shotX = value;
+            }
+        }
+
+        /// <summary>
+        /// Y coordinate of the shot point
+        /// </summary>
+        public int ShotY
+        {
+            get
+            {
+                if (_shotY == 0 && _shotPoint.Y != 0)
+                {
+                    _shotY = _shotPoint.Y;
+                }
+                return _shotY;
+            }
+            set
+            {
+                _shotY = value;
+            }
+        }
+
+        /// <summary>
         /// Point where shot was made
         /// </summary>
+        [NotMapped]
         public Point ShotPoint
         {
             get
@@ -115,7 +165,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// BattleField where shot was made
         /// </summary>
-        public IGameBattleField GameBattleField { get; set; }
+        public GameBattleField GameBattleField { get; set; }
 
         /// <summary>
         /// Id of the game where shot was made

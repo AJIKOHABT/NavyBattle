@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NavyBattleModels.Models;
+using System;
 using System.Collections.Generic;
 
 
@@ -17,7 +18,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Battlefield on which the game will take place
         /// </summary>
-        IBattleField BattleField { get; set; }
+        BaseBattleField BattleField { get; set; }
 
         /// <summary>
         /// Id of the battlefield
@@ -27,7 +28,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Game which this battlefield is added to
         /// </summary>
-        IGame Game { get; set; }
+        Game Game { get; set; }
 
         /// <summary>
         /// Id of the game which this battlefield is added to
@@ -37,7 +38,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Player owner of this battlefield
         /// </summary>
-        IUser Owner { get; set; }
+        User Owner { get; set; }
 
         /// <summary>
         /// Id of the player owner of this battlefield
@@ -47,12 +48,12 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// BattleShips in the game
         /// </summary>
-        IEnumerable<IGameBattleShip> GameBattleShips { get; set; }
+        IEnumerable<GameBattleShip> GameBattleShips { get; set; }
 
         /// <summary>
         /// Shots that were made during the game                                                                                                                                                                                                                                                                                                                     
         /// </summary>
-        IEnumerable<IShot> Shots { get; set; }
+        IEnumerable<Shot> Shots { get; set; }
 
         /// <summary>
         /// Flag to indicate that battlefield is ready to play

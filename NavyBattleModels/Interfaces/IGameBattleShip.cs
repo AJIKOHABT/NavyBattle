@@ -1,5 +1,6 @@
 ﻿using NavyBattleModels.Enums;
-using System;
+using NavyBattleModels.Models;
+
 
 namespace NavyBattleModels.Interfaces
 {
@@ -16,7 +17,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Game battlefield in which battleship stands
         /// </summary>
-        IGameBattleField GameBattleField { get; set; }
+        GameBattleField GameBattleField { get; set; }
 
         // <summary>
         /// Id of the game battlefield
@@ -26,7 +27,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Battleship on the battleField
         /// </summary>
-        IBattleShip BattleShip { get; set; }
+        BattleShip BattleShip { get; set; }
 
         /// <summary>
         /// Id of the battleship on the battleField

@@ -1,4 +1,5 @@
 ﻿using NavyBattleModels.Interfaces;
+using NavyBattleModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace NavyBattleModels
         /// <summary>
         /// List of battleships on the battlefield
         /// </summary>
-        private ICollection<IBattleShip> _battleShips = new List<IBattleShip>();
+        private ICollection<BattleShip> _battleShips = new List<BattleShip>();
 
         /// <summary>
         /// Width of the battlefield
@@ -80,7 +81,7 @@ namespace NavyBattleModels
         /// <summary>
         /// List of battleships on the battlefield
         /// </summary>
-        public ICollection<IBattleShip> BattleShips
+        public ICollection<BattleShip> BattleShips
         {
             get
             {
@@ -95,7 +96,7 @@ namespace NavyBattleModels
         /// <summary>
         /// Player owner of this battlefield
         /// </summary>
-        public IUser Owner { get; set; }
+        public User Owner { get; set; }
 
         /// <summary>
         /// Id of the player owner of this battlefield
@@ -111,7 +112,7 @@ namespace NavyBattleModels
         /// </summary>
         public BaseBattleField()
         {
-            _battleShips = new List<IBattleShip>();
+            _battleShips = new List<BattleShip>();
         }
 
         /// <summary>
@@ -144,8 +145,9 @@ namespace NavyBattleModels
                 if (battleship.Length < 0)
                 {
                     battleship.RecalculateBattleShip();
+                    battleship.BattleField = this;
                 }
-                _battleShips.Add(battleship);
+                _battleShips.Add((BattleShip)battleship);
             }
         }       
 

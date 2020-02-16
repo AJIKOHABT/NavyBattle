@@ -30,9 +30,24 @@ namespace NavyBattleModels.Interfaces
         Point StartPoint { get; set; }
 
         /// <summary>
+        /// X coordinate of the start point
+        /// </summary>
+        int StartX { get; set; }
+
+        /// <summary>
+        /// Y coordinate of the start point
+        /// </summary>
+        int StartY { get; set; }
+
+        /// <summary>
         /// ID of the battlefield
         /// </summary>
         int? BattleFieldId { get; set; }
+
+        /// <summary>
+        /// Battlefield
+        /// </summary>
+        BaseBattleField BattleField { get; set; }
 
         /// <summary>
         /// Recalculation of battleship parameters

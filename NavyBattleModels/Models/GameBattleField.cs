@@ -11,12 +11,12 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Battlefield
         /// </summary>
-        private IBattleField _battleField;
+        private BaseBattleField _battleField;
 
         /// <summary>
         /// BattleShips in the game
         /// </summary>
-        private List<IGameBattleShip> _gameBattleShips = new List<IGameBattleShip>();
+        private List<GameBattleShip> _gameBattleShips = new List<GameBattleShip>();
 
         /// <summary>
         /// Flag to indicate that battlefield is ready to play
@@ -31,7 +31,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Battlefield on which the game will take place
         /// </summary>
-        public IBattleField BattleField { get; set; }
+        public BaseBattleField BattleField { get; set; }
 
         /// <summary>
         /// Id of the battlefield
@@ -41,7 +41,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Game which this battlefield is added to
         /// </summary>
-        public IGame Game { get; set; }
+        public Game Game { get; set; }
 
         /// <summary>
         /// Id of the game which this battlefield is added to
@@ -51,7 +51,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Player owner of this battlefield
         /// </summary>
-        public IUser Owner { get; set; }
+        public User Owner { get; set; }
 
         /// <summary>
         /// Id of the player owner of this battlefield
@@ -76,7 +76,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// BattleShips in the game
         /// </summary>
-        public IEnumerable<IGameBattleShip> GameBattleShips
+        public IEnumerable<GameBattleShip> GameBattleShips
         {
             get
             {
@@ -86,7 +86,7 @@ namespace NavyBattleModels.Models
             {
                 if (value != null)
                 {
-                    _gameBattleShips = (List<IGameBattleShip>)value;
+                    _gameBattleShips = (List<GameBattleShip>)value;
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Shots that were made during the game                                                                                                                                                                                                                                                                                                                     
         /// </summary>
-        public IEnumerable<IShot> Shots { get; set; }
+        public IEnumerable<Shot> Shots { get; set; }
 
         #endregion
 
@@ -115,7 +115,7 @@ namespace NavyBattleModels.Models
         /// <param name="isWaiting">flag to indicate that battlefield is ready to play</param>
         public GameBattleField(IBattleField battleField, bool isWaiting = true)
         {
-            _battleField = battleField;
+            _battleField = (BaseBattleField)battleField;
             GenerateGameBattleShips(battleField);
             _isWaiting = isWaiting;
         }

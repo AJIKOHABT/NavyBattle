@@ -1,4 +1,5 @@
 ﻿using NavyBattleModels.Enums;
+using NavyBattleModels.Models;
 using System;
 
 namespace NavyBattleModels.Interfaces
@@ -12,6 +13,16 @@ namespace NavyBattleModels.Interfaces
         /// Id of the shot
         /// </summary>
         int Id { get; set; }
+
+        /// <summary>
+        /// X coordinate of the shot point
+        /// </summary>
+        int ShotX { get; set; }
+
+        /// <summary>
+        /// X coordinate of the shot point
+        /// </summary>
+        int ShotY { get; set; }
 
         /// <summary>
         /// Point where shot was made
@@ -31,7 +42,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// BattleField where shot was made
         /// </summary>
-        IGameBattleField GameBattleField { get; set; }
+        GameBattleField GameBattleField { get; set; }
 
         /// <summary>
         /// Id of the BattleField where shot was made

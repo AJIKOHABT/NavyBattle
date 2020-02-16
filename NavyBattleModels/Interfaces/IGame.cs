@@ -1,5 +1,5 @@
 ﻿using NavyBattleModels.Enums;
-using System;
+using NavyBattleModels.Models;
 using System.Collections.Generic;
 
 
@@ -18,7 +18,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Battlefield on which the game will take place
         /// </summary>
-        IEnumerable<IGameBattleField> GameBattleFields { get; set; }
+        IEnumerable<GameBattleField> GameBattleFields { get; set; }
 
         /// <summary>
         /// Id of the player who's shooting now
@@ -28,7 +28,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Winner
         /// </summary>
-        IUser Winner { get; set; }
+        User Winner { get; set; }
 
         /// <summary>
         /// Id of the winner

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NavyBattleModels.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -24,7 +25,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// List of battleships on the battlefield
         /// </summary>
-        ICollection<IBattleShip> BattleShips { get; set; }
+        ICollection<BattleShip> BattleShips { get; set; }
 
         /// <summary>
         /// Recalculation of the startPoint and adding battleship to battlefield
@@ -35,7 +36,7 @@ namespace NavyBattleModels.Interfaces
         /// <summary>
         /// Player owner of this battlefield
         /// </summary>
-        IUser Owner { get; set; }
+        User Owner { get; set; }
 
         /// <summary>
         /// Id of the player owner of this battlefield

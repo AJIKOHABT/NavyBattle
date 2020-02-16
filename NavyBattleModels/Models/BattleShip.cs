@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using NavyBattleModels.Interfaces;
 
 namespace NavyBattleModels
@@ -46,11 +47,11 @@ namespace NavyBattleModels
         /// </summary>
         public int Id
         {
-            get 
+            get
             {
                 return _id;
             }
-            set 
+            set
             {
                 _id = value;
             }
@@ -59,13 +60,13 @@ namespace NavyBattleModels
         /// <summary>
         /// Length of the battleship
         /// </summary>
-        public int Length 
+        public int Length
         {
-            get 
-            { 
-                return _length; 
+            get
+            {
+                return _length;
             }
-            set 
+            set
             {
                 _length = value;
             }
@@ -76,19 +77,30 @@ namespace NavyBattleModels
         /// </summary>
         public bool IsVertical
         {
-            get 
-            { 
-                return _isVertical; 
+            get
+            {
+                return _isVertical;
             }
-            set 
+            set
             {
                 _isVertical = value;
             }
         }
 
         /// <summary>
+        /// X coordinate of the start point
+        /// </summary>
+        public int StartX { get; set; }
+
+        /// <summary>
+        /// Y coordinate of the start point
+        /// </summary>
+        public int StartY { get; set; }
+
+        /// <summary>
         /// Starting point of the battleship
         /// </summary>
+        [NotMapped]
         public Point StartPoint
         {
             get
@@ -116,9 +128,19 @@ namespace NavyBattleModels
             }
         }
 
+        /// <summary>
+        /// Battlefield
+        /// </summary>
+        public BaseBattleField BattleField { get; set; }
+
         #endregion
 
         #region constructors
+
+        public BattleShip()
+        {
+           _startPoint = new Point(StartX, StartY);
+        }
 
         /// <summary>
         /// BattleShip constructor
@@ -131,6 +153,8 @@ namespace NavyBattleModels
             _length = length;
             _isVertical = isVertical;
             _startPoint = startPoint;
+            StartX = startPoint.X;
+            StartY = startPoint.Y;
         }
 
         #endregion

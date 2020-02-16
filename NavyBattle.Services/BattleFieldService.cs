@@ -2,6 +2,7 @@
 using NavyBattleModels;
 using NavyBattleModels.Errors;
 using NavyBattleModels.Interfaces;
+using NavyBattleModels.Models;
 using NavyBattleModels.Services;
 using NavyBattleModels.Validators;
 using NavyBattleModels.Validators.Interfaces;
@@ -63,7 +64,7 @@ namespace NavyBattle.Services
             if (result.IsSuccess)
             {
 
-                battleField.Owner = user;
+                battleField.Owner = (User)user;
                 _battleFieldRepository.Add(battleField);
                 _battleFieldRepository.Save();
 
