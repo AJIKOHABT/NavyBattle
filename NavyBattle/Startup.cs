@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using NavyBattle.Services;
 using NavyBattle.Dal;
 using NavyBattleModels;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace NavyBattle
 {
@@ -24,7 +26,11 @@ namespace NavyBattle
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             ModelsContainer.RegisterModels(services);
             DalContainer.RegisterRepositories(services, Configuration.GetConnectionString("sqlConnection"));
-            ServicesContainer.RegisterServices(services);            
+            ServicesContainer.RegisterServices(services);
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "NavyBattle", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +48,12 @@ namespace NavyBattle
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NavyBattle V1");
+            });
         }
     }
 }
