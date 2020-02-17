@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NavyBattleModels.Interfaces;
+using NavyBattleModels.Models;
 using NavyBattleModels.Services;
 
 namespace NavyBattle.Controllers
@@ -36,14 +37,14 @@ namespace NavyBattle.Controllers
 
         // POST api/values
         [HttpPost]
-        public JsonResult Post([FromBody] int userId, [FromBody] int battleFieldId)
+        public JsonResult Post([FromHeader] int userId, [FromBody] int battleFieldId)
         {
            return Json(_gameService.CreateGameBattleField(userId, battleFieldId));
         }
 
         // PUT api/values/5
         [HttpPut("{shot}")]
-        public ActionResult Put(IShot shot)
+        public ActionResult Put(Shot shot)
         {
             var result = _gameService.FireShot(shot);
             if (result.IsSuccess)

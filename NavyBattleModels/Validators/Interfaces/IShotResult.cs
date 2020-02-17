@@ -1,4 +1,5 @@
 ﻿using NavyBattleModels.Interfaces;
+using NavyBattleModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,12 +16,12 @@ namespace NavyBattleModels.Validators.Interfaces
         /// <summary>
         /// Damaged or destroyed battleship
         /// </summary>
-        IGameBattleShip GameBattleShip { get; set; }
+        GameBattleShip GameBattleShip { get; set; }
 
         /// <summary>
         /// Shot
         /// </summary>
-        IShot Shot { get; set; }
+        Shot Shot { get; set; }
 
     }
 }

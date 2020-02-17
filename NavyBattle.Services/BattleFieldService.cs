@@ -19,14 +19,14 @@ namespace NavyBattle.Services
         /// <summary>
         /// Repository class to work with battlefield objectcs in database
         /// </summary>
-        IBaseRepository<IBattleField> _battleFieldRepository;
+        IBaseRepository<BaseBattleField> _battleFieldRepository;
 
         /// <summary>
         /// Repository class to work with battleship objectcs in database
         /// </summary>
-        IBaseRepository<IBattleShip> _battleShipRepository;
+        IBaseRepository<BattleShip> _battleShipRepository;
 
-        IBaseRepository<IUser> _userRepository;
+        IBaseRepository<User> _userRepository;
 
         #endregion
 
@@ -37,10 +37,13 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="battleFieldRepository">Repository class to work with battlefield objectcs in database</param>
         /// <param name="battleShipRepository">Repository class to work with battleship objectcs in database</param>
-        public BattleFieldService(IBaseRepository<IBattleField> battleFieldRepository, IBaseRepository<IBattleShip> battleShipRepository)
+        public BattleFieldService(IBaseRepository<BaseBattleField> battleFieldRepository, 
+            IBaseRepository<BattleShip> battleShipRepository, 
+            IBaseRepository<User> userRepository)
         {
             this._battleFieldRepository = battleFieldRepository;
             this._battleShipRepository = battleShipRepository;
+            this._userRepository = userRepository;
         }
 
         #endregion
@@ -52,7 +55,7 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        public IBattleFieldValidationResult CreateBattleField(int userId, IEnumerable<IBattleShip> battleShips)
+        public BattleFieldValidationResult CreateBattleField(int userId, IEnumerable<BattleShip> battleShips)
         {
             var user = _userRepository.GetById(userId);         
 
@@ -74,7 +77,7 @@ namespace NavyBattle.Services
                 result.BattleFieldId = battleField.Id;
             }
 
-            return result;
+            return (BattleFieldValidationResult)result;
         }
 
         /// <summary>
@@ -82,7 +85,7 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IBattleField GetById(int id)
+        public BaseBattleField GetById(int id)
         {
             return _battleFieldRepository.GetById(id);
         }
@@ -91,7 +94,7 @@ namespace NavyBattle.Services
         /// Getting all battlefields from the database
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IBattleField> GetAll()
+        public IEnumerable<BaseBattleField> GetAll()
         {
             return _battleFieldRepository.GetAll();
         }

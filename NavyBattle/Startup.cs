@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NavyBattle.Services;
 using NavyBattle.Dal;
 using NavyBattleModels;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NavyBattle
 {
@@ -23,7 +23,7 @@ namespace NavyBattle
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllers();            
             ModelsContainer.RegisterModels(services);
             DalContainer.RegisterRepositories(services, Configuration.GetConnectionString("sqlConnection"));
             ServicesContainer.RegisterServices(services);
@@ -34,7 +34,7 @@ namespace NavyBattle
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -47,7 +47,15 @@ namespace NavyBattle
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers(); // подключаем маршрутизацию на контроллеры
+            });
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

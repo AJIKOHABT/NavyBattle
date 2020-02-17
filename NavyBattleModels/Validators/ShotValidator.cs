@@ -3,6 +3,7 @@ using NavyBattleModels.Enums;
 using NavyBattleModels.Validators.Interfaces;
 using System.Linq;
 using System.Collections.Generic;
+using NavyBattleModels.Models;
 
 namespace NavyBattleModels.Validators
 {
@@ -15,7 +16,7 @@ namespace NavyBattleModels.Validators
         /// </summary>
         /// <param name="shot">fired shot</param>
         /// <returns>Result of the shot as IResultShot object</returns>
-        public IShotResult Validate(IGame game, IShot shot)
+        public ShotResult Validate(Game game, Shot shot)
         {
             var gameBattleField = game.GameBattleFields.FirstOrDefault(gbf => gbf.OwnerId != shot.PlayerId.Value);
             var gameShots = gameBattleField.Shots;
@@ -93,7 +94,7 @@ namespace NavyBattleModels.Validators
         /// <param name="gameBattleShips"></param>
         /// <param name="shotResult"></param>
         /// <returns>true - if destroyed, false - if damaged, null - if missed</returns>
-        private bool? CheckBattleShipDestroyed(IEnumerable<IGameBattleShip> gameBattleShips, IShotResult shotResult)
+        private bool? CheckBattleShipDestroyed(IEnumerable<GameBattleShip> gameBattleShips, IShotResult shotResult)
         {
             var shot = shotResult.Shot;
             var shotPoint = shot.ShotPoint;

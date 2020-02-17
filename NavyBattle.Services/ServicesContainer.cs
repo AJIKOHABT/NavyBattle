@@ -16,6 +16,7 @@ namespace NavyBattle.Services
         {
             services.AddScoped<IBattleFieldService, BattleFieldService>();
             services.AddScoped<IGameService, GameService>();
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

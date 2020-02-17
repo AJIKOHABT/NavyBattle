@@ -21,37 +21,37 @@ namespace NavyBattle.Services
         /// <summary>
         /// Repository class to work with battlefield objectcs in database
         /// </summary>
-        IBaseRepository<IGameBattleField> _gameBattleFieldRepository;
+        IBaseRepository<GameBattleField> _gameBattleFieldRepository;
 
         /// <summary>
         /// Repository class to work with game objectcs in database
         /// </summary>
-        IBaseRepository<IGame> _gameRepository;
+        IBaseRepository<Game> _gameRepository;
 
         /// <summary>
         /// Repository class to work with battleship objectcs from the game in database
         /// </summary>
-        IBaseRepository<IGameBattleShip> _gameBattleShipRepository;
+        IBaseRepository<GameBattleShip> _gameBattleShipRepository;
 
         /// <summary>
         /// Repository class to work with shot objectcs in database
         /// </summary>
-        IBaseRepository<IShot> _shotRepository;
+        IBaseRepository<Shot> _shotRepository;
 
         /// <summary>
         /// Repository class to work with battlefield objectcs in database
         /// </summary>
-        IBaseRepository<IBattleField> _battleFieldRepository;
+        IBaseRepository<BaseBattleField> _battleFieldRepository;
 
         /// <summary>
         /// Repository class to work with battleship objectcs in database
         /// </summary>
-        IBaseRepository<IBattleShip> _battleShipRepository;
+        IBaseRepository<BattleShip> _battleShipRepository;
 
         /// <summary>
         /// Repository class to work with battleship objectcs in database
         /// </summary>
-        IBaseRepository<IUser> _userRepository;
+        IBaseRepository<User> _userRepository;
 
         #endregion
 
@@ -64,15 +64,17 @@ namespace NavyBattle.Services
         /// <param name="gameRepository">Repository class to work with game objectcs in database</param>
         /// <param name="gameBattleShipRepository">Repository class to work with battleship objectcs from the game in database</param>
         /// <param name="shotRepository">Repository class to work with shot objectcs in database</param>
-        public GameService(IBaseRepository<IGameBattleField> gameBattleFieldRepository, 
-            IBaseRepository<IGame> gameRepository,
-            IBaseRepository<IGameBattleShip> gameBattleShipRepository,
-            IBaseRepository<IShot> shotRepository)
+        public GameService(IBaseRepository<GameBattleField> gameBattleFieldRepository, 
+            IBaseRepository<Game> gameRepository,
+            IBaseRepository<GameBattleShip> gameBattleShipRepository,
+            IBaseRepository<Shot> shotRepository,
+            IBaseRepository<User> userRepository)
         {
             this._gameBattleFieldRepository = gameBattleFieldRepository;
             this._gameRepository = gameRepository;
             this._gameBattleShipRepository = gameBattleShipRepository;
             this._shotRepository = shotRepository;
+            this._userRepository = userRepository;
         }
 
         #endregion
@@ -84,7 +86,7 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IGame GetById(int id)
+        public Game GetById(int id)
         {
             return _gameRepository.GetById(id);
         }
@@ -93,7 +95,7 @@ namespace NavyBattle.Services
         /// Getting all battlefields from the database
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IGame> GetAll()
+        public IEnumerable<Game> GetAll()
         {
             return _gameRepository.GetAll();
         }
@@ -104,7 +106,7 @@ namespace NavyBattle.Services
         /// <param name="battleFieldId"></param>
         /// <param name="ownerId"></param>
         /// <returns></returns>
-        public IBattleFieldResult CreateGameBattleField(int battleFieldId, int ownerId)
+        public BattleFieldResult CreateGameBattleField(int battleFieldId, int ownerId)
         {
             var owner = _userRepository.GetById(ownerId);
             var result = new BattleFieldResult();
@@ -145,7 +147,7 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="gameBattleFieldId"></param>
         /// <returns></returns>
-        public IBattleFieldResult WaitingForPlayer(int gameBattleFieldId)
+        public BattleFieldResult WaitingForPlayer(int gameBattleFieldId)
         {
             var result = new BattleFieldResult();
             var userGameBattleField = _gameBattleFieldRepository.GetById(gameBattleFieldId);
@@ -175,7 +177,7 @@ namespace NavyBattle.Services
                 return result;
             }
 
-            var gameBattleFields = new List<IGameBattleField>()
+            var gameBattleFields = new List<GameBattleField>()
                     {
                         userGameBattleField,
                         gameBattleField
@@ -191,7 +193,7 @@ namespace NavyBattle.Services
         /// <param name="userId"></param>
         /// <param name="gameId"></param>
         /// <returns></returns>
-        public IGameResult CheckForUsersTurn(int userId, int gameId)
+        public GameResult CheckForUsersTurn(int userId, int gameId)
         {
             var result = new GameResult();
             result.GameId = gameId;
@@ -222,9 +224,9 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="shot"></param>
         /// <returns></returns>
-        public IShotResult FireShot(IShot shot)
+        public ShotResult FireShot(Shot shot)
         {
-            var game = GetById(shot.GameId.Value);            
+            var game = _gameRepository.GetById(shot.GameId.Value);            
             var shotValidator = new ShotValidator();
             var result = shotValidator.Validate(game, shot);
 
@@ -256,7 +258,7 @@ namespace NavyBattle.Services
         /// </summary>
         /// <param name="gameBattleFields"></param>
         /// <returns></returns>
-        private int CreateGame(IEnumerable<IGameBattleField> gameBattleFields)
+        private int CreateGame(IEnumerable<GameBattleField> gameBattleFields)
         {
             var game = new Game(gameBattleFields);
             game.State = GameState.WaitingForShot;

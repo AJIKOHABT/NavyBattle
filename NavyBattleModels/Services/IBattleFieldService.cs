@@ -1,5 +1,4 @@
-﻿using NavyBattleModels.Interfaces;
-using NavyBattleModels.Validators.Interfaces;
+﻿using NavyBattleModels.Validators;
 using System.Collections.Generic;
 
 namespace NavyBattleModels.Services
@@ -11,19 +10,19 @@ namespace NavyBattleModels.Services
         /// </summary>
         /// <param name="battleShips"></param>
         /// <returns></returns>
-        IBattleFieldValidationResult CreateBattleField(int userId, IEnumerable<IBattleShip> battleShips);
+        BattleFieldValidationResult CreateBattleField(int userId, IEnumerable<BattleShip> battleShips);
 
         /// <summary>
         /// Getting battlefield by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        IBattleField GetById(int id);
+        BaseBattleField GetById(int id);
 
         /// <summary>
         /// Getting all battlefields from the database
         /// </summary>
         /// <returns></returns>
-        IEnumerable<IBattleField> GetAll();
+        IEnumerable<BaseBattleField> GetAll();
     }
 }

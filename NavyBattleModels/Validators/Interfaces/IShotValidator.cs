@@ -1,6 +1,7 @@
 ﻿
 
 using NavyBattleModels.Interfaces;
+using NavyBattleModels.Models;
 
 namespace NavyBattleModels.Validators.Interfaces
 {
@@ -11,6 +12,6 @@ namespace NavyBattleModels.Validators.Interfaces
         /// </summary>
         /// <param name="shot"></param>
         /// <returns></returns>
-        IShotResult Validate(IGame game, IShot shot);
+        ShotResult Validate(Game game, Shot shot);
     }
 }

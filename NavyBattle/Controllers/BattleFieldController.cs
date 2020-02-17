@@ -21,21 +21,21 @@ namespace NavyBattleController.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult GetBattleFields()
         {
             return Json(_battleFieldService.GetAll());
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public JsonResult GetBattleField(int id)
         {
             return Json(_battleFieldService.GetById(id));
         }
 
         // POST api/<controller>
         [HttpPost]
-        public ActionResult Post([FromBody] int userId, [FromBody]List<BattleShip> battleShips)
+        public ActionResult CreateBattleField([FromHeader] int userId, [FromBody]List<BattleShip> battleShips)
         {
             var result = _battleFieldService.CreateBattleField(userId, battleShips);
             if (result.IsSuccess)

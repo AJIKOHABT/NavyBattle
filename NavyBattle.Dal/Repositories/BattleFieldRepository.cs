@@ -1,4 +1,5 @@
 ﻿using NavyBattle.Dal.Contexts;
+using NavyBattleModels;
 using NavyBattleModels.Interfaces;
 
 namespace NavyBattle.Dal.Repositories
@@ -6,7 +7,7 @@ namespace NavyBattle.Dal.Repositories
     /// <summary>
     /// Repository to work with battlefield objects in db
     /// </summary>
-    internal class BattleFieldRepository : BaseRepository<IBattleField>
+    internal class BattleFieldRepository : BaseRepository<BaseBattleField>
     {
         #region Constructor
 

@@ -1,4 +1,5 @@
 ﻿using NavyBattleModels.Interfaces;
+using NavyBattleModels.Models;
 using NavyBattleModels.Validators.Interfaces;
 
 namespace NavyBattleModels.Validators
@@ -15,12 +16,12 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Damaged or destroyed battleship
         /// </summary>
-        private IGameBattleShip _gameBattleShip;
+        private GameBattleShip _gameBattleShip;
 
         /// <summary>
         /// Shot
         /// </summary>
-        private IShot _shot;
+        private Shot _shot;
 
         /// <summary>
         /// Indicator of successful validation (true if successful)
@@ -40,7 +41,7 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Damaged or destroyed battleship
         /// </summary>
-        public IGameBattleShip GameBattleShip
+        public GameBattleShip GameBattleShip
         {
             get 
             {
@@ -55,7 +56,7 @@ namespace NavyBattleModels.Validators
         /// <summary>
         /// Shot
         /// </summary>
-        public IShot Shot
+        public Shot Shot
         {
             get 
             {

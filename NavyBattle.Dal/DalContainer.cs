@@ -21,13 +21,13 @@ namespace NavyBattle.Dal
         public static void RegisterRepositories(IServiceCollection services, string connectionString)
         {
             services.AddDbContext<NavyBattleContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("NavyBattle.Dal")));
-            services.AddScoped<IBaseRepository<IBattleField>, BattleFieldRepository>();
-            services.AddScoped<IBaseRepository<IBattleShip>, BattleShipRepository>();
-            services.AddScoped<IBaseRepository<IGame>, GameRepository>();
-            services.AddScoped<IBaseRepository<IGameBattleShip>, GameBattleShipRepository>();
-            services.AddScoped<IBaseRepository<IShot>, ShotRepository>();
-            services.AddScoped<IBaseRepository<IUser>, UserRepository>();
-            services.AddScoped<IBaseRepository<IGameBattleField>, GameBattleFieldRepository>();
+            services.AddScoped<IBaseRepository<BaseBattleField>, BattleFieldRepository>();
+            services.AddScoped<IBaseRepository<BattleShip>, BattleShipRepository>();
+            services.AddScoped<IBaseRepository<Game>, GameRepository>();
+            services.AddScoped<IBaseRepository<GameBattleShip>, GameBattleShipRepository>();
+            services.AddScoped<IBaseRepository<Shot>, ShotRepository>();
+            services.AddScoped<IBaseRepository<User>, UserRepository>();
+            services.AddScoped<IBaseRepository<GameBattleField>, GameBattleFieldRepository>();
 
         }
     }

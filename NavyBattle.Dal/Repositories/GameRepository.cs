@@ -1,12 +1,13 @@
 ﻿using NavyBattleModels.Interfaces;
 using NavyBattle.Dal.Contexts;
+using NavyBattleModels.Models;
 
 namespace NavyBattle.Dal.Repositories
 {
     /// <summary>
     /// Repository to work with game objects in db
     /// </summary>
-    internal class GameRepository : BaseRepository<IGame>        
+    internal class GameRepository : BaseRepository<Game>        
     {
         #region Constructor
 
