@@ -18,14 +18,19 @@ namespace NavyBattleModels.Validators
         /// <returns>Result of the shot as IResultShot object</returns>
         public ShotResult Validate(Game game, Shot shot)
         {
+            var shotResult = new ShotResult();
+            shotResult.Shot = shot;
+
+            if (game.TurnOfThePlayer != shot.PlayerId.Value)
+            {
+                shot.State = ShotState.NotUsersTurn;
+            }
+
             var gameBattleField = game.GameBattleFields.FirstOrDefault(gbf => gbf.OwnerId != shot.PlayerId.Value);
             var gameShots = gameBattleField.Shots;
             var shotPoint = shot.ShotPoint;
             var battleField = gameBattleField.BattleField;
             
-            var shotResult = new ShotResult();
-            shotResult.Shot = shot;
-
             if (!CheckShotIsValid(battleField, shotPoint))
             {
                 shot.State = ShotState.Nonvalid;

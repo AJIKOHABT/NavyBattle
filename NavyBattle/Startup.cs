@@ -59,8 +59,8 @@ namespace NavyBattle
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.RoutePrefix = "";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NavyBattle V1");
+                c.SwaggerEndpoint("./swagger/v1/swagger.json", "NavyBattle V1");
+                c.RoutePrefix = string.Empty;
             });
         }
     }

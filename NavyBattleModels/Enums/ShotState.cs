@@ -29,6 +29,11 @@ namespace NavyBattleModels.Enums
         /// <summary>
         /// Shot was made at the same point
         /// </summary>
-        SamePoint
+        SamePoint,
+
+        /// <summary>
+        /// Shot was made not in turn of the user
+        /// </summary>
+        NotUsersTurn,
     }
 }

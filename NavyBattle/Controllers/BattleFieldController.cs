@@ -27,7 +27,7 @@ namespace NavyBattleController.Controllers
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public JsonResult GetBattleField(int id)
         {
             return Json(_battleFieldService.GetById(id));

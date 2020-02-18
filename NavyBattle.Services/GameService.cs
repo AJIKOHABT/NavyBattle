@@ -234,7 +234,7 @@ namespace NavyBattle.Services
             {
                 if (game.State == GameState.Finished)
                 {
-                    game.Winner = (User)_userRepository.GetById(shot.PlayerId.Value);
+                    game.Winner = _userRepository.GetById(shot.PlayerId.Value);
                     _gameRepository.Update(game);
                     _gameRepository.Save();
                 }

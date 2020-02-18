@@ -23,13 +23,13 @@ namespace NavyBattle.Controllers
             return Json(_gameService.GetAll());
         }
 
-        [HttpGet("{battleFieldId}")]
+        [HttpGet("{battleFieldId:int}")]
         public JsonResult Get(int battleFieldId)
         {
             return Json(_gameService.WaitingForPlayer(battleFieldId));
         }
 
-        [HttpGet]
+        [HttpGet("api/games/checkturn")]
         public JsonResult Get([FromQuery]int userId, [FromQuery]int gameId)
         {
             return Json(_gameService.CheckForUsersTurn(userId, gameId));
