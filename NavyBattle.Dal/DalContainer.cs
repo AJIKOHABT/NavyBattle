@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using NavyBattle.Dal.Contexts;
+﻿using Microsoft.Extensions.DependencyInjection;
 using NavyBattle.Dal.Repositories;
 using NavyBattleModels;
-using NavyBattleModels.Interfaces;
 using NavyBattleModels.Models;
 
 namespace NavyBattle.Dal
@@ -18,9 +15,8 @@ namespace NavyBattle.Dal
         /// </summary>
         /// <param name="services">collection of services</param>
         /// <param name="connectionString">database connection string</param>
-        public static void RegisterRepositories(IServiceCollection services, string connectionString)
+        public static void RegisterRepositories(IServiceCollection services)
         {
-            services.AddDbContext<NavyBattleContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("NavyBattle.Dal")));
             services.AddScoped<IBaseRepository<BaseBattleField>, BattleFieldRepository>();
             services.AddScoped<IBaseRepository<BattleShip>, BattleShipRepository>();
             services.AddScoped<IBaseRepository<Game>, GameRepository>();

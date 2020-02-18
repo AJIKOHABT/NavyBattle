@@ -8,6 +8,8 @@ using NavyBattleModels;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using NavyBattle.Dal.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace NavyBattle
 {
@@ -23,9 +25,10 @@ namespace NavyBattle
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();            
-            ModelsContainer.RegisterModels(services);
-            DalContainer.RegisterRepositories(services, Configuration.GetConnectionString("sqlConnection"));
+            services.AddDbContext<NavyBattleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"), x => x.MigrationsAssembly("NavyBattle.Dal")));
+            services.AddControllers();
+            DalContainer.RegisterRepositories(services);
+            ModelsContainer.RegisterModels(services);              
             ServicesContainer.RegisterServices(services);
             services.AddSwaggerGen(options =>
             {

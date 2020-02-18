@@ -16,7 +16,7 @@ namespace NavyBattleController.Controllers
         }
 
         // POST api/values
-        [HttpPost]
+        [HttpPost("add")]
         public ActionResult Post([FromBody] User user)
         {
             if (user == null)
@@ -33,7 +33,7 @@ namespace NavyBattleController.Controllers
             return Json(_userService.GetById(userId));
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public JsonResult GetAll()
         {
             return Json(_userService.GetAll());

@@ -20,21 +20,21 @@ namespace NavyBattleController.Controllers
         }
 
         // GET: api/<controller>
-        [HttpGet]
+        [HttpGet("all")]
         public JsonResult GetBattleFields()
         {
             return Json(_battleFieldService.GetAll());
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id:int}")]
+        [HttpGet("get/{id:int}")]
         public JsonResult GetBattleField(int id)
         {
             return Json(_battleFieldService.GetById(id));
         }
 
         // POST api/<controller>
-        [HttpPost]
+        [HttpPost("add")]
         public ActionResult CreateBattleField([FromHeader] int userId, [FromBody]List<BattleShip> battleShips)
         {
             var result = _battleFieldService.CreateBattleField(userId, battleShips);
@@ -45,16 +45,15 @@ namespace NavyBattleController.Controllers
             return BadRequest(result.ErrorList);
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpDelete("delete/{id}")]
+        public ActionResult Delete(int id)
         {
-        }
+            if (id == 0)
+                return BadRequest();
 
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            _battleFieldService.Delete(id);
+
+            return NoContent();
         }
     }
 }

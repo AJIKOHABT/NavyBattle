@@ -46,11 +46,6 @@ namespace NavyBattle.Services
         /// <summary>
         /// Repository class to work with battleship objectcs in database
         /// </summary>
-        IBaseRepository<BattleShip> _battleShipRepository;
-
-        /// <summary>
-        /// Repository class to work with battleship objectcs in database
-        /// </summary>
         IBaseRepository<User> _userRepository;
 
         #endregion
@@ -64,12 +59,14 @@ namespace NavyBattle.Services
         /// <param name="gameRepository">Repository class to work with game objectcs in database</param>
         /// <param name="gameBattleShipRepository">Repository class to work with battleship objectcs from the game in database</param>
         /// <param name="shotRepository">Repository class to work with shot objectcs in database</param>
-        public GameService(IBaseRepository<GameBattleField> gameBattleFieldRepository, 
+        public GameService(IBaseRepository<GameBattleField> gameBattleFieldRepository,
+            IBaseRepository<BaseBattleField> battleFieldRepository,
             IBaseRepository<Game> gameRepository,
             IBaseRepository<GameBattleShip> gameBattleShipRepository,
             IBaseRepository<Shot> shotRepository,
             IBaseRepository<User> userRepository)
         {
+            this._battleFieldRepository = battleFieldRepository;
             this._gameBattleFieldRepository = gameBattleFieldRepository;
             this._gameRepository = gameRepository;
             this._gameBattleShipRepository = gameBattleShipRepository;
@@ -128,7 +125,7 @@ namespace NavyBattle.Services
             }
 
             var gameBattleField = new GameBattleField(battleField);
-            gameBattleField.Owner = (User)owner;
+            gameBattleField.Owner = owner;
 
             _gameBattleFieldRepository.Add(gameBattleField);
             _gameBattleFieldRepository.Save();

@@ -13,11 +13,6 @@ namespace NavyBattleModels
         #region fields & properties
 
         /// <summary>
-        /// Id of the battleShip
-        /// </summary>
-        private int _id;
-
-        /// <summary>
         /// Zone around the battleship
         /// </summary>
         private HashSet<Point> _zoneAroundBattleShip;
@@ -45,17 +40,7 @@ namespace NavyBattleModels
         /// <summary>
         /// Id of the battleShip
         /// </summary>
-        public int Id
-        {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                _id = value;
-            }
-        }
+        public int Id  { get;set; }
 
         /// <summary>
         /// Length of the battleship
@@ -256,7 +241,7 @@ namespace NavyBattleModels
             if (_isVertical)
             {
                 var startY = _startPoint.Y > 1 ? -1 : 0;
-                var endY = endPoint.Y < 10 ? endPoint.Y + 1 : endPoint.Y;
+                var endY = endPoint.Y < 10 ? _length : _length-1;
                 for (int dY = startY; dY <= endY; dY++)
                 {
                     _zoneAroundBattleShip.Add(new Point(_startPoint.X - 1, _startPoint.Y+dY));
@@ -282,7 +267,7 @@ namespace NavyBattleModels
             if (_isVertical)
             {
                 var startY = _startPoint.Y > 1 ? -1 : 0;
-                var endY = endPoint.Y < 10 ? endPoint.Y + 1 : endPoint.Y;
+                var endY = endPoint.Y < 10 ? _length : _length - 1;
                 for (int dY = startY; dY <= endY; dY++)
                 {
                     _zoneAroundBattleShip.Add(new Point(_startPoint.X + 1, _startPoint.Y + dY));
@@ -306,8 +291,9 @@ namespace NavyBattleModels
             var endPoint = GetEndPoint();
             if (!_isVertical)
             {
+
                 var startX = _startPoint.X > 1 ? -1 : 0;
-                var endX = endPoint.X < 10 ? endPoint.X + 1 : endPoint.X;
+                var endX = endPoint.X < 10 ? _length : _length-1;
                 for (int dX = startX; dX <= endX; dX++)
                 {
                     _zoneAroundBattleShip.Add(new Point(_startPoint.X + dX, _startPoint.Y - 1));
@@ -332,7 +318,7 @@ namespace NavyBattleModels
             if (!_isVertical)
             {
                 var startX = _startPoint.X > 1 ? -1 : 0;
-                var endX = endPoint.X < 10 ? endPoint.X + 1 : endPoint.X;
+                var endX = endPoint.X < 10 ? _length : _length - 1;
                 for (int dX = startX; dX <= endX; dX++)
                 {
                     _zoneAroundBattleShip.Add(new Point(_startPoint.X + dX, _startPoint.Y + 1));

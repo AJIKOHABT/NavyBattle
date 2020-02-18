@@ -42,7 +42,7 @@ namespace NavyBattle.Dal.Repositories
         /// Getting all objects of required type from the database
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return Context.Set<TEntity>().ToList();
         }
@@ -71,7 +71,7 @@ namespace NavyBattle.Dal.Repositories
         /// <param name="entities"></param>
         public void AddRange(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().AddRange(entities);
+            Context.Set<TEntity>().AddRange(entities);            
         }
 
         /// <summary>
@@ -88,8 +88,17 @@ namespace NavyBattle.Dal.Repositories
         /// </summary>
         /// <returns></returns>
         public int Save()
-        {
+        {            
             return Context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Remove entity from the database
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Remove(TEntity entity)
+        {
+            Context.Set<TEntity>().Remove(entity);
         }
 
         #endregion

@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using NavyBattleModels;
-using NavyBattleModels.Errors;
-using NavyBattleModels.Interfaces;
 using NavyBattleModels.Models;
 using NavyBattleModels.Services;
 using NavyBattleModels.Validators;
-using NavyBattleModels.Validators.Interfaces;
 
 namespace NavyBattle.Services
 {
@@ -67,7 +64,7 @@ namespace NavyBattle.Services
             if (result.IsSuccess)
             {
 
-                battleField.Owner = (User)user;
+                battleField.Owner = user;
                 _battleFieldRepository.Add(battleField);
                 _battleFieldRepository.Save();
 
@@ -96,7 +93,19 @@ namespace NavyBattle.Services
         /// <returns></returns>
         public IEnumerable<BaseBattleField> GetAll()
         {
-            return _battleFieldRepository.GetAll();
+            var bfs = _battleFieldRepository.GetAll();
+            return bfs;
+        }
+
+        /// <summary>
+        /// Delete battlefield
+        /// </summary>
+        /// <param name="id"></param>
+        public void Delete(int id)
+        {
+            var battleField =  _battleFieldRepository.GetById(id);
+            _battleFieldRepository.Remove(battleField);
+            _battleFieldRepository.Save();
         }
 
         #endregion

@@ -24,5 +24,11 @@ namespace NavyBattleModels.Services
         /// </summary>
         /// <returns></returns>
         IEnumerable<BaseBattleField> GetAll();
+
+        /// <summary>
+        /// Delete battlefield
+        /// </summary>
+        /// <param name="id"></param>
+        void Delete(int id);
     }
 }

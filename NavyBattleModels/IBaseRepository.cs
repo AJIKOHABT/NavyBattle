@@ -42,5 +42,10 @@ namespace NavyBattleModels
         /// <returns></returns>
         int Save();
 
+        /// <summary>
+        /// Remove entity from the database
+        /// </summary>
+        /// <param name="entity"></param>
+        void Remove(TEntity entity);
     }
 }
