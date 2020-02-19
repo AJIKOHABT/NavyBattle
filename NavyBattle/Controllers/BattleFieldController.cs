@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NavyBattleController.Resource;
 using NavyBattleModels;
 using NavyBattleModels.Services;
 
@@ -12,31 +14,73 @@ namespace NavyBattleController.Controllers
     ///Controller for battlefiled validator
     public class BattleFieldController : Controller
     {
-        private IBattleFieldService _battleFieldService;
 
-        public BattleFieldController(IBattleFieldService battleFieldService)
+        #region properties and fields
+
+        /// <summary>
+        /// Service to work with battlefield objects
+        /// </summary>
+        private readonly IBattleFieldService _battleFieldService;
+
+        /// <summary>
+        /// Automapper object
+        /// </summary>
+        private readonly IMapper _mapper;
+
+        #endregion
+
+        #region constructor
+
+        /// <summary>
+        /// User controller constructor
+        /// </summary>
+        /// <param name="battleFieldService">Service to work with battlefield objects</param>
+        /// <param name="mapper">Automapper object</param>
+        public BattleFieldController(IBattleFieldService battleFieldService, IMapper mapper)
         {
+            this._mapper = mapper;
             this._battleFieldService = battleFieldService;
         }
 
-        // GET: api/<controller>
+        #endregion
+
+        #region Api methods
+
+        /// <summary>
+        /// Get all battlefields
+        /// </summary>
+        /// <returns>List of battlefields</returns>
         [HttpGet("all")]
-        public JsonResult GetBattleFields()
+        public ActionResult<IEnumerable<BattleFieldResource>> GetBattleFields()
         {
-            return Json(_battleFieldService.GetAll());
+            var battleFields = _battleFieldService.GetAll();
+            var battleFieldResources = _mapper.Map<IEnumerable<BaseBattleField>, IEnumerable<BattleFieldResource>>(battleFields);
+            return Ok(battleFieldResources);
         }
 
-        // GET api/<controller>/5
+        /// <summary>
+        /// Get battlefield by id
+        /// </summary>
+        /// <param name="id">Id of the battlefield</param>
+        /// <returns>Battlefield object</returns>
         [HttpGet("get/{id:int}")]
-        public JsonResult GetBattleField(int id)
+        public ActionResult<BattleFieldResource> GetBattleField(int id)
         {
-            return Json(_battleFieldService.GetById(id));
+            var battleField = _battleFieldService.GetById(id);
+            var battleFieldResource = _mapper.Map<BaseBattleField, BattleFieldResource>(battleField);
+            return Ok(battleFieldResource);
         }
 
-        // POST api/<controller>
+        /// <summary>
+        /// Add battlefield
+        /// </summary>
+        /// <param name="userId">Id of the user</param>
+        /// <param name="battleShipResources">List of battleships</param>
+        /// <returns></returns>
         [HttpPost("add")]
-        public ActionResult CreateBattleField([FromHeader] int userId, [FromBody]List<BattleShip> battleShips)
+        public ActionResult CreateBattleField([FromHeader] int userId, [FromBody]IEnumerable<SaveBattleShipResource> battleShipResources)
         {
+            var battleShips = _mapper.Map<IEnumerable<SaveBattleShipResource>, IEnumerable<BattleShip>>(battleShipResources);
             var result = _battleFieldService.CreateBattleField(userId, battleShips);
             if (result.IsSuccess)
             {
@@ -55,5 +99,7 @@ namespace NavyBattleController.Controllers
 
             return NoContent();
         }
+
+        #endregion
     }
 }

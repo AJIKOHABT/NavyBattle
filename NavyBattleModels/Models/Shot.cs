@@ -18,16 +18,6 @@ namespace NavyBattleModels.Models
         private int _id;
 
         /// <summary>
-        /// X coordinate of the shot point
-        /// </summary>
-        private int _shotX;
-
-        /// <summary>
-        /// Y coordinate of the shot point
-        /// </summary>
-        private int _shotY;
-
-        /// <summary>
         /// Point where shot was made
         /// </summary>
         private Point _shotPoint;
@@ -69,15 +59,11 @@ namespace NavyBattleModels.Models
         {
             get
             {
-                if (_shotX == 0 && _shotPoint.X != 0)
-                {
-                    _shotX = _shotPoint.X;
-                }
-                return _shotX;
+                return _shotPoint.X;
             }
             set
             {
-                _shotX = value;
+                _shotPoint.X = value;
             }
         }
 
@@ -88,15 +74,11 @@ namespace NavyBattleModels.Models
         {
             get
             {
-                if (_shotY == 0 && _shotPoint.Y != 0)
-                {
-                    _shotY = _shotPoint.Y;
-                }
-                return _shotY;
+                return _shotPoint.Y;
             }
             set
             {
-                _shotY = value;
+                _shotPoint.Y = value;
             }
         }
 

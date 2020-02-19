@@ -75,12 +75,32 @@ namespace NavyBattleModels
         /// <summary>
         /// X coordinate of the start point
         /// </summary>
-        public int StartX { get; set; }
+        public int StartX 
+        {
+            get
+            {
+                return _startPoint.X;
+            }
+            set
+            {
+                _startPoint.X = value;
+            }
+        }
 
         /// <summary>
         /// Y coordinate of the start point
         /// </summary>
-        public int StartY { get; set; }
+        public int StartY
+        {
+            get
+            {
+                return _startPoint.Y;
+            }
+            set
+            {
+                _startPoint.Y = value;
+            }
+        }
 
         /// <summary>
         /// Starting point of the battleship
@@ -124,22 +144,6 @@ namespace NavyBattleModels
 
         public BattleShip()
         {
-           _startPoint = new Point(StartX, StartY);
-        }
-
-        /// <summary>
-        /// BattleShip constructor
-        /// </summary>
-        /// <param name="length">Length of the battleship</param>
-        /// <param name="startPoint">Starting point of the battleship</param>
-        /// <param name="isVertical">Is battleship vertically or horizontally orinted (true - vertically)</param>
-        public BattleShip(int length, Point startPoint, bool isVertical = true)
-        {
-            _length = length;
-            _isVertical = isVertical;
-            _startPoint = startPoint;
-            StartX = startPoint.X;
-            StartY = startPoint.Y;
         }
 
         #endregion

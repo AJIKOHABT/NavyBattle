@@ -27,7 +27,25 @@ namespace NavyBattle.Dal.Repositories
         /// <returns></returns>
         public override IEnumerable<BaseBattleField> GetAll()
         {
-            return Context.Set<BaseBattleField>().Include(b => b.BattleShips).ToList();
+            return Context.Set<BaseBattleField>().
+                Include(b => b.BattleShips).
+                Include(b=>b.Owner).ToList();
+        }
+
+        /// <summary>
+        /// Getting object of required type from the database by its id
+        /// </summary>
+        /// <returns></returns>
+        public override BaseBattleField GetById(int id)
+        {
+            var battleField = Context.Set<BaseBattleField>().Single(b => b.Id == id);
+            Context.Entry(battleField)
+                .Collection(b => b.BattleShips)
+                .Load();
+            Context.Entry(battleField)
+                .Reference(b => b.Owner)
+                .Load();
+            return battleField;      
         }
 
         #endregion

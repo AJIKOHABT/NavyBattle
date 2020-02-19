@@ -51,7 +51,7 @@ namespace NavyBattle.Dal.Repositories
         /// Getting object of required type from the database by its id
         /// </summary>
         /// <returns></returns>
-        public TEntity GetById(int id)
+        public virtual TEntity GetById(int id)
         {
             return Context.Set<TEntity>().Find(id);
         }
