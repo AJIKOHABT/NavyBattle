@@ -68,9 +68,6 @@ namespace NavyBattle.Services
                 _battleFieldRepository.Add(battleField);
                 _battleFieldRepository.Save();
 
-                _battleShipRepository.AddRange(battleField.BattleShips);
-                _battleShipRepository.Save();
-
                 result.BattleFieldId = battleField.Id;
             }
 

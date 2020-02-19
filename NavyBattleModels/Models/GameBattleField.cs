@@ -31,7 +31,17 @@ namespace NavyBattleModels.Models
         /// <summary>
         /// Battlefield on which the game will take place
         /// </summary>
-        public BaseBattleField BattleField { get; set; }
+        public BaseBattleField BattleField 
+        {
+            get
+            {
+                return _battleField; 
+            }
+            set
+            {
+                _battleField = value;
+            }
+        }
 
         /// <summary>
         /// Id of the battlefield

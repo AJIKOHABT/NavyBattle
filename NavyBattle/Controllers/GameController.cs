@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NavyBattleController.Resource;
-using NavyBattleModels.Interfaces;
 using NavyBattleModels.Models;
 using NavyBattleModels.Services;
 using NavyBattleModels.Validators;
@@ -9,6 +8,9 @@ using System.Collections.Generic;
 
 namespace NavyBattle.Controllers
 {
+    /// <summary>
+    /// Api to create and play the navy battle game
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class GameController : Controller
@@ -59,6 +61,19 @@ namespace NavyBattle.Controllers
         }
 
         /// <summary>
+        /// Get game by id
+        /// </summary>
+        /// <returns>Info about the game
+        /// </returns>
+        [HttpGet("{id:int}")]
+        public ActionResult<GameResource> GetById(int id)
+        {
+            var game = _gameService.GetById(id);
+            var gameResource = _mapper.Map<Game, GameResource>(game);
+            return Ok(gameResource);
+        }
+
+        /// <summary>
         /// Check any other player to start the game
         /// </summary>
         /// <param name="battleFieldId">Id of the battlefield with which to start the game</param>
@@ -76,9 +91,15 @@ namespace NavyBattle.Controllers
         /// <param name="gameId">Id of the game</param>
         /// <returns></returns>
         [HttpGet("checkturn")]
-        public ActionResult<GameResult> Get([FromQuery]int userId, [FromQuery]int gameId)
+        public ActionResult<GameResultResource> Get([FromQuery]int userId, [FromQuery]int gameId)
         {
-            return Ok(_gameService.CheckForUsersTurn(userId, gameId));
+            var gameResult = _gameService.CheckForUsersTurn(userId, gameId);
+            var result = _mapper.Map<GameResult, GameResultResource>(gameResult);
+            if (result.IsError)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
 
         /// <summary>
@@ -92,18 +113,18 @@ namespace NavyBattle.Controllers
         {
            return Json(_gameService.CreateGameBattleField(userId, battleFieldId));
         }
-
         
         /// <summary>
         /// Fire a shot to the enemy battlefield
         /// </summary>
         /// <param name="shotResource">Shot object</param>
         /// <returns></returns>
-        [HttpPut("fire/{shot}")]
+        [HttpPut("fire/")]
         public ActionResult<ShotResult> Put(SaveShotResource saveShot)
         {
             var shot = _mapper.Map<SaveShotResource, Shot>(saveShot);
-            var result = _gameService.FireShot(shot);
+            var shotResult = _gameService.FireShot(shot);
+            var result = _mapper.Map<ShotResult, ShotResultResource>(shotResult);
             if (result.IsSuccess)
             {
                 return Ok(result);

@@ -2,6 +2,7 @@
 using NavyBattleController.Resource;
 using NavyBattleModels.Models;
 using NavyBattleModels;
+using NavyBattleModels.Validators;
 
 namespace NavyBattleController.Mapping
 {
@@ -17,7 +18,9 @@ namespace NavyBattleController.Mapping
             CreateMap<GameBattleField, GameBattleFieldResource>();
             CreateMap<GameBattleShip, GameBattleShipResource>();
             CreateMap<Shot, ShotResource>();
-
+            CreateMap<ShotResult, ShotResultResource>();
+            CreateMap<GameResult, GameResultResource>();
+            
             // Resource to Domain
             CreateMap<UserResource, User>();
             CreateMap<BattleShipResource, BattleShip>();
@@ -29,6 +32,8 @@ namespace NavyBattleController.Mapping
             CreateMap<SaveShotResource, Shot>();
             CreateMap<SaveUserResource, User>();
             CreateMap<SaveBattleShipResource, BattleShip>();
+            CreateMap<ShotResultResource, ShotResult>();
+            CreateMap<GameResultResource, GameResult>();
         }
     }
 }

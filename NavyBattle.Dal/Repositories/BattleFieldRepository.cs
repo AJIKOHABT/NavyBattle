@@ -21,6 +21,10 @@ namespace NavyBattle.Dal.Repositories
         {
         }
 
+        #endregion
+
+        #region override
+
         /// <summary>
         /// Getting all objects of required type from the database
         /// </summary>
@@ -38,7 +42,7 @@ namespace NavyBattle.Dal.Repositories
         /// <returns></returns>
         public override BaseBattleField GetById(int id)
         {
-            var battleField = Context.Set<BaseBattleField>().Single(b => b.Id == id);
+            var battleField = Context.Set<BaseBattleField>().Find(id);
             Context.Entry(battleField)
                 .Collection(b => b.BattleShips)
                 .Load();

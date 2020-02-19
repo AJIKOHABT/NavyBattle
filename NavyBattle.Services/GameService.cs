@@ -100,10 +100,10 @@ namespace NavyBattle.Services
         /// <summary>
         /// Creating gameBattleField for the player
         /// </summary>
-        /// <param name="battleFieldId"></param>
         /// <param name="ownerId"></param>
+        /// <param name="battleFieldId"></param>
         /// <returns></returns>
-        public BattleFieldResult CreateGameBattleField(int battleFieldId, int ownerId)
+        public BattleFieldResult CreateGameBattleField(int ownerId, int battleFieldId)
         {
             var owner = _userRepository.GetById(ownerId);
             var result = new BattleFieldResult();
@@ -129,9 +129,6 @@ namespace NavyBattle.Services
 
             _gameBattleFieldRepository.Add(gameBattleField);
             _gameBattleFieldRepository.Save();
-
-            _gameBattleShipRepository.AddRange(gameBattleField.GameBattleShips);
-            _gameBattleShipRepository.Save();
 
             result.IsWaiting = true;
             result.GameBattleFieldId = gameBattleField.Id;
@@ -237,10 +234,12 @@ namespace NavyBattle.Services
                 }
 
                 _shotRepository.Add(result.Shot);
-                _shotRepository.Save();                
-
-                _gameBattleShipRepository.Update(result.GameBattleShip);
-                _gameBattleShipRepository.Save();
+                _shotRepository.Save();
+                if (shot.State == ShotState.Damaged || shot.State == ShotState.Destroyed)
+                {
+                    _gameBattleShipRepository.Update(result.GameBattleShip);
+                    _gameBattleShipRepository.Save();
+                }
             }           
 
             return result;

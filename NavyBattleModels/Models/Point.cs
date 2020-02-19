@@ -88,8 +88,9 @@ namespace NavyBattleModels
                 return false;
             }
 
-            return true; 
+            var otherPoint = (Point)obj;
 
+            return this.X == otherPoint.X && this.Y == otherPoint.Y;
         }
 
         /// <summary>
