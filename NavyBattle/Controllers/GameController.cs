@@ -120,7 +120,7 @@ namespace NavyBattle.Controllers
         /// <param name="shotResource">Shot object</param>
         /// <returns></returns>
         [HttpPut("fire/")]
-        public ActionResult<ShotResult> Put(SaveShotResource saveShot)
+        public ActionResult<ShotResultResource> Put(SaveShotResource saveShot)
         {
             var shot = _mapper.Map<SaveShotResource, Shot>(saveShot);
             var shotResult = _gameService.FireShot(shot);
